@@ -24,6 +24,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Synergy.WPF.Common\Synergy.WPF.Common\Synergy.WPF.Common.csproj" />
   </ItemGroup>
 

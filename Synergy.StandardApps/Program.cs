@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Synergy.WPF.Common.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace Synergy.StandardApps
 
             builder.ConfigureServices(services =>
             {
+                services.RegisterSynergyWPFCommon();
+
                 services.AddSingleton<App>();
                 services.AddSingleton<MainWindow>();
             });
