@@ -23,4 +23,8 @@
     <None Include="AssemblyInfo.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Synergy.WPF.Common\Synergy.WPF.Common\Synergy.WPF.Common.csproj" />
+  </ItemGroup>
+
 </Project>

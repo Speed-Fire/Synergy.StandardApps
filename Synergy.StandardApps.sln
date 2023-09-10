@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synergy.StandardApps", "Synergy.StandardApps\Synergy.StandardApps.csproj", "{7106AA8A-F626-44BB-8EBD-183FE816E153}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synergy.StandardApps", "Synergy.StandardApps\Synergy.StandardApps.csproj", "{7106AA8A-F626-44BB-8EBD-183FE816E153}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synergy.WPF.Common", "..\Synergy.WPF.Common\Synergy.WPF.Common\Synergy.WPF.Common.csproj", "{C483494C-5C6D-44F4-A9C4-34915F45A730}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{7106AA8A-F626-44BB-8EBD-183FE816E153}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7106AA8A-F626-44BB-8EBD-183FE816E153}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7106AA8A-F626-44BB-8EBD-183FE816E153}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C483494C-5C6D-44F4-A9C4-34915F45A730}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C483494C-5C6D-44F4-A9C4-34915F45A730}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C483494C-5C6D-44F4-A9C4-34915F45A730}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C483494C-5C6D-44F4-A9C4-34915F45A730}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
