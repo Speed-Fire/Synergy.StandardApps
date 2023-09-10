@@ -1,0 +1,13 @@
+﻿<Application x:Class="Synergy.StandardApps.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Synergy.StandardApps">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Synergy.WPF.Common;component/Themes/Generic.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Synergy.WPF.Common;component/Styles/Synergy.WPF.Common.Shared.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
