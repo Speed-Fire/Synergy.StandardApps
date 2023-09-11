@@ -16,7 +16,8 @@ namespace Synergy.StandardApps.DAL.DbContexts
         internal DbSet<CalendarEvent> CalendarEvents => Set<CalendarEvent>();
         internal DbSet<Note> Notes => Set<Note>();
 
-        public AppDbContext()
+        public AppDbContext(DbContextOptions<AppDbContext> options) : 
+            base(options)
         {
             Database.EnsureCreated();
         }

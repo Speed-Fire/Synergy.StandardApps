@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Synergy.WPF.Common.Utility;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,9 +15,23 @@ namespace Synergy.StandardApps
     /// </summary>
     public partial class App : Application
     {
-        public App()
+        private readonly AppThemeController _themeController;
+
+        public App(AppThemeController themeController)
         {
             InitializeComponent();
+
+            _themeController = themeController;
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            _themeController.SetTheme("Dark");
+
+            MainWindow = Program.AppHost.Services.GetRequiredService<MainWindow>();
+            MainWindow.Show();
         }
     }
 }

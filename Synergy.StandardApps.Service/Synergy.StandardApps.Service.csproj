@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Alarm\" />
+    <Folder Include="Calendar\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Synergy.StandardApps.DAL\Synergy.StandardApps.DAL.csproj" />
+    <ProjectReference Include="..\Synergy.StandardApps.Domain\Synergy.StandardApps.Domain.csproj" />
+    <ProjectReference Include="..\Synergy.StandardApps.EntityForms\Synergy.StandardApps.EntityForms.csproj" />
+  </ItemGroup>
+
+</Project>

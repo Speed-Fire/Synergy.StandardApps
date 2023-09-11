@@ -1,5 +1,4 @@
-﻿using Synergy.StandardApps.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,18 +13,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Synergy.StandardApps
+namespace Synergy.StandardApps.Notes.SubPages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для NoteViewPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class NoteViewPage : Page
     {
-        public MainWindow()
+        public NoteViewPage()
         {
             InitializeComponent();
 
-            DataContext = new MainVM();
+            DataContext = new NoteViewPage();
         }
     }
 }

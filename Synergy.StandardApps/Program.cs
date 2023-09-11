@@ -3,6 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Synergy.StandardApps.DAL.DbContexts;
 using Synergy.StandardApps.DAL.Extensions;
+using Synergy.StandardApps.EntityForms.Extensions;
+using Synergy.StandardApps.Notes.Extensions;
+using Synergy.StandardApps.Service.Extensions;
 using Synergy.WPF.Common.Extensions;
 using System;
 using System.Collections.Generic;
@@ -24,7 +27,7 @@ namespace Synergy.StandardApps
 
             builder.ConfigureServices(services =>
             {
-                var path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 path = Path.Combine(path, "Synergy", "StandardApps", "standardAppsDb.sqlite");
 
                 var connStr = $"Data Source={path};";
@@ -36,7 +39,10 @@ namespace Synergy.StandardApps
 
                 services
                     .RegisterSynergyWPFCommon()
-                    .RegisterRepositories();
+                    .RegisterRepositories()
+                    .RegisterEntityFormsConverters()
+                    .RegisterNoteServies()
+                    .RegisterNotes();
 
                 services.AddSingleton<App>();
                 services.AddSingleton<MainWindow>();

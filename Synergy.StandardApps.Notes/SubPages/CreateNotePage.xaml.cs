@@ -1,4 +1,5 @@
-﻿using Synergy.StandardApps.ViewModels;
+﻿using Synergy.StandardApps.Notes.ViewModels;
+using Synergy.StandardApps.Service.Notes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,18 +15,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Synergy.StandardApps
+namespace Synergy.StandardApps.Notes.SubPages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для CreateNotePage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CreateNotePage : Page
     {
-        public MainWindow()
+        public CreateNotePage(INoteService service)
         {
             InitializeComponent();
 
-            DataContext = new MainVM();
+            DataContext = new CreateNoteVM(service);
         }
     }
 }

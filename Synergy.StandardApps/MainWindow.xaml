@@ -25,7 +25,12 @@
             Grid.Column="0"
             Style="{StaticResource Sidebar}"
             Output="{Binding ElementName=outputFrame}">
-            
+
+            <sidebar:NavItem
+                NavCommand="{Binding NavigateToNotes}"
+                    Style="{StaticResource ThemedNavItemStyle}"
+                    Icon="{StaticResource ListIcon}"/>
+
         </sidebar:Sidebar>
     </Grid>
 </Window>

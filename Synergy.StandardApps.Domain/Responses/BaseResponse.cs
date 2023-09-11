@@ -12,5 +12,7 @@ namespace Synergy.StandardApps.Domain.Responses
         public StatusCode StatusCode { get; set; }
         public ErrorCode ErrorCode { get; set; }
         public T? Data { get; set; }
+
+        internal BaseResponse(){}
     }
 }

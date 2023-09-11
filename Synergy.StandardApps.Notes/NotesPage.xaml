@@ -1,0 +1,73 @@
+﻿<Page x:Class="Synergy.StandardApps.Notes.NotesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Synergy.StandardApps.Notes"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Notes"
+      KeepAlive="True">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.3*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid
+            IsEnabled="{Binding IsListEnabled}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <DockPanel>
+                <Button
+                    DockPanel.Dock="Right"
+                    HorizontalAlignment="Right"
+                    Margin="0 0 10 0"
+                    Content="Delete"
+                    Command="{Binding DeleteNote}"
+                    CommandParameter="{Binding ElementName=NoteList, Path=SelectedItem.DataContext.Id}"/>
+                
+                <Button
+                    DockPanel.Dock="Right"
+                    HorizontalAlignment="Right"
+                    Margin="0 0 10 0"
+                    Content="Add"
+                    Command="{Binding OpenNoteCreation}"/>
+            </DockPanel>
+            
+            <ListView
+                x:Name="NoteList"
+                Grid.Row="1"
+                ItemsSource="{Binding Notes}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Button
+                            Command="{Binding Path=DataContext.OpenNote,
+                                RelativeSource={RelativeSource FindAncestor,
+                                AncestorType={x:Type ListView}}}"
+                            CommandParameter="{Binding}">
+                            <TextBox
+                                HorizontalAlignment="Stretch"
+                                TextAlignment="Center"
+                                Text="{Binding Name}"/>
+                        </Button>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        
+        <GridSplitter
+            Grid.Column="1"/>
+
+        <Frame
+            x:Name="NoteFrame"
+            Grid.Column="2"
+            NavigationUIVisibility="Hidden"
+            JournalOwnership="OwnsJournal"/>
+    </Grid>
+</Page>
