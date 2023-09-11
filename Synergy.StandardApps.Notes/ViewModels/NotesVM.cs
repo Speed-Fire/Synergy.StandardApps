@@ -38,11 +38,14 @@ namespace Synergy.StandardApps.Notes.ViewModels
             _noteService = noteService;
 
             notes = new();
+            IsListEnabled = true;
 
-            LoadNotes();
+            IsActive = true;
+
+            LoadNotesAsync();
         }
 
-        private async Task LoadNotes()
+        public async Task LoadNotesAsync()
         {
             var _notes = await _noteService.GetNotes();
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Synergy.StandardApps.Notes.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,7 @@ namespace Synergy.StandardApps.Notes.SubPages
         {
             InitializeComponent();
 
-            DataContext = new NoteViewPage();
+            DataContext = new NoteViewVM();
         }
     }
 }

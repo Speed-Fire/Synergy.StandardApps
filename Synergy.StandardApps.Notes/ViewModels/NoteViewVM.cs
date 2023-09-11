@@ -25,6 +25,11 @@ namespace Synergy.StandardApps.Notes.ViewModels
             set => SetProperty(ref description, value);
         }
 
+        public NoteViewVM()
+        {
+            IsActive = true;
+        }
+
         public void Receive(OpenNoteMessage message)
         {
             if (message.Value is null)

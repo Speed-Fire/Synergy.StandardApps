@@ -32,7 +32,7 @@ namespace Synergy.StandardApps.Service.Notes
 
                 var note = await _noteRepository
                     .GetAll()
-                    .Where(n => n.Equals(form.Name))
+                    .Where(n => n.Name.Equals(form.Name))
                     .FirstOrDefaultAsync();
 
                 if(note is not null)

@@ -30,7 +30,8 @@ namespace Synergy.StandardApps
                 var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 path = Path.Combine(path, "Synergy", "StandardApps", "standardAppsDb.sqlite");
 
-                var connStr = $"Data Source={path};";
+                //var connStr = $"Data Source={path};";
+                var connStr = $"Data Source=standardAppsDb.sqlite;";
 
                 services.AddDbContext<AppDbContext>(options =>
                 {

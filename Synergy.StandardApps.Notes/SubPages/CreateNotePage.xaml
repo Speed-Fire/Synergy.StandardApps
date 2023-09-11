@@ -9,14 +9,6 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CreateNotePage">
 
-    <Page.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Synergy.WPF.Common;component/Styles/Synergy.WPF.Common.Shared.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Page.Resources>
-    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -30,7 +22,7 @@
             FontWeight="Bold"
             HorizontalAlignment="Stretch"
             TextAlignment="Center"
-            Text="{Binding Name}"/>
+            Text="{Binding ProtoNote.Name}"/>
 
         <Rectangle
             Grid.Row="1"
@@ -42,7 +34,7 @@
         <TextBox
             Grid.Row="2"
             Margin="10,10"
-            Text="{Binding Description}"/>
+            Text="{Binding ProtoNote.Description}"/>
 
         <DockPanel
             Grid.Row="3">
@@ -51,7 +43,7 @@
                 HorizontalAlignment="Right"
                 Margin="0 0 10 0"
                 CornerRadius="5"
-                Command="{Binding}"/>
+                Command="{Binding CreateNote}"/>
         </DockPanel>
     </Grid>
 </Page>

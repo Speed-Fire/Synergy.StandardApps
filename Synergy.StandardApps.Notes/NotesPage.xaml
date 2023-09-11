@@ -30,7 +30,8 @@
                     Margin="0 0 10 0"
                     Content="Delete"
                     Command="{Binding DeleteNote}"
-                    CommandParameter="{Binding ElementName=NoteList, Path=SelectedItem.DataContext.Id}"/>
+                    CommandParameter="{Binding ElementName=NoteList,
+                        Path=SelectedItem}"/>
                 
                 <Button
                     DockPanel.Dock="Right"
@@ -47,11 +48,12 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Button
+                            HorizontalAlignment="Stretch"
                             Command="{Binding Path=DataContext.OpenNote,
                                 RelativeSource={RelativeSource FindAncestor,
                                 AncestorType={x:Type ListView}}}"
                             CommandParameter="{Binding}">
-                            <TextBox
+                            <TextBlock
                                 HorizontalAlignment="Stretch"
                                 TextAlignment="Center"
                                 Text="{Binding Name}"/>

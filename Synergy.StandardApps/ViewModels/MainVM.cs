@@ -20,7 +20,7 @@ namespace Synergy.StandardApps.ViewModels
             {
                 var page = Program.AppHost.Services
                     .GetRequiredService<NotesPage>();
-
+                
                 frame.Navigate(page);
             }));
     }
