@@ -4,27 +4,56 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Synergy.StandardApps.Notes"
+      xmlns:controls="clr-namespace:Synergy.WPF.Common.Controls;assembly=Synergy.WPF.Common"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:convs="clr-namespace:Synergy.StandardApps.Notes.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Notes"
       KeepAlive="True">
 
+    <Page.Resources>
+        <ResourceDictionary>
+            <convs:Bool2VisibilityConverter x:Key="b2Visibility"/>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction
+                Command="{Binding LoadNotes}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.3*"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
         <Grid
-            IsEnabled="{Binding IsListEnabled}">
+            Grid.Column="0"
+            MinWidth="180"
+            Margin="0 5 0 0"
+            Panel.ZIndex="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <DockPanel>
-                <Button
+
+                <Rectangle
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Right"
+                    DockPanel.Dock="Right"
+                    MinWidth="1"
+                    Margin="0 -5 0 -3"
+                    Fill="{StaticResource Gray200Brush}"/>
+
+                <controls:NormalButton
+                    Style="{StaticResource NormalButtonStyle}"
                     DockPanel.Dock="Right"
                     HorizontalAlignment="Right"
                     Margin="0 0 10 0"
@@ -33,38 +62,63 @@
                     CommandParameter="{Binding ElementName=NoteList,
                         Path=SelectedItem}"/>
                 
-                <Button
+                <controls:NormalButton
+                    Style="{StaticResource NormalButtonStyle}"
                     DockPanel.Dock="Right"
                     HorizontalAlignment="Right"
                     Margin="0 0 10 0"
                     Content="Add"
                     Command="{Binding OpenNoteCreation}"/>
+
+                <TextBlock
+                    DockPanel.Dock="Left"
+                    HorizontalAlignment="Left"
+                    Margin="2 0 0 0"
+                    Style="{StaticResource TextBlockStyle}"
+                    Text="Notes:"/>
             </DockPanel>
             
             <ListView
                 x:Name="NoteList"
                 Grid.Row="1"
-                ItemsSource="{Binding Notes}">
+                Margin="0 3 0 0"
+                Style="{StaticResource ListViewStyle}"
+                ItemsSource="{Binding Notes}"
+                SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction
+                            Command="{Binding OpenNote}"
+                            CommandParameter="{Binding Path=SelectedItem,
+                                RelativeSource={RelativeSource FindAncestor,
+                                AncestorType={x:Type ListView}}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Button
-                            HorizontalAlignment="Stretch"
-                            Command="{Binding Path=DataContext.OpenNote,
-                                RelativeSource={RelativeSource FindAncestor,
-                                AncestorType={x:Type ListView}}}"
-                            CommandParameter="{Binding}">
-                            <TextBlock
-                                HorizontalAlignment="Stretch"
-                                TextAlignment="Center"
-                                Text="{Binding Name}"/>
-                        </Button>
+                        <TextBlock
+                            Style="{StaticResource ListViewStyle.TextBlock}"
+                            Text="{Binding Name}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-        
-        <GridSplitter
-            Grid.Column="1"/>
+
+        <Border
+            Grid.Column="0"
+            Panel.ZIndex="5"
+            Background="{StaticResource Gray600Brush}"
+            Opacity="0.7"
+            Visibility="{Binding IsListDisabled, Converter={StaticResource b2Visibility}}"/>
+
+        <Rectangle
+            Grid.Column="1"
+            MinWidth="2"
+            VerticalAlignment="Stretch"
+            HorizontalAlignment="Center"
+            Fill="{StaticResource Gray200Brush}"/>
 
         <Frame
             x:Name="NoteFrame"

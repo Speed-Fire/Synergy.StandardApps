@@ -10,37 +10,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
-namespace Synergy.StandardApps.Notes.ViewModels
+namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
 {
-    internal class CreateNoteVM : ObservableObject
+    internal class CreateNoteVM : ChangeNoteVM
     {
-        private readonly INoteService _noteService;
-
         private NoteCreationForm protoNote;
-        public NoteCreationForm ProtoNote
+        public override NoteCreationForm ProtoNote
         {
             get => protoNote;
-            set => SetProperty(ref protoNote, value);
+            //set => SetProperty(ref protoNote, value);
         }
 
-        internal CreateNoteVM(INoteService noteService)
-        {
-            _noteService = noteService;
+        public override string Created => string.Empty;
 
+        internal CreateNoteVM(INoteService noteService) : base(noteService)
+        {
             protoNote = new();
         }
 
-        private RelayCommand? createNote;
-        public RelayCommand CreateNote => createNote ??
-            (createNote = new RelayCommand(async () =>
+        private RelayCommand? save;
+        public override ICommand? Save => save ??
+            (save = new RelayCommand(async () =>
             {
                 var res = await _noteService.CreateNote(ProtoNote);
 
-                if(res.StatusCode == Domain.Enums.StatusCode.Error)
+                if (res.StatusCode == Domain.Enums.StatusCode.Error)
                 {
                     await NotifyingGrid.ShowNotificationAsync("MainGrid",
-                        "Error", "test", System.Windows.MessageBoxButton.OK);
+                        "Error", "Specified name is already taken!",
+                        System.Windows.MessageBoxButton.OK);
 
                     return;
                 }

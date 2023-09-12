@@ -1,4 +1,5 @@
 ﻿using Synergy.StandardApps.Notes.ViewModels;
+using Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs;
 using Synergy.StandardApps.Service.Notes;
 using System;
 using System.Collections.Generic;
@@ -20,13 +21,13 @@ namespace Synergy.StandardApps.Notes.SubPages
     /// <summary>
     /// Логика взаимодействия для CreateNotePage.xaml
     /// </summary>
-    public partial class CreateNotePage : Page
+    public partial class ChangeNotePage : Page
     {
-        public CreateNotePage(INoteService service)
+        public ChangeNotePage(ChangeNoteVM vm)
         {
             InitializeComponent();
 
-            DataContext = new CreateNoteVM(service);
+            DataContext = vm;
         }
     }
 }

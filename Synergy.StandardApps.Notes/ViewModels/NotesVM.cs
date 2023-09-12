@@ -4,18 +4,25 @@ using CommunityToolkit.Mvvm.Messaging;
 using Synergy.StandardApps.EntityForms.Notes;
 using Synergy.StandardApps.Notes.Messages;
 using Synergy.StandardApps.Notes.SubPages;
+using Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs;
 using Synergy.StandardApps.Service.Notes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Navigation;
 
 namespace Synergy.StandardApps.Notes.ViewModels
 {
-    public class NotesVM : ObservableRecipient, IRecipient<NoteCreatedMessage>
+    public class NotesVM : 
+        ObservableRecipient,
+        IRecipient<NoteCreatedMessage>,
+        IRecipient<OpenNoteEditMessage>,
+        IRecipient<NoteChangingCanceledMessage>
     {
         private readonly INoteService _noteService;
 
@@ -26,11 +33,18 @@ namespace Synergy.StandardApps.Notes.ViewModels
             set => SetProperty(ref notes, value);
         }
 
-        private bool isListEnabled;
-        public bool IsListEnabled
+        private NoteForm? selectedItem;
+        public NoteForm? SelectedItem
         {
-            get => isListEnabled;
-            set => SetProperty(ref isListEnabled, value);
+            get => selectedItem;
+            set => SetProperty(ref selectedItem, value);
+        }
+
+        private bool isListDisabled;
+        public bool IsListDisabled
+        {
+            get => isListDisabled;
+            set => SetProperty(ref isListDisabled, value);
         }
 
         public NotesVM(INoteService noteService)
@@ -38,11 +52,11 @@ namespace Synergy.StandardApps.Notes.ViewModels
             _noteService = noteService;
 
             notes = new();
-            IsListEnabled = true;
+            IsListDisabled = false;
 
             IsActive = true;
 
-            LoadNotesAsync();
+            //LoadNotesAsync();
         }
 
         public async Task LoadNotesAsync()
@@ -58,9 +72,11 @@ namespace Synergy.StandardApps.Notes.ViewModels
             }
         }
 
+        #region Messages
+
         void IRecipient<NoteCreatedMessage>.Receive(NoteCreatedMessage message)
         {
-            IsListEnabled = true;
+            IsListDisabled = false;
 
             if (message.Value is null)
                 return;
@@ -68,17 +84,34 @@ namespace Synergy.StandardApps.Notes.ViewModels
             Notes.Add(message.Value);
         }
 
+        void IRecipient<OpenNoteEditMessage>.Receive(OpenNoteEditMessage message)
+        {
+            IsListDisabled = true;
+
+            WeakReferenceMessenger.Default
+                    .Send(new NoteNavigateMessage(new ChangeNotePage(new UpdateNoteVM(SelectedItem, _noteService))));
+        }
+
+        void IRecipient<NoteChangingCanceledMessage>.Receive(NoteChangingCanceledMessage message)
+        {
+            IsListDisabled = false;
+        }
+
+        #endregion
+
         #region Commands
+
+        private AsyncRelayCommand? loadNotes;
+        public ICommand LoadNotes => loadNotes ??
+            (loadNotes = new AsyncRelayCommand(LoadNotesAsync));
 
         private RelayCommand? openNoteCreation;
         public RelayCommand OpenNoteCreation => openNoteCreation ??
             (openNoteCreation = new RelayCommand(() =>
             {
-                IsListEnabled = false;
-                //WeakReferenceMessenger.Default
-                //    .Send(new NoteNavigateMessage(new Uri("", UriKind.RelativeOrAbsolute)));
+                IsListDisabled = true;
                 WeakReferenceMessenger.Default
-                    .Send(new NoteNavigateMessage(new CreateNotePage(_noteService)));
+                    .Send(new NoteNavigateMessage(new ChangeNotePage(new CreateNoteVM(_noteService))));
             }));
 
         private RelayCommand<NoteForm>? openNote;
