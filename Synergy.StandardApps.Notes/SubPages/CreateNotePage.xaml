@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Synergy.StandardApps.Notes.SubPages"
-      xmlns:nbutton="clr-namespace:Synergy.WPF.Common.Controls.NormalButton;assembly=Synergy.WPF.Common"
+      xmlns:controls="clr-namespace:Synergy.WPF.Common.Controls;assembly=Synergy.WPF.Common"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CreateNotePage">
@@ -38,7 +38,8 @@
 
         <DockPanel
             Grid.Row="3">
-            <nbutton:NormalButton
+            <controls:NormalButton
+                Style="{StaticResource NormalButtonStyle}"
                 DockPanel.Dock="Right"
                 HorizontalAlignment="Right"
                 Margin="0 0 10 0"

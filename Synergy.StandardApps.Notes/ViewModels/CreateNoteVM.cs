@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Synergy.StandardApps.EntityForms.Notes;
 using Synergy.StandardApps.Notes.Messages;
 using Synergy.StandardApps.Service.Notes;
+using Synergy.WPF.Common.Controls.NotifyingGrid;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,8 @@ namespace Synergy.StandardApps.Notes.ViewModels
 
                 if(res.StatusCode == Domain.Enums.StatusCode.Error)
                 {
+                    await NotifyingGrid.ShowNotificationAsync("MainGrid",
+                        "Error", "test", System.Windows.MessageBoxButton.OK);
 
                     return;
                 }

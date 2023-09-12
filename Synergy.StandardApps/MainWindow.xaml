@@ -5,13 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Synergy.StandardApps"
         xmlns:sidebar="clr-namespace:Synergy.WPF.Common.Controls.Sidebar;assembly=Synergy.WPF.Common"
+        xmlns:ntfGtid="clr-namespace:Synergy.WPF.Common.Controls.NotifyingGrid;assembly=Synergy.WPF.Common"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Grid.ColumnDefinitions>
+    <ntfGtid:NotifyingGrid
+        NtfName="MainGrid"
+        Style="{StaticResource NotifyingGridStyle}">
+        <ntfGtid:NotifyingGrid.ColumnDefinitions>
             <ColumnDefinition Width="40"/>
             <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        </ntfGtid:NotifyingGrid.ColumnDefinitions>
 
         <Frame
             x:Name="outputFrame"
@@ -26,11 +29,12 @@
             Style="{StaticResource Sidebar}"
             Output="{Binding ElementName=outputFrame}">
 
-            <sidebar:NavItem
+                <sidebar:NavItem
                 NavCommand="{Binding NavigateToNotes}"
                     Style="{StaticResource ThemedNavItemStyle}"
                     Icon="{StaticResource ListIcon}"/>
 
-        </sidebar:Sidebar>
-    </Grid>
+            </sidebar:Sidebar>
+        
+    </ntfGtid:NotifyingGrid>
 </Window>
