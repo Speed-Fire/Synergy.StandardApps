@@ -11,6 +11,7 @@ namespace Synergy.StandardApps.Service.Notes
     public interface INoteService
     {
         Task<IResponse<NoteForm>> CreateNote(NoteCreationForm form);
+        Task<IResponse<NoteForm>> UpdateNote(NoteCreationForm form, long id);
         Task<IResponse<IEnumerable<NoteForm>>> GetNotes();
         Task<IResponse<bool>> DeleteNote(long id);
     }

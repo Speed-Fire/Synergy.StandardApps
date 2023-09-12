@@ -57,6 +57,34 @@ namespace Synergy.StandardApps.Service.Notes
             }
         }
 
+        public async Task<IResponse<NoteForm>> UpdateNote(NoteCreationForm form, long id)
+        {
+            try
+            {
+                if (form.HasErrors)
+                    throw new("Invalid form.");
+
+                var note = await _noteRepository
+                    .GetAll()
+                    .FirstOrDefaultAsync(n => n.Id == id);
+
+                if (note is null)
+                    throw new("Invalid id.");
+
+                note.Name = form.Name;
+                note.Description = form.Description;
+
+                note = await _noteRepository
+                    .Update(note);
+
+                return ResponseFactory.OK(_noteConverter.Convert(note));
+            }
+            catch(Exception ex)
+            {
+                return ResponseFactory.BadResponse<NoteForm>(ex);
+            }
+        }
+
         public async Task<IResponse<bool>> DeleteNote(long id)
         {
             try
