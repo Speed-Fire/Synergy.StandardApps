@@ -21,6 +21,7 @@ namespace Synergy.StandardApps.Notes.ViewModels
     public class NotesVM : 
         ObservableRecipient,
         IRecipient<NoteCreatedMessage>,
+        IRecipient<NoteUpdatedMessage>,
         IRecipient<OpenNoteEditMessage>,
         IRecipient<NoteChangingCanceledMessage>
     {
@@ -84,6 +85,22 @@ namespace Synergy.StandardApps.Notes.ViewModels
             Notes.Add(message.Value);
         }
 
+        void IRecipient<NoteUpdatedMessage>.Receive(NoteUpdatedMessage message)
+        {
+            IsListDisabled = false;
+
+            if (message.Value is null)
+                return;
+
+            var old = Notes.First(n => n.Id == message.Value.Id);
+            var oldPos = Notes.IndexOf(old);
+
+            Notes.RemoveAt(oldPos);
+            Notes.Insert(oldPos, message.Value);
+
+            SelectedItem = message.Value;
+        }
+
         void IRecipient<OpenNoteEditMessage>.Receive(OpenNoteEditMessage message)
         {
             IsListDisabled = true;
@@ -118,27 +135,32 @@ namespace Synergy.StandardApps.Notes.ViewModels
         public RelayCommand<NoteForm> OpenNote => openNote ??
             (openNote = new RelayCommand<NoteForm>(note =>
             {
+                if (note is null)
+                    note = SelectedItem;
+
                 WeakReferenceMessenger.Default.Send(new OpenNoteMessage(note));
             }));
 
-        private RelayCommand<NoteForm>? deleteNote;
-        public RelayCommand<NoteForm> DeleteNote => deleteNote ??
-            (deleteNote = new RelayCommand<NoteForm>(async note =>
+        private AsyncRelayCommand<NoteForm>? deleteNote;
+        public ICommand DeleteNote => deleteNote ??
+            (deleteNote = new AsyncRelayCommand<NoteForm>(note =>
+                DeleteNoteAsync(note)));
+
+        private async Task DeleteNoteAsync(NoteForm note)
+        {
+            if (note is null)
+                return;
+
+            var res = await _noteService.DeleteNote(note.Id);
+
+            if (res.StatusCode == Domain.Enums.StatusCode.Error)
             {
-                if (note is null)
-                    return;
 
-                var res = await _noteService.DeleteNote(note.Id);
+                return;
+            }
 
-                if(res.StatusCode == Domain.Enums.StatusCode.Error)
-                {
-
-                    return;
-                }
-
-                Notes.Remove(note);
-                WeakReferenceMessenger.Default.Send(new OpenNoteMessage(null));
-            }));
+            Notes.Remove(note);
+        }
 
         #endregion
     }

@@ -47,6 +47,6 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
 
                 WeakReferenceMessenger.Default.Send(new NoteCreatedMessage(res.Data));
                 WeakReferenceMessenger.Default.Send(new NoteNavigateMessage(null));
-            }, () => { return !ProtoNote.HasErrors; }));
+            }/*, () => { return !ProtoNote.HasErrors; }*/));
     }
 }

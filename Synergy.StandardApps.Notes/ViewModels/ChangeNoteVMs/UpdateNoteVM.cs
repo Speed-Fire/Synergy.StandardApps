@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Synergy.StandardApps.EntityForms.Notes;
 using Synergy.StandardApps.Notes.Messages;
 using Synergy.StandardApps.Service.Notes;
+using Synergy.WPF.Common.Controls.NotifyingGrid;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,9 +47,25 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
 
         private AsyncRelayCommand? save;
         public override ICommand? Save => save ??
-            (save = new AsyncRelayCommand(async () =>
-            {
+            (save = new AsyncRelayCommand(UpdateNote));
 
-            }));
+        private async Task UpdateNote()
+        {
+            if (ProtoNote.HasErrors)
+                return;
+
+            var res = await _noteService.UpdateNote(ProtoNote, id);
+            if (res.StatusCode == Domain.Enums.StatusCode.Error)
+            {
+                await NotifyingGrid.ShowNotificationAsync("MainGrid",
+                    "Error", "Specified name is already taken!",
+                    System.Windows.MessageBoxButton.OK);
+
+                return;
+            }
+
+            WeakReferenceMessenger.Default.Send(new NoteNavigateMessage(null));
+            WeakReferenceMessenger.Default.Send(new NoteUpdatedMessage(res.Data));
+        }
     }
 }

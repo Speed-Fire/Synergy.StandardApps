@@ -84,13 +84,13 @@
                 Margin="0 3 0 0"
                 Style="{StaticResource ListViewStyle}"
                 ItemsSource="{Binding Notes}"
-                SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <i:InvokeCommandAction
                             Command="{Binding OpenNote}"
-                            CommandParameter="{Binding Path=SelectedItem,
+                            CommandParameter="{Binding Path=DataContext.SelectedItem,
                                 RelativeSource={RelativeSource FindAncestor,
                                 AncestorType={x:Type ListView}}}"/>
                     </i:EventTrigger>
