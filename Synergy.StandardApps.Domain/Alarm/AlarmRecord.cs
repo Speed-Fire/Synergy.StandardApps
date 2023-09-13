@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Synergy.StandardApps.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,14 +14,46 @@ namespace Synergy.StandardApps.Domain.Alarm
         public long Id { get; set; }
         public string Name { get; set; } = "";
         public TimeOnly Time { get; set; }
-        public byte DayMask { get; set; }
+        public WeekDay DayMask { get; set; }
 
         public DateTime Created { get; set; }
         public DateTime? Updated { get; set; }
 
-        public static bool IsAlarmedDay(AlarmRecord alarm, DateTime date)
+        public bool IsAlarmedDay(DateTime date)
         {
-            return (DayOfWeek)((byte)date.DayOfWeek & alarm.DayMask) == date.DayOfWeek;
+            var day = DayOfWeekToWeekDay(date.DayOfWeek);
+
+            return DayMask.HasFlag(day);
+        }
+
+        public void SetDay(DayOfWeek day)
+        {
+            var _day = DayOfWeekToWeekDay(day);
+
+            DayMask ^= _day;
+        }
+
+        private static WeekDay DayOfWeekToWeekDay(DayOfWeek dayOfWeek)
+        {
+            switch (dayOfWeek)
+            {
+                case DayOfWeek.Sunday:
+                    return WeekDay.Sunday;
+                case DayOfWeek.Monday:
+                    return WeekDay.Monday;
+                case DayOfWeek.Tuesday:
+                    return WeekDay.Tuesday;
+                case DayOfWeek.Wednesday:
+                    return WeekDay.Wednesday;
+                case DayOfWeek.Thursday:
+                    return WeekDay.Thursday;
+                case DayOfWeek.Friday:
+                    return WeekDay.Friday;
+                case DayOfWeek.Saturday:
+                    return WeekDay.Saturday;
+            }
+
+            throw new ArgumentOutOfRangeException(nameof(dayOfWeek));
         }
     }
 }
