@@ -15,6 +15,7 @@ namespace Synergy.StandardApps.Domain.Alarm
         public string Name { get; set; } = "";
         public TimeOnly Time { get; set; }
         public WeekDay DayMask { get; set; }
+        public bool IsEnabled { get; set; }
 
         public DateTime Created { get; set; }
         public DateTime? Updated { get; set; }
