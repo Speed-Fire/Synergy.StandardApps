@@ -6,6 +6,8 @@ using Synergy.StandardApps.DAL.Extensions;
 using Synergy.StandardApps.EntityForms.Extensions;
 using Synergy.StandardApps.Notes.Extensions;
 using Synergy.StandardApps.Service.Extensions;
+using Synergy.StandardApps.WorkerIntercator;
+using Synergy.StandardApps.WorkerIntercator.Extensions;
 using Synergy.WPF.Common.Extensions;
 using System;
 using System.Collections.Generic;
@@ -23,16 +25,31 @@ namespace Synergy.StandardApps
         [STAThread]
         public static void Main(params string[] args)
         {
+            // Windows service setup
+            try
+            {
+                StandardAppsServiceSetuper.Setup();
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+
+                return;
+            }
+
+
+            // App building
             var builder = Host.CreateDefaultBuilder(args);
 
             builder.ConfigureServices(services =>
             {
-                var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                path = Path.Combine(path, "Synergy", "StandardApps", "standardAppsDb.sqlite");
+                var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Synergy");
+                Directory.CreateDirectory(dir);
+                dir = Path.Combine(dir, "StandardApps");
+                Directory.CreateDirectory(dir);
+                dir = Path.Combine(dir, "standardapps.sqlite");
 
-                //var connStr = $"Data Source={path};";
-                var connStr = $"Data Source=standardAppsDb.sqlite;";
-
+                var connStr = $"Data Source={dir};";
                 services.AddDbContext<AppDbContext>(options =>
                 {
                     options.UseSqlite(connStr);
@@ -43,7 +60,8 @@ namespace Synergy.StandardApps
                     .RegisterRepositories()
                     .RegisterEntityFormsConverters()
                     .RegisterNoteServies()
-                    .RegisterNotes();
+                    .RegisterNotes()
+                    .RegisterWorkerIntercator();
 
                 services.AddSingleton<App>();
                 services.AddSingleton<MainWindow>();

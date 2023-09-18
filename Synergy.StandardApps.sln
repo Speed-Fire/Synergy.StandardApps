@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synergy.StandardApps.Notes"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WorkerServices", "WorkerServices", "{FD16641A-EA09-4A4F-8C9F-4BE19419895A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synergy.StandardApps.Worker", "Synergy.StandardApps.Worker\Synergy.StandardApps.Worker.csproj", "{154CB36C-1F89-4AA2-94D9-A50645DD5332}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synergy.StandardApps.Worker", "Synergy.StandardApps.Worker\Synergy.StandardApps.Worker.csproj", "{154CB36C-1F89-4AA2-94D9-A50645DD5332}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synergy.StandardApps.WorkerIntercator", "Synergy.StandardApps.WorkerIntercator\Synergy.StandardApps.WorkerIntercator.csproj", "{6421ECDE-787E-4CD4-934B-5EEFF5104A20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,12 +67,17 @@ Global
 		{154CB36C-1F89-4AA2-94D9-A50645DD5332}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{154CB36C-1F89-4AA2-94D9-A50645DD5332}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{154CB36C-1F89-4AA2-94D9-A50645DD5332}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6421ECDE-787E-4CD4-934B-5EEFF5104A20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6421ECDE-787E-4CD4-934B-5EEFF5104A20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6421ECDE-787E-4CD4-934B-5EEFF5104A20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6421ECDE-787E-4CD4-934B-5EEFF5104A20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{154CB36C-1F89-4AA2-94D9-A50645DD5332} = {FD16641A-EA09-4A4F-8C9F-4BE19419895A}
+		{6421ECDE-787E-4CD4-934B-5EEFF5104A20} = {FD16641A-EA09-4A4F-8C9F-4BE19419895A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2414648B-6C37-4929-A6AE-54BB2C2027D0}

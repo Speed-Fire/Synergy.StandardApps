@@ -37,6 +37,7 @@
     <ProjectReference Include="..\Synergy.StandardApps.EntityForms\Synergy.StandardApps.EntityForms.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.Notes\Synergy.StandardApps.Notes.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.Service\Synergy.StandardApps.Service.csproj" />
+    <ProjectReference Include="..\Synergy.StandardApps.WorkerIntercator\Synergy.StandardApps.WorkerIntercator.csproj" />
   </ItemGroup>
 
 </Project>
