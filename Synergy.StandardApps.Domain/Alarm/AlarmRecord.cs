@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Numerics;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,6 +26,20 @@ namespace Synergy.StandardApps.Domain.Alarm
             var day = DayOfWeekToWeekDay(date.DayOfWeek);
 
             return DayMask.HasFlag(day);
+        }
+
+        public bool IsTimeToAlarm(DateTime time)
+        {
+            if (this.Time.Hour < time.Hour)
+                return true;
+
+            if (this.Time.Hour > time.Hour)
+                return true;
+
+            if (this.Time.Minute <= time.Minute)
+                return true;
+
+            return false;
         }
 
         public void SetDay(DayOfWeek day)
