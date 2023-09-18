@@ -11,5 +11,6 @@ namespace Synergy.StandardApps.WorkerIntercator.Interactors
         Task Add(T entity);
         Task Update(T entity);
         Task Delete(long id);
+        Task Enable(T entity);
     }
 }
