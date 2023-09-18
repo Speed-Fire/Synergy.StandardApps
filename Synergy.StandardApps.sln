@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synergy.StandardApps.Worker
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synergy.StandardApps.WorkerInteractor", "Synergy.StandardApps.WorkerIntercator\Synergy.StandardApps.WorkerInteractor.csproj", "{6421ECDE-787E-4CD4-934B-5EEFF5104A20}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{4E8887F6-5BFB-4CA3-A915-25081D403536}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{8B894116-846A-4EF2-A1FF-1DECD8C42A75} = {4E8887F6-5BFB-4CA3-A915-25081D403536}
 		{154CB36C-1F89-4AA2-94D9-A50645DD5332} = {FD16641A-EA09-4A4F-8C9F-4BE19419895A}
 		{6421ECDE-787E-4CD4-934B-5EEFF5104A20} = {FD16641A-EA09-4A4F-8C9F-4BE19419895A}
 	EndGlobalSection
