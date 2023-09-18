@@ -1,6 +1,7 @@
 ﻿using Synergy.StandardApps.Domain.Alarm;
 using Synergy.StandardApps.Utility.Converters;
 using Synergy.StandardApps.Worker.Utility.Converters;
+using Synergy.StandardApps.Worker.Utility.Notifications;
 
 namespace Synergy.StandardApps.Worker.Extensions
 {
@@ -10,6 +11,14 @@ namespace Synergy.StandardApps.Worker.Extensions
         {
             services
                 .AddTransient<IConverter<AlarmRequest, AlarmRecord>, AlarmRecordConverter>();
+
+            return services;
+        }
+
+        public static IServiceCollection RegisterNotifiers(this IServiceCollection services)
+        {
+            services
+                .AddTransient<INotifier<AlarmRecord>, AlarmToastNotifier>();
 
             return services;
         }

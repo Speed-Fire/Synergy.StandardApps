@@ -11,6 +11,7 @@ service AlarmAdder {
   // Sends a greeting
   rpc AddAlarm (AlarmRequest) returns (AlarmReply);
   rpc DeleteAlarm (AlarmDeleteRequest) returns (AlarmReply);
+  rpc EnableAlarm (AlarmEnableRequest) returns (AlarmReply);
 }
 
 // The request message containing the user's name.
@@ -18,11 +19,16 @@ message AlarmRequest {
 	sint64 id = 1;
 	string name = 2;
 	google.protobuf.Timestamp time = 3;
-	int32 day_mask = 4;
+	uint32 day_mask = 4;
 }
 
 message AlarmDeleteRequest{
 	sint64 id = 1;
+}
+
+message AlarmEnableRequest{
+	AlarmRequest alarm = 1;
+	bool is_enabled = 2;
 }
 
 // The response message containing the greetings.

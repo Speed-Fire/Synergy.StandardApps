@@ -21,6 +21,9 @@ namespace Synergy.StandardApps.Worker.Services
 
         public override Task<AlarmReply> AddAlarm(AlarmRequest request, ServerCallContext context)
         {
+            var alarm = _alarmRecordConverter.Convert(request);
+            alarm.IsEnabled = true;
+
             WeakReferenceMessenger.Default
                 .Send(new AddAlarmMessage(_alarmRecordConverter.Convert(request)));
 
@@ -31,6 +34,17 @@ namespace Synergy.StandardApps.Worker.Services
         {
             WeakReferenceMessenger.Default
                 .Send(new DeleteAlarmMessage(request.Id));
+
+            return Task.FromResult(new AlarmReply());
+        }
+
+        public override Task<AlarmReply> EnableAlarm(AlarmEnableRequest request, ServerCallContext context)
+        {
+            var alarm = _alarmRecordConverter.Convert(request.Alarm);
+            alarm.IsEnabled = request.IsEnabled;
+
+            WeakReferenceMessenger.Default
+                .Send(new EnableAlarmMessage(alarm));
 
             return Task.FromResult(new AlarmReply());
         }

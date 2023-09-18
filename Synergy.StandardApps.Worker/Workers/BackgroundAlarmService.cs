@@ -12,29 +12,34 @@ namespace Synergy.StandardApps.Worker.Workers
     public class BackgroundAlarmService :
         BackgroundService,
         IRecipient<AddAlarmMessage>,
-        IRecipient<DeleteAlarmMessage>
+        IRecipient<DeleteAlarmMessage>,
+        IRecipient<EnableAlarmMessage>
     {
+        #region Readonly
+
         private readonly ILogger<BackgroundAlarmService> _logger;
-        private readonly IRepository<AlarmRecord> _alarmRecordRepository;
-        private readonly INotificator<AlarmRecord> _notifier;
+        private readonly INotifier<AlarmRecord> _notifier;
 
         private readonly ConcurrentQueue<AlarmRecord> _alarmsToAdd;
         private readonly ConcurrentQueue<long> _alarmsToDelete;
+        private readonly ConcurrentQueue<AlarmRecord> _alarmsToChangeEnability;
+
         private readonly LinkedList<AlarmRecord> _alarms;
+
+        #endregion
 
         private DateTime _lastDay;
 
         public BackgroundAlarmService(ILogger<BackgroundAlarmService> logger,
-            IRepository<AlarmRecord> alarmRecordRepository,
-            INotificator<AlarmRecord> notifier)
+            INotifier<AlarmRecord> notifier)
         {
             _logger = logger;
-            _alarmRecordRepository = alarmRecordRepository;
             _notifier = notifier;
 
             _alarmsToAdd = new();
             _alarmsToDelete = new();
             _alarms = new();
+            _alarmsToChangeEnability = new();
 
             _lastDay = DateTime.Now.Date.AddDays(-1);
 
@@ -57,16 +62,17 @@ namespace Synergy.StandardApps.Worker.Workers
                         $"[{nameof(BackgroundAlarmService)}]: new day alarms loaded.");
                 }
 
+                HandleAlarmsEnability();
                 HandleAddedAlarms(date);
                 HandleDeletedAlarms();
 
-                if(_alarms.Count == 0)
+                if(_alarms.First is null)
                 {
                     await Task.Delay(1000);
                     continue;
                 }
 
-                if(IsTimeToAlarm(_alarms.First.Value, date))
+                if(_alarms.First.Value.IsTimeToAlarm(date))
                 {
                     var alarm = _alarms.First.Value;
                     _alarms.Remove(alarm);
@@ -81,10 +87,17 @@ namespace Synergy.StandardApps.Worker.Workers
 
         private async Task LoadAlarmsFromDb(DateTime today)
         {
+            using var _scope = Program.App.Services.CreateAsyncScope();
+
+            var _alarmRecordRepository =
+                _scope.ServiceProvider.GetRequiredService<IRepository<AlarmRecord>>();
+
             _alarms.Clear();
 
             var alarms = await _alarmRecordRepository
-                .GetAll().ToListAsync();
+                .GetAll()
+                .Where(a => a.IsEnabled)
+                .ToListAsync();
 
             // Select only todays alarms
             var todaysAlarms = new List<AlarmRecord>();
@@ -106,6 +119,8 @@ namespace Synergy.StandardApps.Worker.Workers
                 _alarms.AddLast(alarm);
             }
         }
+
+        #region Adding/updating alarm
 
         private void HandleAddedAlarms(DateTime today)
         {
@@ -221,6 +236,8 @@ namespace Synergy.StandardApps.Worker.Workers
                 $"[{nameof(BackgroundAlarmService)}]: alarm updated.");
         }
 
+        #endregion
+
         private void HandleDeletedAlarms()
         {
             while (!_alarmsToDelete.IsEmpty)
@@ -240,18 +257,18 @@ namespace Synergy.StandardApps.Worker.Workers
             }
         }
 
-        private bool IsTimeToAlarm(AlarmRecord alarm, DateTime time)
+        private void HandleAlarmsEnability()
         {
-            if (alarm.Time.Hour < time.Hour)
-                return true;
-
-            if (alarm.Time.Hour > time.Hour)
-                return true;
-
-            if (alarm.Time.Minute <= time.Minute)
-                return true;
-
-            return false;
+            while (!_alarmsToChangeEnability.IsEmpty)
+            {
+                if(_alarmsToChangeEnability.TryDequeue(out var alarm))
+                {
+                    if (alarm.IsEnabled)
+                        _alarmsToAdd.Enqueue(alarm);
+                    else
+                        _alarmsToDelete.Enqueue(alarm.Id);
+                }
+            }
         }
 
         #region Messages
@@ -264,6 +281,11 @@ namespace Synergy.StandardApps.Worker.Workers
         public void Receive(DeleteAlarmMessage message)
         {
             _alarmsToDelete.Enqueue(message.Value);
+        }
+
+        public void Receive(EnableAlarmMessage message)
+        {
+            _alarmsToChangeEnability.Enqueue(message.Value);
         }
 
         #endregion
