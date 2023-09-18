@@ -25,6 +25,16 @@ namespace Synergy.StandardApps.DAL.DbContexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder
+                .Entity<AlarmRecord>()
+                .HasIndex(a => a.Time)
+                .IsUnique();
+
+            modelBuilder
+                .Entity<Note>()
+                .HasIndex(n => n.Name)
+                .IsUnique();
         }
     }
 }
