@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Common\" />
     <Folder Include="Extensions\" />
-    <Folder Include="Alarm\" />
     <Folder Include="Calendar\" />
   </ItemGroup>
 
@@ -17,7 +16,7 @@
     <ProjectReference Include="..\Synergy.StandardApps.DAL\Synergy.StandardApps.DAL.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.Domain\Synergy.StandardApps.Domain.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.EntityForms\Synergy.StandardApps.EntityForms.csproj" />
-    <ProjectReference Include="..\Synergy.StandardApps.WorkerIntercator\Synergy.StandardApps.WorkerIntercator.csproj" />
+    <ProjectReference Include="..\Synergy.StandardApps.WorkerIntercator\Synergy.StandardApps.WorkerInteractor.csproj" />
   </ItemGroup>
 
 </Project>
