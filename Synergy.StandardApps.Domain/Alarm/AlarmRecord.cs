@@ -20,56 +20,5 @@ namespace Synergy.StandardApps.Domain.Alarm
 
         public DateTime Created { get; set; }
         public DateTime? Updated { get; set; }
-
-        public bool IsAlarmedDay(DateTime date)
-        {
-            var day = DayOfWeekToWeekDay(date.DayOfWeek);
-
-            return DayMask.HasFlag(day);
-        }
-
-        public bool IsTimeToAlarm(DateTime time)
-        {
-            if (this.Time.Hour < time.Hour)
-                return true;
-
-            if (this.Time.Hour > time.Hour)
-                return true;
-
-            if (this.Time.Minute <= time.Minute)
-                return true;
-
-            return false;
-        }
-
-        public void SetDay(DayOfWeek day)
-        {
-            var _day = DayOfWeekToWeekDay(day);
-
-            DayMask ^= _day;
-        }
-
-        private static WeekDay DayOfWeekToWeekDay(DayOfWeek dayOfWeek)
-        {
-            switch (dayOfWeek)
-            {
-                case DayOfWeek.Sunday:
-                    return WeekDay.Sunday;
-                case DayOfWeek.Monday:
-                    return WeekDay.Monday;
-                case DayOfWeek.Tuesday:
-                    return WeekDay.Tuesday;
-                case DayOfWeek.Wednesday:
-                    return WeekDay.Wednesday;
-                case DayOfWeek.Thursday:
-                    return WeekDay.Thursday;
-                case DayOfWeek.Friday:
-                    return WeekDay.Friday;
-                case DayOfWeek.Saturday:
-                    return WeekDay.Saturday;
-            }
-
-            throw new ArgumentOutOfRangeException(nameof(dayOfWeek));
-        }
     }
 }
