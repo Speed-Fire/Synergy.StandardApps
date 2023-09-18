@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Synergy.StandardApps.WorkerIntercator
+namespace Synergy.StandardApps.WorkerInteractor
 {
     public static class StandardAppsServiceSetuper
     {

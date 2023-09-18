@@ -2,15 +2,15 @@
 using Synergy.StandardApps.Domain.Alarm;
 using Synergy.StandardApps.Utility.Converters;
 using Synergy.StandardApps.Worker;
-using Synergy.StandardApps.WorkerIntercator.Converters;
-using Synergy.StandardApps.WorkerIntercator.Interactors;
+using Synergy.StandardApps.WorkerInteractor.Converters;
+using Synergy.StandardApps.WorkerInteractor.Interactors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Synergy.StandardApps.WorkerIntercator.Extensions
+namespace Synergy.StandardApps.WorkerInteractor.Extensions
 {
     public static class DIExtensions
     {
@@ -34,7 +34,7 @@ namespace Synergy.StandardApps.WorkerIntercator.Extensions
         public static IServiceCollection RegisterInteractors(this IServiceCollection services)
         {
             services
-                .AddTransient<IServiceIntercator<AlarmRecord>, AlarmServiceIntercator>();
+                .AddTransient<IServiceInteractor<AlarmRecord>, AlarmServiceInteractor>();
 
             return services;
         }

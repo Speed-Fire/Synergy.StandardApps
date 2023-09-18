@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Synergy.StandardApps.WorkerIntercator.Converters
+namespace Synergy.StandardApps.WorkerInteractor.Converters
 {
     internal class AlarmRecordToRequestConverter : IConverter<AlarmRecord, AlarmRequest>
     {

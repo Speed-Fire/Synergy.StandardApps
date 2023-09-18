@@ -9,13 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using static Grpc.Core.Metadata;
 
-namespace Synergy.StandardApps.WorkerIntercator.Interactors
+namespace Synergy.StandardApps.WorkerInteractor.Interactors
 {
-    public class AlarmServiceIntercator : IServiceIntercator<AlarmRecord>
+    public class AlarmServiceInteractor : IServiceInteractor<AlarmRecord>
     {
         private readonly IConverter<AlarmRecord, AlarmRequest> _converter;
 
-        public AlarmServiceIntercator(IConverter<AlarmRecord, AlarmRequest> converter)
+        public AlarmServiceInteractor(IConverter<AlarmRecord, AlarmRequest> converter)
         {
             _converter = converter;
         }

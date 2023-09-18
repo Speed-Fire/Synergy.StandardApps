@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Synergy.StandardApps.WorkerIntercator.Interactors
+namespace Synergy.StandardApps.WorkerInteractor.Interactors
 {
-    public interface IServiceIntercator<T>
+    public interface IServiceInteractor<T>
     {
         Task Add(T entity);
         Task Update(T entity);
