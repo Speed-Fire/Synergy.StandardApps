@@ -25,6 +25,7 @@ namespace Synergy.StandardApps
         [STAThread]
         public static void Main(params string[] args)
         {
+#if !DEBUG
             // Windows service setup
             try
             {
@@ -36,7 +37,7 @@ namespace Synergy.StandardApps
 
                 return;
             }
-
+#endif
 
             // App building
             var builder = Host.CreateDefaultBuilder(args);
