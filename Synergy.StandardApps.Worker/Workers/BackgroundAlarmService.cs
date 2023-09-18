@@ -72,7 +72,7 @@ namespace Synergy.StandardApps.Worker.Workers
                     continue;
                 }
 
-                if(_alarms.First.Value.IsTimeToAlarm(date))
+                if(AlarmHandler.IsTimeToAlarm(_alarms.First.Value, date))
                 {
                     var alarm = _alarms.First.Value;
                     _alarms.Remove(alarm);
@@ -103,7 +103,7 @@ namespace Synergy.StandardApps.Worker.Workers
             var todaysAlarms = new List<AlarmRecord>();
             foreach(var alarm in alarms)
             {
-                if (alarm.IsAlarmedDay(today))
+                if (AlarmHandler.IsAlarmedDay(alarm, today))
                 {
                     todaysAlarms.Add(alarm);
                 }
@@ -144,7 +144,7 @@ namespace Synergy.StandardApps.Worker.Workers
 
         private void AddAlarm(AlarmRecord alarm, DateTime today)
         {
-            if (!alarm.IsAlarmedDay(today))
+            if (!AlarmHandler.IsAlarmedDay(alarm, today))
                 return;
 
             var time = TimeOnly.FromDateTime(today);
@@ -191,7 +191,7 @@ namespace Synergy.StandardApps.Worker.Workers
                             $"[{nameof(BackgroundAlarmService)}]: alarm deleted from queue.");
             }
 
-            if (!alarm.IsAlarmedDay(today))
+            if (!AlarmHandler.IsAlarmedDay(alarm, today))
             {
                 localRemoveAlarm(existing);
                 return;
