@@ -16,7 +16,12 @@ namespace Synergy.StandardApps.Domain.Alarm
 
         public static bool IsAlarmedDay(WeekDay mask, DateTime date)
         {
-            var day = DayOfWeekToWeekDay(date.DayOfWeek);
+            return IsAlarmedDay(mask, date.DayOfWeek);
+        }
+
+        public static bool IsAlarmedDay(WeekDay mask, DayOfWeek _day)
+        {
+            var day = DayOfWeekToWeekDay(_day);
 
             return mask.HasFlag(day);
         }
