@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WorkerServices", "WorkerSer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synergy.StandardApps.Worker", "Synergy.StandardApps.Worker\Synergy.StandardApps.Worker.csproj", "{154CB36C-1F89-4AA2-94D9-A50645DD5332}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synergy.StandardApps.WorkerIntercator", "Synergy.StandardApps.WorkerIntercator\Synergy.StandardApps.WorkerIntercator.csproj", "{6421ECDE-787E-4CD4-934B-5EEFF5104A20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synergy.StandardApps.WorkerInteractor", "Synergy.StandardApps.WorkerIntercator\Synergy.StandardApps.WorkerInteractor.csproj", "{6421ECDE-787E-4CD4-934B-5EEFF5104A20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
