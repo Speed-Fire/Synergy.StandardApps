@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Synergy.StandardApps.Domain.Alarm;
 using Synergy.StandardApps.Domain.Notes;
+using Synergy.StandardApps.EntityForms.Alarm;
+using Synergy.StandardApps.EntityForms.Alarm.Converters;
 using Synergy.StandardApps.EntityForms.Notes;
 using Synergy.StandardApps.EntityForms.Notes.Converters;
 using Synergy.StandardApps.Utility.Converters;
@@ -16,7 +19,8 @@ namespace Synergy.StandardApps.EntityForms.Extensions
         public static IServiceCollection RegisterEntityFormsConverters(this IServiceCollection services)
         {
             services
-                .AddTransient<IConverter<Note, NoteForm>, NoteToNoteFormConverter>();
+                .AddTransient<IConverter<Note, NoteForm>, NoteToNoteFormConverter>()
+                .AddTransient<IConverter<AlarmRecord, AlarmForm>, AlarmRecordToAlarmFormConverter>();
 
             return services;
         }

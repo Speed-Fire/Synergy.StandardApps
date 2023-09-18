@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Alarm\" />
     <Folder Include="Calendar\" />
   </ItemGroup>
 
