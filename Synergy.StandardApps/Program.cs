@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Synergy.StandardApps.Alarms.Extensions;
 using Synergy.StandardApps.DAL.DbContexts;
 using Synergy.StandardApps.DAL.Extensions;
 using Synergy.StandardApps.EntityForms.Extensions;
@@ -60,8 +61,10 @@ namespace Synergy.StandardApps
                     .RegisterSynergyWPFCommon()
                     .RegisterRepositories()
                     .RegisterEntityFormsConverters()
-                    .RegisterNoteServies()
+                    .RegisterNoteServices()
                     .RegisterNotes()
+                    .RegisterAlarmServices()
+                    .RegisterAlarmsUI()
                     .RegisterWorkerIntercator();
 
                 services.AddSingleton<App>();
