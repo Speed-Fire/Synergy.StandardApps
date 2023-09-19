@@ -29,12 +29,17 @@
             Style="{StaticResource Sidebar}"
             Output="{Binding ElementName=outputFrame}">
 
-                <sidebar:NavItem
+            <sidebar:NavItem
                 NavCommand="{Binding NavigateToNotes}"
-                    Style="{StaticResource ThemedNavItemStyle}"
-                    Icon="{StaticResource ListIcon}"/>
+                Style="{StaticResource ThemedNavItemStyle}"
+                Icon="{StaticResource ListIcon}"/>
 
-            </sidebar:Sidebar>
+            <sidebar:NavItem
+                NavCommand="{Binding NavigateToAlarms}"
+                Style="{StaticResource ThemedNavItemStyle}"
+                Icon="{StaticResource SitemapIcon}"/>
+
+        </sidebar:Sidebar>
         
     </ntfGtid:NotifyingGrid>
 </Window>
