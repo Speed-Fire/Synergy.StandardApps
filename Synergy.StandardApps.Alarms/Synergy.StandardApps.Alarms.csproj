@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Synergy.WPF.Common\Synergy.WPF.Common\Synergy.WPF.Common.csproj" />
+    <ProjectReference Include="..\Synergy.StandardApps.EntityForms\Synergy.StandardApps.EntityForms.csproj" />
+    <ProjectReference Include="..\Synergy.StandardApps.Service\Synergy.StandardApps.Service.csproj" />
+    <ProjectReference Include="..\Synergy.StandardApps.Utility\Synergy.StandardApps.Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+  </ItemGroup>
+
+</Project>
