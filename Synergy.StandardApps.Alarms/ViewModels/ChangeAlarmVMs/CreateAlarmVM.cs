@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using Synergy.StandardApps.Alarms.Messages;
 using Synergy.StandardApps.EntityForms.Alarm;
 using Synergy.StandardApps.Service.Alarm;
 using Synergy.WPF.Common.Controls.NotifyingGrid;
@@ -13,8 +15,8 @@ namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
 {
     public class CreateAlarmVM : ChangeAlarmVM
     {
-        public CreateAlarmVM(IAlarmService alarmService, AlarmCreationForm form) :
-            base(alarmService, form)
+        public CreateAlarmVM(IAlarmService alarmService) :
+            base(alarmService)
         {
         }
 
@@ -36,6 +38,9 @@ namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
 
                 return;
             }
+
+            WeakReferenceMessenger.Default
+                .Send(new AlarmCreatedMessage(res.Data));
         }
     }
 }

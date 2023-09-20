@@ -20,19 +20,35 @@ namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
 
         public IEnumerable<DayOfWeek> AlarmedDays => Form.GetAlarmedDays();
 
-        protected ChangeAlarmVM(IAlarmService alarmService, AlarmCreationForm form)
+        protected ChangeAlarmVM(IAlarmService alarmService, AlarmForm form)
         {
             _alarmService = alarmService;
-            _form = form;
+            _form = new AlarmCreationForm()
+            {
+                Name = form.Name,
+                Time = form.Time,
+                DayMask = form.DayMask,
+            };
+        }
+
+        protected ChangeAlarmVM(IAlarmService alarmService)
+        {
+            _alarmService = alarmService;
+
+            _form = new AlarmCreationForm()
+            {
+                Name = "",
+                Time = new TimeOnly(),
+            };
         }
 
         public abstract ICommand Save { get; }
 
-        private RelayCommand<int>? setDay;
+        private RelayCommand<string>? setDay;
         public ICommand SetDay => setDay ??
-            (setDay = new RelayCommand<int>(param =>
+            (setDay = new RelayCommand<string>(param =>
             {
-                var day = (DayOfWeek)param;
+                var day = (DayOfWeek)int.Parse(param);
                 
                 Form.SetDay(day);
             }));

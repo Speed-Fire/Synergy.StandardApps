@@ -1,5 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using Synergy.StandardApps.Alarms.Messages;
+using Synergy.StandardApps.Alarms.SubPages;
+using Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs;
 using Synergy.StandardApps.EntityForms.Alarm;
 using Synergy.StandardApps.EntityForms.Notes;
 using Synergy.StandardApps.Service.Alarm;
@@ -13,7 +17,10 @@ using System.Windows.Input;
 
 namespace Synergy.StandardApps.Alarms.ViewModels
 {
-    public class AlarmsVM : ObservableRecipient
+    public class AlarmsVM :
+        ObservableRecipient,
+        IRecipient<AlarmCreatedMessage>,
+        IRecipient<AlarmUpdatedMessage>
     {
         private readonly IAlarmService _alarmService;
 
@@ -50,6 +57,27 @@ namespace Synergy.StandardApps.Alarms.ViewModels
 
         #region Messages
 
+        void IRecipient<AlarmCreatedMessage>.Receive(AlarmCreatedMessage message)
+        {
+            Alarms.Add(message.Value);
+
+            IsListDisabled = false;
+
+            WeakReferenceMessenger.Default
+                    .Send(new AlarmNavigateMessage(new ChangeAlarmPage(new UpdateAlarmVM(_alarmService,
+                        SelectedItem))));
+        }
+
+        void IRecipient<AlarmUpdatedMessage>.Receive(AlarmUpdatedMessage message)
+        {
+            var pos = alarms.IndexOf(alarms.First(a => a.Id == message.Value.Id));
+
+            alarms.RemoveAt(pos);
+            alarms.Insert(pos, message.Value);
+
+            SelectedItem = message.Value;
+        }
+
         #endregion
 
         #region Commands
@@ -62,7 +90,19 @@ namespace Synergy.StandardApps.Alarms.ViewModels
         public ICommand OpenAlarmCreation => openAlarmCreation ??
             (openAlarmCreation = new RelayCommand<AlarmForm>(alarm =>
             {
+                IsListDisabled = true;
 
+                WeakReferenceMessenger.Default
+                    .Send(new AlarmNavigateMessage(new ChangeAlarmPage(new CreateAlarmVM(_alarmService))));
+            }));
+
+        private RelayCommand<AlarmForm>? openAlarm;
+        public ICommand OpenAlarm => openAlarm ??
+            (openAlarm = new RelayCommand<AlarmForm>(alarm =>
+            {
+                WeakReferenceMessenger.Default
+                    .Send(new AlarmNavigateMessage(new ChangeAlarmPage(new UpdateAlarmVM(_alarmService,
+                        alarm))));
             }));
 
         private AsyncRelayCommand<AlarmForm>? switchAlarmEnability;
@@ -105,7 +145,11 @@ namespace Synergy.StandardApps.Alarms.ViewModels
 
         private async Task SwitchAlarmEnabilityAsync(AlarmForm? alarm)
         {
+            var res = await _alarmService.SwitchAlarmEnability(alarm.Id, !alarm.IsEnabled);
+            alarm.IsEnabled = !alarm.IsEnabled;
 
+            if (res.StatusCode == Domain.Enums.StatusCode.Error)
+                return;
         }
 
         #endregion

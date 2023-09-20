@@ -28,7 +28,9 @@ namespace Synergy.StandardApps.Alarms
         public AlarmsPage(AlarmsVM alarmsVM)
         {
             InitializeComponent();
-            this.alarmsVM = alarmsVM;
+            DataContext = this.alarmsVM = alarmsVM;
+
+            WeakReferenceMessenger.Default.RegisterAll(this);
         }
 
         void IRecipient<AlarmNavigateMessage>.Receive(AlarmNavigateMessage message)
