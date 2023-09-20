@@ -69,15 +69,5 @@ namespace Synergy.StandardApps.Worker.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Byte[].
-        /// </summary>
-        internal static byte[] tyriam_tyriam {
-            get {
-                object obj = ResourceManager.GetObject("tyriam_tyriam", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }

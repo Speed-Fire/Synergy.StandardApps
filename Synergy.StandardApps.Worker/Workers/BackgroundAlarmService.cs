@@ -48,9 +48,9 @@ namespace Synergy.StandardApps.Worker.Workers
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (stoppingToken.IsCancellationRequested)
+            while (!stoppingToken.IsCancellationRequested)
             {
-                var date = DateTime.Now.Date;
+                var date = DateTime.Now/*.Date*/;
 
                 if (_lastDay.AddDays(1).Equals(date))
                 {
@@ -110,7 +110,7 @@ namespace Synergy.StandardApps.Worker.Workers
             }
 
             // sort todays alarms by Time
-            todaysAlarms.Sort((a1, a2) => { return a1.Time.CompareTo(a2); });
+            todaysAlarms.Sort((a1, a2) => { return a1.Time.CompareTo(a2.Time); });
 
             // fill _alarms
             foreach (var alarm in todaysAlarms
