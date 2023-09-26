@@ -61,7 +61,7 @@ namespace Synergy.StandardApps.WorkerInteractor.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на https://localhost:7136.
+        ///   Ищет локализованную строку, похожую на http://localhost:7136.
         /// </summary>
         internal static string StandardApps_Service_gRPC_address {
             get {

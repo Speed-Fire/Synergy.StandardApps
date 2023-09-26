@@ -149,7 +149,8 @@
                         Margin="0 0 10 0"
                         Style="{StaticResource ToggleButtonStyle.Colored}"
                         Command="{Binding SetDay}"
-                        CommandParameter="1"/>
+                        CommandParameter="1"
+                        Content="Mn"/>
 
                     <ToggleButton
                         x:Name="TuesdayBtn"
@@ -157,7 +158,8 @@
                         Margin="10 0 10 0"
                         Style="{StaticResource ToggleButtonStyle.Colored}"
                         Command="{Binding SetDay}"
-                        CommandParameter="2"/>
+                        CommandParameter="2"
+                        Content="Tu"/>
 
                     <ToggleButton
                         x:Name="WednesdayBtn"
@@ -165,7 +167,8 @@
                         Margin="10 0 10 0"
                         Style="{StaticResource ToggleButtonStyle.Colored}"
                         Command="{Binding SetDay}"
-                        CommandParameter="3"/>
+                        CommandParameter="3"
+                        Content="Wd"/>
 
                     <ToggleButton
                         x:Name="ThursdayBtn"
@@ -173,7 +176,8 @@
                         Margin="10 0 10 0"
                         Style="{StaticResource ToggleButtonStyle.Colored}"
                         Command="{Binding SetDay}"
-                        CommandParameter="4"/>
+                        CommandParameter="4"
+                        Content="Th"/>
 
                     <ToggleButton
                         x:Name="FridayBtn"
@@ -181,7 +185,8 @@
                         Margin="10 0 10 0"
                         Style="{StaticResource ToggleButtonStyle.Colored}"
                         Command="{Binding SetDay}"
-                        CommandParameter="5"/>
+                        CommandParameter="5"
+                        Content="Fr"/>
 
                     <ToggleButton
                         x:Name="SaturdayBtn"
@@ -189,7 +194,8 @@
                         Margin="10 0 10 0"
                         Style="{StaticResource ToggleButtonStyle.Colored}"
                         Command="{Binding SetDay}"
-                        CommandParameter="6"/>
+                        CommandParameter="6"
+                        Content="St"/>
 
                     <ToggleButton
                         x:Name="SundayBtn"
@@ -197,7 +203,8 @@
                         Margin="10 0 0 0"
                         Style="{StaticResource ToggleButtonStyle.Colored}"
                         Command="{Binding SetDay}"
-                        CommandParameter="0"/>
+                        CommandParameter="0"
+                        Content="Sn"/>
                 </Grid>
             </Grid>
         </Border>

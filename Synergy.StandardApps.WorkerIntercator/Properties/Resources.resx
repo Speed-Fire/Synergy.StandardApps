@@ -118,6 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="StandardApps.Service.gRPC_address" xml:space="preserve">
-    <value>https://localhost:7136</value>
+    <value>http://localhost:7136</value>
   </data>
 </root>

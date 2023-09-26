@@ -14,11 +14,14 @@ namespace Synergy.StandardApps.WorkerInteractor.Converters
     {
         public AlarmRequest Convert(AlarmRecord entity)
         {
+            var dt = new DateTime(2020, 1, 1) + entity.Time.ToTimeSpan();
+            var specified = DateTime.SpecifyKind(dt, DateTimeKind.Utc);
+
             return new()
             {
                 Id = entity.Id,
                 Name = entity.Name,
-                Time = Timestamp.FromDateTime(new DateTime(2020, 1, 1) + entity.Time.ToTimeSpan()),
+                Time = Timestamp.FromDateTime(specified),
                 DayMask = (uint)entity.DayMask,
             };
         }

@@ -63,9 +63,11 @@ namespace Synergy.StandardApps.Alarms.ViewModels
 
             IsListDisabled = false;
 
-            WeakReferenceMessenger.Default
-                    .Send(new AlarmNavigateMessage(new ChangeAlarmPage(new UpdateAlarmVM(_alarmService,
-                        SelectedItem))));
+            SelectedItem = message.Value;
+
+            //WeakReferenceMessenger.Default
+            //        .Send(new AlarmNavigateMessage(new ChangeAlarmPage(new UpdateAlarmVM(_alarmService,
+            //            SelectedItem))));
         }
 
         void IRecipient<AlarmUpdatedMessage>.Receive(AlarmUpdatedMessage message)
@@ -100,6 +102,14 @@ namespace Synergy.StandardApps.Alarms.ViewModels
         public ICommand OpenAlarm => openAlarm ??
             (openAlarm = new RelayCommand<AlarmForm>(alarm =>
             {
+                if (alarm is null)
+                {
+                    WeakReferenceMessenger.Default
+                    .Send(new AlarmNavigateMessage(null));
+
+                    return;
+                }
+
                 WeakReferenceMessenger.Default
                     .Send(new AlarmNavigateMessage(new ChangeAlarmPage(new UpdateAlarmVM(_alarmService,
                         alarm))));
