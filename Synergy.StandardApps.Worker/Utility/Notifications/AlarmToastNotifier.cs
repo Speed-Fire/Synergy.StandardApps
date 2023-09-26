@@ -25,7 +25,7 @@ namespace Synergy.StandardApps.Worker.Utility.Notifications
                 .AddArgument("alarmId", notificationId)
                 .AddText(entity.Name)
                 .AddText("Your alarm is ringing.")
-                .AddInlineImage(new Uri(GetAppAbsolutePath("Resources/alarm.png")))
+                //.AddInlineImage(new Uri(GetAppAbsolutePath("Resources/alarm.png")))
                 .AddButton(new ToastButton()
                 {
                     ActivationOptions = new()
@@ -51,9 +51,10 @@ namespace Synergy.StandardApps.Worker.Utility.Notifications
         /// </summary>
         /// <param name="relativePath">Relative path to a resource.</param>
         /// <returns>Absolute path.</returns>
-        private string GetAppAbsolutePath(string relativePath)
+        private static string GetAppAbsolutePath(string relativePath)
         {
-            return Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), relativePath);
+            //return Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), relativePath);
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
         }
     }
 }
