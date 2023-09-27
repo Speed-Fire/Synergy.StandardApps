@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.EntityFrameworkCore;
+using Synergy.StandardApps.Background.Messages.Alarm;
 using Synergy.StandardApps.DAL.Repositories;
 using Synergy.StandardApps.Domain.Alarm;
 using Synergy.StandardApps.Domain.Responses;
 using Synergy.StandardApps.EntityForms.Alarm;
 using Synergy.StandardApps.EntityForms.Notes;
 using Synergy.StandardApps.Utility.Converters;
-using Synergy.StandardApps.WorkerInteractor.Interactors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,17 +17,14 @@ namespace Synergy.StandardApps.Service.Alarm
 {
     public class AlarmService : IAlarmService
     {
-        private readonly IServiceInteractor<AlarmRecord> _interactor;
         private readonly IRepository<AlarmRecord> _alarmRepository;
         private readonly IConverter<AlarmRecord, AlarmForm> _converter;
 
         public AlarmService(IRepository<AlarmRecord> alarmRepository,
-            IConverter<AlarmRecord, AlarmForm> converter,
-            IServiceInteractor<AlarmRecord> intercator)
+            IConverter<AlarmRecord, AlarmForm> converter)
         {
             _alarmRepository = alarmRepository;
             _converter = converter;
-            _interactor = intercator;
         }
 
         public async Task<IResponse<AlarmForm>> CreateAlarm(AlarmCreationForm form)
@@ -47,8 +45,8 @@ namespace Synergy.StandardApps.Service.Alarm
                 await _alarmRepository
                     .Create(alarm);
 
-                await _interactor
-                    .Add(alarm);
+                WeakReferenceMessenger.Default
+                    .Send(new AddAlarmMessage(alarm));
 
                 return ResponseFactory.OK(_converter.Convert(alarm));
             }
@@ -77,8 +75,8 @@ namespace Synergy.StandardApps.Service.Alarm
                 await _alarmRepository
                     .Update(alarm);
 
-                await _interactor
-                    .Update(alarm);
+                WeakReferenceMessenger.Default
+                    .Send(new AddAlarmMessage(alarm));
 
                 return ResponseFactory.OK(_converter.Convert(alarm));
             }
@@ -121,8 +119,8 @@ namespace Synergy.StandardApps.Service.Alarm
                 await _alarmRepository
                     .Delete(alarm);
 
-                await _interactor
-                    .Delete(id);
+                WeakReferenceMessenger.Default
+                    .Send(new DeleteAlarmMessage(id));
 
                 return ResponseFactory.OK(true);
             }
@@ -150,8 +148,8 @@ namespace Synergy.StandardApps.Service.Alarm
                 await _alarmRepository
                     .Update(alarm);
 
-                await _interactor
-                    .Enable(alarm);
+                WeakReferenceMessenger.Default
+                    .Send(new EnableAlarmMessage(alarm));
 
                 return ResponseFactory.OK(true);
             }

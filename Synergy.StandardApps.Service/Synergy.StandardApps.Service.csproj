@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -13,10 +13,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Synergy.StandardApps.Background\Synergy.StandardApps.Background.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.DAL\Synergy.StandardApps.DAL.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.Domain\Synergy.StandardApps.Domain.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.EntityForms\Synergy.StandardApps.EntityForms.csproj" />
-    <ProjectReference Include="..\Synergy.StandardApps.WorkerIntercator\Synergy.StandardApps.WorkerInteractor.csproj" />
   </ItemGroup>
 
 </Project>
