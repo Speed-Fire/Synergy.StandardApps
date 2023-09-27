@@ -1,2 +1,2 @@
 # Synergy.StandardApps
-Standard applications ass Alarm clock, Notes and calendar.
+Standard applications as Alarm clock, Notes and calendar.
