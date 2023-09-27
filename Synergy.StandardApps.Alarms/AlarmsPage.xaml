@@ -42,11 +42,14 @@
                                 Foreground="LightBlue"
                                 Text="{Binding Time}"/>
 
-                            <CheckBox
+                            <controls:SliderButton
                                 Grid.Row="1"
                                 Grid.Column="1"
+                                MinWidth="40"
+                                Margin="0 0 5 0"
+                                Style="{StaticResource SliderButtonStyle}"
                                 VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
+                                HorizontalAlignment="Stretch"
                                 Command="{Binding Path=DataContext.SwitchAlarmEnability,
                                 RelativeSource={RelativeSource FindAncestor,
                                 AncestorType={x:Type ListBox}}}"
