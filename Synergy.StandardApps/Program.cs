@@ -2,13 +2,13 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Synergy.StandardApps.Alarms.Extensions;
+using Synergy.StandardApps.Background.Extensions;
 using Synergy.StandardApps.DAL.DbContexts;
 using Synergy.StandardApps.DAL.Extensions;
 using Synergy.StandardApps.EntityForms.Extensions;
 using Synergy.StandardApps.Notes.Extensions;
 using Synergy.StandardApps.Service.Extensions;
-using Synergy.StandardApps.WorkerInteractor;
-using Synergy.StandardApps.WorkerInteractor.Extensions;
+using Synergy.StandardApps.Utility.Misc;
 using Synergy.WPF.Common.Extensions;
 using System;
 using System.Collections.Generic;
@@ -26,20 +26,6 @@ namespace Synergy.StandardApps
         [STAThread]
         public static void Main(params string[] args)
         {
-#if !DEBUG
-            // Windows service setup
-            try
-            {
-                StandardAppsServiceSetuper.Setup();
-            }
-            catch (Exception ex)
-            {
-                Console.Error.WriteLine(ex);
-
-                return;
-            }
-#endif
-
             // App building
             var builder = Host.CreateDefaultBuilder(args);
 
@@ -65,7 +51,7 @@ namespace Synergy.StandardApps
                     .RegisterNotes()
                     .RegisterAlarmServices()
                     .RegisterAlarmsUI()
-                    .RegisterWorkerIntercator();
+                    .RegisterBackground();
 
                 services.AddSingleton<App>();
                 services.AddSingleton<MainWindow>();
@@ -73,8 +59,12 @@ namespace Synergy.StandardApps
 
             AppHost = builder.Build();
 
+            AppHost.RunAsync();
             var app = AppHost.Services.GetRequiredService<App>();
             app.Run();
+
+            var cleaner = new Cleaner();
+            cleaner.CleanNotifications();
         }
     }
 }

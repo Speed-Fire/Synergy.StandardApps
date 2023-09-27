@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
@@ -35,11 +35,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Synergy.WPF.Common\Synergy.WPF.Common\Synergy.WPF.Common.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.Alarms\Synergy.StandardApps.Alarms.csproj" />
+    <ProjectReference Include="..\Synergy.StandardApps.Background\Synergy.StandardApps.Background.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.DAL\Synergy.StandardApps.DAL.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.EntityForms\Synergy.StandardApps.EntityForms.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.Notes\Synergy.StandardApps.Notes.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.Service\Synergy.StandardApps.Service.csproj" />
-    <ProjectReference Include="..\Synergy.StandardApps.WorkerIntercator\Synergy.StandardApps.WorkerInteractor.csproj" />
   </ItemGroup>
 
 </Project>
