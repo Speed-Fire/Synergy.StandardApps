@@ -15,6 +15,7 @@ namespace Synergy.StandardApps.EntityForms.Alarm
         private string name;
         private TimeOnly time;
         private WeekDay dayMask;
+        private AlarmSound sound;
 
         [Required]
         [MinLength(1)]
@@ -37,6 +38,13 @@ namespace Synergy.StandardApps.EntityForms.Alarm
         {
             get => dayMask;
             set => SetProperty(ref dayMask, value);
+        }
+
+        [Required]
+        public AlarmSound Sound
+        {
+            get => sound;
+            set => SetProperty(ref sound, value);
         }
 
         public IEnumerable<DayOfWeek> GetAlarmedDays()
