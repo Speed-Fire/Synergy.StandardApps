@@ -1,6 +1,6 @@
 All Rights Reserved
 
-Copyright (c) ${project.inceptionYear} ${owner}
+Copyright (c) Synergy.StandardApps.2023 Speed-Fire
 
 Created by Techcable
 
