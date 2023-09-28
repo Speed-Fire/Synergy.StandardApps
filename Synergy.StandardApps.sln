@@ -25,7 +25,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{4E8887F6-5BFB-
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synergy.StandardApps.Alarms", "Synergy.StandardApps.Alarms\Synergy.StandardApps.Alarms.csproj", "{D7648F78-5982-471B-8894-5F1E2303D2F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synergy.StandardApps.Background", "Synergy.StandardApps.Background\Synergy.StandardApps.Background.csproj", "{13D777C0-CC55-4E4A-9010-D34A12C90D69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synergy.StandardApps.Background", "Synergy.StandardApps.Background\Synergy.StandardApps.Background.csproj", "{13D777C0-CC55-4E4A-9010-D34A12C90D69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synergy.StandardApps.Misc", "Synergy.StandardApps.Misc\Synergy.StandardApps.Misc.csproj", "{A3FE8937-39F1-4B94-8058-D3E61E142BB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,10 @@ Global
 		{13D777C0-CC55-4E4A-9010-D34A12C90D69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13D777C0-CC55-4E4A-9010-D34A12C90D69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13D777C0-CC55-4E4A-9010-D34A12C90D69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3FE8937-39F1-4B94-8058-D3E61E142BB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3FE8937-39F1-4B94-8058-D3E61E142BB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3FE8937-39F1-4B94-8058-D3E61E142BB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3FE8937-39F1-4B94-8058-D3E61E142BB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
