@@ -73,6 +73,8 @@ namespace Synergy.StandardApps.Service.Alarm
                 alarm.Time = form.Time;
                 alarm.DayMask = form.DayMask;
                 alarm.IsEnabled = true;
+                alarm.Sound = form.Sound;
+                alarm.IsSoundEnabled = form.IsSoundEnabled;
 
                 await _alarmRepository
                     .Update(alarm);
