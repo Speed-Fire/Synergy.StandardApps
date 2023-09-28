@@ -40,6 +40,7 @@ namespace Synergy.StandardApps.Service.Alarm
                     Time = form.Time,
                     DayMask = form.DayMask,
                     Sound = form.Sound,
+                    IsSoundEnabled = form.IsSoundEnabled,
                     IsEnabled = true
                 };
 
