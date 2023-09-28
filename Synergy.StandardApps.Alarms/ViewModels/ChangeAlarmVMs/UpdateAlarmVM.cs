@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Synergy.StandardApps.Alarms.Messages;
 using Synergy.StandardApps.EntityForms.Alarm;
 using Synergy.StandardApps.Service.Alarm;
-using Synergy.WPF.Common.Controls.NotifyingGrid;
+using Synergy.WPF.Common.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;

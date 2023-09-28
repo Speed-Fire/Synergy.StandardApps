@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Synergy.StandardApps.EntityForms.Notes;
 using Synergy.StandardApps.Notes.Messages;
 using Synergy.StandardApps.Service.Notes;
-using Synergy.WPF.Common.Controls.NotifyingGrid;
+using Synergy.WPF.Common.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
