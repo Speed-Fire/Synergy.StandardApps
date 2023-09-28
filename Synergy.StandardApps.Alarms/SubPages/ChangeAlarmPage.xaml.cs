@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -22,10 +23,18 @@ namespace Synergy.StandardApps.Alarms.SubPages
     public partial class ChangeAlarmPage : Page
     {
         private readonly ChangeAlarmVM _vm;
+        private readonly List<ToggleButton> _dayRepetingButtons;
 
         public ChangeAlarmPage(ChangeAlarmVM vm)
         {
             InitializeComponent();
+
+            _dayRepetingButtons = new()
+            {
+                SundayBtn, MondayBtn, TuesdayBtn,
+                WednesdayBtn, ThursdayBtn, FridayBtn,
+                SundayBtn,
+            };
 
             InitToggleButtons(vm.AlarmedDays);
 
@@ -60,6 +69,15 @@ namespace Synergy.StandardApps.Alarms.SubPages
                         SaturdayBtn.IsChecked = true;
                         break;
                 }
+            }
+        }
+
+        private void EverydayBtn_Click(object sender, RoutedEventArgs e)
+        {
+            foreach(var btn in _dayRepetingButtons)
+            {
+                if (btn.IsChecked != true)
+                    btn.IsChecked = true;
             }
         }
     }

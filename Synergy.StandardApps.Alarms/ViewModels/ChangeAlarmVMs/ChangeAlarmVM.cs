@@ -52,5 +52,19 @@ namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
                 
                 Form.SetDay(day);
             }));
+
+        private RelayCommand<string>? setAlarmSound;
+        public ICommand SetAlarmSound => setAlarmSound ??
+            (setAlarmSound = new RelayCommand<string>(str =>
+            {
+
+            }));
+
+        private RelayCommand? playAlarmSound;
+        public ICommand PlayAlarmSound => playAlarmSound ??
+            (playAlarmSound = new RelayCommand(() =>
+            {
+
+            }));
     }
 }
