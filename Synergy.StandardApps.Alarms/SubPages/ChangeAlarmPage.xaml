@@ -24,13 +24,14 @@
                         <Border
                             Background="{TemplateBinding Background}"
                             BorderThickness="0"
-                            CornerRadius="15"
+                            CornerRadius="25"
                             Padding="1">
 
                             <TextBlock
                                 x:Name="ToggleBtn_tb"
-                                FontSize="14"
+                                FontSize="18"
                                 HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
                                 TextAlignment="Center"
                                 Foreground="{TemplateBinding Foreground}"
                                 Text="{TemplateBinding Content}"/>
@@ -57,6 +58,25 @@
                     Value="{StaticResource Gray100Brush}"/>
             <Setter Property="Foreground"
                     Value="{StaticResource Primary2Brush}"/>
+
+            <Setter Property="MinWidth" Value="40"/>
+            <Setter Property="MinHeight" Value="40"/>
+        </Style>
+
+        <Style TargetType="Separator">
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Height" Value="1"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+
+        <Style TargetType="RadioButton">
+            <Style.Resources>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+            </Style.Resources>
+
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
     </Page.Resources>
     
@@ -80,6 +100,11 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <TextBlock
@@ -92,6 +117,7 @@
 
                 <controls:TimePicker
                     Grid.Row="1"
+                    Margin="0 10 0 0"
                     Style="{StaticResource TimePickerStyle}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top"
@@ -105,9 +131,12 @@
                     </controls:TimePicker.LayoutTransform>
                 </controls:TimePicker>
 
+                <Separator
+                    Grid.Row="2"/>
+
                 <DockPanel
-                    Grid.Row="2"
-                    Margin="5 0 5 0">
+                    Grid.Row="3"
+                    Margin="15 0 15 0">
 
                     <TextBlock
                         DockPanel.Dock="Left"
@@ -126,12 +155,25 @@
 
                 </DockPanel>
 
+                <Separator
+                    Grid.Row="4"/>
+
                 <!-- Toggle buttons -->
+
+                <TextBlock
+                        Grid.Row="5"
+                    Margin="15 0 15 0"
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource TextBlockStyle}"
+                        Text="Repeat:"/>
+
                 <Grid
-                    Grid.Row="3">
+                    Grid.Row="6"
+                    Margin="0 5 0 0">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
@@ -204,7 +246,116 @@
                         Command="{Binding SetDay}"
                         CommandParameter="0"
                         Content="Sn"/>
+
+                    <controls:NormalButton
+                        Grid.Column="8"
+                        Margin="30 0 0 0"
+                        Style="{StaticResource NormalButtonStyle}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        MinHeight="30"
+                        Padding="2"
+                        Content="Everyday"/>
                 </Grid>
+
+                <Separator
+                    Grid.Row="7"/>
+
+                <GroupBox Grid.Row="8"
+                          Margin="15 0 15 0"
+                          BorderThickness="1"
+                          BorderBrush="{StaticResource Gray300Brush}">
+
+                    <GroupBox.Header>
+                        <CheckBox
+                            x:Name="AlarmSoundCb"
+                            IsChecked="False"
+                            HorizontalAlignment="Center"
+                            HorizontalContentAlignment="Center">
+
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource TextBlockStyle}"
+                                Text="Alarm sound"/>
+
+                        </CheckBox>
+
+                    </GroupBox.Header>
+
+                    <Grid Margin="0 5 0 0">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Style.Triggers>
+
+                                    <DataTrigger Binding="{Binding ElementName=AlarmSoundCb, Path=IsChecked}"
+                                                 Value="False">
+
+                                        <Setter Property="IsEnabled" Value="False"/>
+
+                                    </DataTrigger>
+
+
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+
+                        <Grid Grid.Column="0"
+                              HorizontalAlignment="Left">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <RadioButton Grid.Row="0"
+                                         GroupName="AlarmSounds">
+                                <TextBlock Text="Alarm1"/>
+                            </RadioButton>
+
+                            <RadioButton Grid.Row="1"
+                                         Margin="0 5 0 0"
+                                         GroupName="AlarmSounds">
+                                <TextBlock Text="Alarm2"/>
+                            </RadioButton>
+
+                            <RadioButton Grid.Row="2"
+                                         Margin="0 5 0 0"
+                                         GroupName="AlarmSounds">
+                                <TextBlock Text="Alarm3"/>
+                            </RadioButton>
+
+                            <RadioButton Grid.Row="3"
+                                         Margin="0 5 0 0"
+                                         GroupName="AlarmSounds">
+                                <TextBlock Text="Alarm4"/>
+                            </RadioButton>
+
+                            <RadioButton Grid.Row="4"
+                                         Margin="0 5 0 0"
+                                         GroupName="AlarmSounds">
+                                <TextBlock Text="Alarm5"/>
+                            </RadioButton>
+                        </Grid>
+
+
+                        <controls:NormalButton
+                            Grid.Column="2"
+                            Style="{StaticResource NormalButtonStyle}"
+                            VerticalAlignment="Top"
+                            Content="Play"/>
+                    </Grid>
+
+                </GroupBox>
             </Grid>
         </Border>
         

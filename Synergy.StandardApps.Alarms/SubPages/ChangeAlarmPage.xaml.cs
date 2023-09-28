@@ -34,7 +34,33 @@ namespace Synergy.StandardApps.Alarms.SubPages
 
         private void InitToggleButtons(IEnumerable<DayOfWeek> days)
         {
-
+            foreach (var day in days)
+            {
+                switch (day)
+                {
+                    case DayOfWeek.Sunday:
+                        SundayBtn.IsChecked = true;
+                        break;
+                    case DayOfWeek.Monday:
+                        MondayBtn.IsChecked = true;
+                        break;
+                    case DayOfWeek.Tuesday:
+                        TuesdayBtn.IsChecked = true;
+                        break;
+                    case DayOfWeek.Wednesday:
+                        WednesdayBtn.IsChecked = true;
+                        break;
+                    case DayOfWeek.Thursday:
+                        ThursdayBtn.IsChecked = true;
+                        break;
+                    case DayOfWeek.Friday:
+                        FridayBtn.IsChecked = true;
+                        break;
+                    case DayOfWeek.Saturday:
+                        SaturdayBtn.IsChecked = true;
+                        break;
+                }
+            }
         }
     }
 }
