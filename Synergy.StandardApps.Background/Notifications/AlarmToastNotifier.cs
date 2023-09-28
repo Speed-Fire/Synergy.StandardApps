@@ -1,5 +1,6 @@
 ﻿using Microsoft.Toolkit.Uwp.Notifications;
 using Synergy.StandardApps.Domain.Alarm;
+using Synergy.StandardApps.Misc;
 using System;
 using System.IO;
 using System.Reflection;
@@ -15,13 +16,6 @@ namespace Synergy.StandardApps.Background.Notifications
         {
             var builder = new ToastContentBuilder();
 
-            var audio = new ToastAudio()
-            {
-                Loop = true,
-                Silent = false,
-                Src = new Uri("ms-winsoundevent:Notification.Looping.Alarm")
-            };
-
             builder
                 .AddArgument("action", "alarm")
                 .AddArgument("alarmId", notificationId)
@@ -36,8 +30,21 @@ namespace Synergy.StandardApps.Background.Notifications
                     }
                 }
                     .SetContent("Stop")
-                    .AddArgument("action", "stop"))
-                .AddAudio(audio)
+                    .AddArgument("action", "stop"));
+
+            if (entity.IsSoundEnabled)
+            {
+                var audio = new ToastAudio()
+                {
+                    Loop = true,
+                    Silent = false,
+                    Src = new Uri(AlarmSoundPlayer.GetPath(entity.Sound))
+                };
+
+                builder.AddAudio(audio);
+            }
+
+            builder
                 .Show(toast =>
                 {
                     toast.ExpirationTime = DateTime.Now.AddMinutes(1);
