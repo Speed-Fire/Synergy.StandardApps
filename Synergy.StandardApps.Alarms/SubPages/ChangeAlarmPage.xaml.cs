@@ -36,9 +36,15 @@ namespace Synergy.StandardApps.Alarms.SubPages
                 SundayBtn,
             };
 
-            InitToggleButtons(vm.AlarmedDays);
+            InitSettings(vm);
 
             DataContext = _vm = vm;
+        }
+
+        private void InitSettings(ChangeAlarmVM vm)
+        {
+            InitToggleButtons(vm.AlarmedDays);
+            InitRadioButtons(vm.Form.Sound);
         }
 
         private void InitToggleButtons(IEnumerable<DayOfWeek> days)
@@ -69,6 +75,29 @@ namespace Synergy.StandardApps.Alarms.SubPages
                         SaturdayBtn.IsChecked = true;
                         break;
                 }
+            }
+        }
+
+        private void InitRadioButtons(Domain.Enums.AlarmSound sound)
+        {
+            switch (sound)
+            {
+                case Domain.Enums.AlarmSound.None:
+                case Domain.Enums.AlarmSound.Alarm1:
+                    Alarm1RB.IsChecked = true;
+                    break;
+                case Domain.Enums.AlarmSound.Alarm2:
+                    Alarm2RB.IsChecked = true;
+                    break;
+                case Domain.Enums.AlarmSound.Alarm3:
+                    Alarm3RB.IsChecked = true;
+                    break;
+                case Domain.Enums.AlarmSound.Alarm4:
+                    Alarm4RB.IsChecked = true;
+                    break;
+                case Domain.Enums.AlarmSound.Alarm5:
+                    Alarm5RB.IsChecked = true;
+                    break;
             }
         }
 

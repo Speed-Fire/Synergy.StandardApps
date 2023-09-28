@@ -270,7 +270,7 @@
                     <GroupBox.Header>
                         <CheckBox
                             x:Name="AlarmSoundCb"
-                            IsChecked="False"
+                            IsChecked="{Binding Form.IsSoundEnabled}"
                             HorizontalAlignment="Center"
                             HorizontalContentAlignment="Center">
 
@@ -319,6 +319,7 @@
                             </Grid.RowDefinitions>
 
                             <RadioButton Grid.Row="0"
+                                         x:Name="Alarm1RB"
                                          GroupName="AlarmSounds"
                                          Command="{Binding SetAlarmSound}"
                                          CommandParameter="1">
@@ -326,6 +327,7 @@
                             </RadioButton>
 
                             <RadioButton Grid.Row="1"
+                                         x:Name="Alarm2RB"
                                          Margin="0 5 0 0"
                                          GroupName="AlarmSounds"
                                          Command="{Binding SetAlarmSound}"
@@ -334,6 +336,7 @@
                             </RadioButton>
 
                             <RadioButton Grid.Row="2"
+                                         x:Name="Alarm3RB"
                                          Margin="0 5 0 0"
                                          GroupName="AlarmSounds"
                                          Command="{Binding SetAlarmSound}"
@@ -342,6 +345,7 @@
                             </RadioButton>
 
                             <RadioButton Grid.Row="3"
+                                         x:Name="Alarm4RB"
                                          Margin="0 5 0 0"
                                          GroupName="AlarmSounds"
                                          Command="{Binding SetAlarmSound}"
@@ -350,6 +354,7 @@
                             </RadioButton>
 
                             <RadioButton Grid.Row="4"
+                                         x:Name="Alarm5RB"
                                          Margin="0 5 0 0"
                                          GroupName="AlarmSounds"
                                          Command="{Binding SetAlarmSound}"
