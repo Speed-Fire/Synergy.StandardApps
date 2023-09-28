@@ -321,7 +321,7 @@
                             <RadioButton Grid.Row="0"
                                          GroupName="AlarmSounds"
                                          Command="{Binding SetAlarmSound}"
-                                         CommandParameter="0">
+                                         CommandParameter="1">
                                 <TextBlock Text="Alarm1"/>
                             </RadioButton>
 
@@ -329,7 +329,7 @@
                                          Margin="0 5 0 0"
                                          GroupName="AlarmSounds"
                                          Command="{Binding SetAlarmSound}"
-                                         CommandParameter="1">
+                                         CommandParameter="2">
                                 <TextBlock Text="Alarm2"/>
                             </RadioButton>
 
@@ -337,7 +337,7 @@
                                          Margin="0 5 0 0"
                                          GroupName="AlarmSounds"
                                          Command="{Binding SetAlarmSound}"
-                                         CommandParameter="2">
+                                         CommandParameter="3">
                                 <TextBlock Text="Alarm3"/>
                             </RadioButton>
 
@@ -345,7 +345,7 @@
                                          Margin="0 5 0 0"
                                          GroupName="AlarmSounds"
                                          Command="{Binding SetAlarmSound}"
-                                         CommandParameter="3">
+                                         CommandParameter="4">
                                 <TextBlock Text="Alarm4"/>
                             </RadioButton>
 
@@ -353,7 +353,7 @@
                                          Margin="0 5 0 0"
                                          GroupName="AlarmSounds"
                                          Command="{Binding SetAlarmSound}"
-                                         CommandParameter="4">
+                                         CommandParameter="5">
                                 <TextBlock Text="Alarm5"/>
                             </RadioButton>
                         </Grid>

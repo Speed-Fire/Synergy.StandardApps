@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Synergy.StandardApps.Misc;
 using Synergy.StandardApps.EntityForms.Alarm;
 using Synergy.StandardApps.Service.Alarm;
 using System;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Synergy.StandardApps.Domain.Enums;
 
 namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
 {
@@ -57,14 +59,16 @@ namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
         public ICommand SetAlarmSound => setAlarmSound ??
             (setAlarmSound = new RelayCommand<string>(str =>
             {
+                var sound = (AlarmSound)int.Parse(str);
 
+                Form.Sound = sound;
             }));
 
         private RelayCommand? playAlarmSound;
         public ICommand PlayAlarmSound => playAlarmSound ??
             (playAlarmSound = new RelayCommand(() =>
             {
-
+                AlarmSoundPlayer.PlaySound(Form.Sound);
             }));
     }
 }

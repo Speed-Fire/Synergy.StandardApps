@@ -19,6 +19,7 @@ namespace Synergy.StandardApps.EntityForms.Alarm.Converters
                 Time = entity.Time,
                 DayMask = entity.DayMask,
                 Sound = entity.Sound,
+                IsSoundEnabled = entity.IsSoundEnabled,
                 IsEnabled = entity.IsEnabled
             };
         }
