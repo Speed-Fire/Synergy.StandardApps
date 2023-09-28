@@ -16,6 +16,7 @@ namespace Synergy.StandardApps.EntityForms.Alarm
         private TimeOnly _time;
         private WeekDay _dayMask;
         private AlarmSound _sound;
+        private bool _isSoundEnabled;
         private bool _isEnabled;
 
         public long Id
@@ -46,6 +47,12 @@ namespace Synergy.StandardApps.EntityForms.Alarm
         {
             get => _sound;
             internal set => _sound = value;
+        }
+
+        public bool IsSoundEnabled
+        {
+            get => _isSoundEnabled;
+            internal set => _isSoundEnabled = value;
         }
 
         public bool IsEnabled

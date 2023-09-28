@@ -16,6 +16,7 @@ namespace Synergy.StandardApps.Domain.Alarm
         public string Name { get; set; } = "";
         public TimeOnly Time { get; set; }
         public AlarmSound Sound { get; set; } = AlarmSound.Alarm1;
+        public bool IsSoundEnabled { get; set; } = true;
         public WeekDay DayMask { get; set; }
         public bool IsEnabled { get; set; }
 
