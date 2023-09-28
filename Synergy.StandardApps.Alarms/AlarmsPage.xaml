@@ -76,6 +76,7 @@
                                         Style="{StaticResource SliderButtonStyle}"
                                         VerticalAlignment="Center"
                                         HorizontalAlignment="Stretch"
+                                        IsChecked="{Binding IsEnabled}"
                                         Command="{Binding Path=DataContext.SwitchAlarmEnability,
                                         RelativeSource={RelativeSource FindAncestor,
                                         AncestorType={x:Type ListBox}}}"
