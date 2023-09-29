@@ -45,5 +45,12 @@ namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
             WeakReferenceMessenger.Default
                 .Send(new AlarmUpdatedMessage(res.Data));
         }
+
+        private RelayCommand? goBack;
+        public override ICommand GoBack => goBack ??
+            (goBack = new RelayCommand(() =>
+            {
+
+            }));
     }
 }

@@ -18,6 +18,7 @@ namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
         public CreateAlarmVM(IAlarmService alarmService) :
             base(alarmService)
         {
+            IsCancelEnabled = true;
         }
 
         private AsyncRelayCommand? save;
@@ -42,5 +43,17 @@ namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
             WeakReferenceMessenger.Default
                 .Send(new AlarmCreatedMessage(res.Data));
         }
+
+        private RelayCommand? goBack;
+        public override ICommand GoBack => goBack ??
+            (goBack = new RelayCommand(() =>
+            {
+                WeakReferenceMessenger.Default
+                    .Send(new AlarmNavigateMessage(null));
+
+                WeakReferenceMessenger.Default
+                    .Send(new AlarmCreationCancelledMessage(null));
+            }));
+
     }
 }

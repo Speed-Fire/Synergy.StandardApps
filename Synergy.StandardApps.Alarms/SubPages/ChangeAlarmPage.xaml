@@ -14,6 +14,9 @@
         <convs:StringToTimeOnlyConverter
             x:Key="str2timeConv"/>
 
+        <convs:Bool2VisibilityConverter
+            x:Key="b2vconv"/>
+
         <Style x:Key="ToggleButtonStyle"
                TargetType="ToggleButton">
             <Setter Property="Template">
@@ -385,18 +388,28 @@
                 Margin="10 7.5 10 7.5">
 
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <controls:NormalButton
-                    Grid.Column="1"
+                    Grid.Column="2"
                     Style="{StaticResource NormalButtonStyle}"
                     MinHeight="30"
                     HorizontalAlignment="Center"
                     Content="Save"
                     Command="{Binding Save}"/>
 
+                <controls:NormalButton
+                    Grid.Column="0"
+                    Visibility="{Binding IsCancelEnabled, Converter={StaticResource b2vconv}}"
+                    Style="{StaticResource NormalButtonStyle}"
+                    MinHeight="30"
+                    HorizontalAlignment="Center"
+                    Content="Cancel"
+                    Command="{Binding GoBack}"/>
+                
             </Grid>
         </Border>
     </Grid>

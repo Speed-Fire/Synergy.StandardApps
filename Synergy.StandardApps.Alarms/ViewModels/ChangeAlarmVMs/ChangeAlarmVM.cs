@@ -22,6 +22,13 @@ namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
 
         public IEnumerable<DayOfWeek> AlarmedDays => Form.GetAlarmedDays();
 
+        private bool isCancelEnabled;
+        public bool IsCancelEnabled
+        {
+            get => isCancelEnabled;
+            set => SetProperty(ref isCancelEnabled, value);
+        }
+
         protected ChangeAlarmVM(IAlarmService alarmService, AlarmForm form)
         {
             _alarmService = alarmService;
@@ -31,6 +38,7 @@ namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
                 Time = form.Time,
                 DayMask = form.DayMask,
             };
+            IsCancelEnabled = false;
         }
 
         protected ChangeAlarmVM(IAlarmService alarmService)
@@ -70,5 +78,7 @@ namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
             {
                 AlarmSoundPlayer.PlaySound(Form.Sound);
             }));
+
+        public abstract ICommand GoBack { get; }
     }
 }
