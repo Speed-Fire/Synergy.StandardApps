@@ -12,6 +12,8 @@ namespace Synergy.StandardApps.EntityForms.Calendar
         private string _title;
         private string _description;
         private int _color;
+        private int _month;
+        private int _day;
 
         public long Id
         {
@@ -35,6 +37,18 @@ namespace Synergy.StandardApps.EntityForms.Calendar
         {
             get => _color;
             set => _color = value;
+        }
+
+        public int Month
+        {
+            get => _month;
+            set => _month = value;
+        }
+
+        public int Day
+        {
+            get => _day;
+            set => _day = value;
         }
 
         public Color GetColor()

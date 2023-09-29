@@ -18,6 +18,8 @@ namespace Synergy.StandardApps.EntityForms.Calendar.Converters
                 Title = entity.Title,
                 Description = entity.Description,
                 Color = entity.Color,
+                Month = entity.Month,
+                Day = entity.Day,
             };
         }
     }

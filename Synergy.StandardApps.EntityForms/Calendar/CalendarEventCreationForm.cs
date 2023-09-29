@@ -13,6 +13,8 @@ namespace Synergy.StandardApps.EntityForms.Calendar
         private string title;
         private string description;
         private int color;
+        private int month;
+        private int day;
 
         [Required]
         [CustomValidation(typeof(CalendarEventCreationForm), "ValidateTitle")]
@@ -26,6 +28,20 @@ namespace Synergy.StandardApps.EntityForms.Calendar
         {
             get => description;
             set => SetProperty(ref description, value);
+        }
+
+        [CustomValidation(typeof(CalendarEventCreationForm), "ValidateDayMonth")]
+        public int Month
+        {
+            get => month;
+            set => SetProperty(ref month, value);
+        }
+
+        [CustomValidation(typeof(CalendarEventCreationForm), "ValidateDayMonth")]
+        public int Day
+        {
+            get => day;
+            set => SetProperty(ref day, value);
         }
 
         public Color Color
@@ -55,6 +71,16 @@ namespace Synergy.StandardApps.EntityForms.Calendar
             if(string.IsNullOrWhiteSpace(title))
             {
                 return new("Empty event name!");
+            }
+
+            return ValidationResult.Success;
+        }
+
+        public static ValidationResult ValidateDayMonth(int dm, ValidationContext context)
+        {
+            if(dm <= 0)
+            {
+                return new("Property can't be equal to or less than null!");
             }
 
             return ValidationResult.Success;
