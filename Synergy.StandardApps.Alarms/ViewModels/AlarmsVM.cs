@@ -20,7 +20,8 @@ namespace Synergy.StandardApps.Alarms.ViewModels
     public class AlarmsVM :
         ObservableRecipient,
         IRecipient<AlarmCreatedMessage>,
-        IRecipient<AlarmUpdatedMessage>
+        IRecipient<AlarmUpdatedMessage>,
+        IRecipient<AlarmCreationCancelledMessage>
     {
         private readonly IAlarmService _alarmService;
 
@@ -97,6 +98,11 @@ namespace Synergy.StandardApps.Alarms.ViewModels
                 WeakReferenceMessenger.Default
                     .Send(new AlarmNavigateMessage(new ChangeAlarmPage(new CreateAlarmVM(_alarmService))));
             }));
+
+        void IRecipient<AlarmCreationCancelledMessage>.Receive(AlarmCreationCancelledMessage message)
+        {
+            IsListDisabled = false;
+        }
 
         private RelayCommand<AlarmForm>? openAlarm;
         public ICommand OpenAlarm => openAlarm ??
