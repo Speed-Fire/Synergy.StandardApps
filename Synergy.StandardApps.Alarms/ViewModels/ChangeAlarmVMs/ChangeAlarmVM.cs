@@ -37,6 +37,8 @@ namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
                 Name = form.Name,
                 Time = form.Time,
                 DayMask = form.DayMask,
+                IsSoundEnabled = form.IsSoundEnabled,
+                Sound = form.Sound
             };
             IsCancelEnabled = false;
         }
