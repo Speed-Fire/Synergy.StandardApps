@@ -17,9 +17,17 @@
             <GradientStop Color="Brown" Offset="1"/>
         </LinearGradientBrush>
 
+        <RadialGradientBrush x:Key="DayBtnBackgroundBrush"
+                             GradientOrigin="0.5, 0.5"
+                             RadiusX="1.5" RadiusY="1.5">
+            <GradientStop Color="LightGray" Offset="0"/>
+            <GradientStop Color="{Binding ElementName=CalendarDayCard, Path=SeasonColor}"
+                          Offset="1"/>
+        </RadialGradientBrush>
+        
         <Style x:Key="NormalButtonStyle.CalendarCard.Bottom"
                TargetType="controls:NormalButton"
-               BasedOn="NormalButtonStyle.Base">
+               BasedOn="{StaticResource NormalButtonStyle.Base}">
 
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
@@ -30,22 +38,81 @@
 
         <Style x:Key="NormalButtonStyle.CalendarCard.Top"
                TargetType="controls:NormalButton"
-               BasedOn="NormalButtonStyle.Base">
+               BasedOn="{StaticResource NormalButtonStyle.Base}">
 
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
             <Setter Property="CornerRadius" Value="10 10 0 0"/>
-            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="Background" Value="{StaticResource DayBtnBackgroundBrush}"/>
 
         </Style>
 
     </UserControl.Resources>
     
     <Border
+        x:Name="MainBrd"
         CornerRadius="10"
-        BorderThickness="2"
+        BorderThickness="1"
         Background="LightGray">
 
+        <Border.BorderBrush>
+            <SolidColorBrush x:Name="BrdBrush" Color="Black"/>
+        </Border.BorderBrush>
+
+        <Border.Triggers>
+
+            <EventTrigger RoutedEvent="MouseEnter">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation Storyboard.TargetName="BrdBrush"
+                                        Storyboard.TargetProperty="Color"
+                                        From="Black" To="LightBlue"
+                                        SpeedRatio="4"/>
+
+                        <ThicknessAnimation Storyboard.TargetName="MainBrd"
+                                            Storyboard.TargetProperty="BorderThickness"
+                                            SpeedRatio="4">
+
+                            <ThicknessAnimation.From>
+                                <Thickness>1</Thickness>
+                            </ThicknessAnimation.From>
+
+                            <ThicknessAnimation.To>
+                                <Thickness>3</Thickness>
+                            </ThicknessAnimation.To>
+
+                        </ThicknessAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+
+            <EventTrigger RoutedEvent="MouseLeave">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation Storyboard.TargetName="BrdBrush"
+                                        Storyboard.TargetProperty="Color"
+                                        From="LightBlue" To="Black"
+                                        SpeedRatio="4"/>
+
+                        <ThicknessAnimation Storyboard.TargetName="MainBrd"
+                                            Storyboard.TargetProperty="BorderThickness"
+                                            SpeedRatio="4">
+
+                            <ThicknessAnimation.From>
+                                <Thickness>3</Thickness>
+                            </ThicknessAnimation.From>
+
+                            <ThicknessAnimation.To>
+                                <Thickness>1</Thickness>
+                            </ThicknessAnimation.To>
+
+                        </ThicknessAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+
+        </Border.Triggers>
+        
         <Grid>
 
             <Grid.RowDefinitions>
@@ -53,20 +120,25 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <controls:NormalButton
+            <Border
                 Panel.ZIndex="15"
-                Style="{StaticResource NormalButtonStyle.CalendarCard.Top}"
-                Command="{Binding}">
+                CornerRadius="10 10 0 0"
+                Background="LightGray">
 
-                <TextBlock
-                    TextAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="36"
-                    Text="{Binding ElementName=CalendarDayCard,
-                                   Path=Day}"/>
+                <controls:NormalButton
+                    Style="{StaticResource NormalButtonStyle.CalendarCard.Top}"
+                    Command="{Binding}">
+
+                    <TextBlock
+                        TextAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="36"
+                        Text="{Binding ElementName=CalendarDayCard,
+                                       Path=Day}"/>
                 
-            </controls:NormalButton>
-
+                </controls:NormalButton>
+            </Border>
+        
             <Grid
                 Grid.Row="1">
                 
@@ -87,7 +159,7 @@
                             TextAlignment="Center"
                             VerticalAlignment="Center"
                             Margin="0 15 0 15"
-                            FontSize="12"
+                            FontSize="14"
                             Text="{Binding ElementName=CalendarDayCard,
                                            Path=EventName}"/>
 
@@ -120,14 +192,16 @@
                             <Storyboard>
 
                                 <DoubleAnimation
-                                                Storyboard.TargetName="TT"
-                                                Storyboard.TargetProperty="Y"
-                                                From="0" To="10"/>
+                                    Storyboard.TargetName="TT"
+                                    Storyboard.TargetProperty="Y"
+                                    From="0" To="-50"
+                                    SpeedRatio="4"/>
 
                                 <DoubleAnimation
-                                                Storyboard.TargetName="ChangeBtn"
-                                                Storyboard.TargetProperty="Opacity"
-                                                From="0" To="1"/>
+                                    Storyboard.TargetName="ChangeBtn"
+                                    Storyboard.TargetProperty="Opacity"
+                                    From="0" To="1"
+                                    SpeedRatio="4"/>
 
                             </Storyboard>
                         </BeginStoryboard>
@@ -140,14 +214,16 @@
                             <Storyboard>
 
                                 <DoubleAnimation
-                                                Storyboard.TargetName="TT"
-                                                Storyboard.TargetProperty="Y"
-                                                From="10" To="0"/>
+                                    Storyboard.TargetName="TT"
+                                    Storyboard.TargetProperty="Y"
+                                    From="-50" To="0"
+                                    SpeedRatio="4"/>
 
                                 <DoubleAnimation
-                                                Storyboard.TargetName="ChangeBtn"
-                                                Storyboard.TargetProperty="Opacity"
-                                                From="1" To="0"/>
+                                    Storyboard.TargetName="ChangeBtn"
+                                    Storyboard.TargetProperty="Opacity"
+                                    From="1" To="0"
+                                    SpeedRatio="4"/>
 
                             </Storyboard>
                         </BeginStoryboard>
