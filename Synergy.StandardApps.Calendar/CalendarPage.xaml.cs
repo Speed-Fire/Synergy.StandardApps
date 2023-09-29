@@ -1,4 +1,6 @@
-﻿using Synergy.StandardApps.Calendar.ViewModels;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Synergy.StandardApps.Calendar.Messages;
+using Synergy.StandardApps.Calendar.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +21,9 @@ namespace Synergy.StandardApps.Calendar
     /// <summary>
     /// Логика взаимодействия для CalendarPage.xaml
     /// </summary>
-    public partial class CalendarPage : Page
+    public partial class CalendarPage : 
+        Page,
+        IRecipient<MonthLoadedMessage>
     {
         private readonly CalendarVM _vm;
 
@@ -30,12 +34,24 @@ namespace Synergy.StandardApps.Calendar
             InitializeComponent();
             ItemMargin = new Thickness(15, 10, 15, 10);
 
+            WeakReferenceMessenger.Default
+                .RegisterAll(this);
+
             DataContext = _vm = vm;
         }
 
-        protected override void OnInitialized(EventArgs e)
+        #region Messages
+
+        void IRecipient<MonthLoadedMessage>.Receive(MonthLoadedMessage message)
         {
-            base.OnInitialized(e);
+            LoadMonth();
+        }
+
+        #endregion
+
+        private void LoadMonth()
+        {
+
         }
     }
 }
