@@ -4,9 +4,43 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="clr-namespace:Synergy.WPF.Common.Controls;assembly=Synergy.WPF.Common"
              xmlns:local="clr-namespace:Synergy.StandardApps.Calendar.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="100">
+
+    <UserControl.Resources>
+
+        <LinearGradientBrush x:Key="BtnBackgroundBrush"
+            StartPoint="0, 0" EndPoint="1, 1">
+            <GradientStop Color="#F99A26" Offset="0.0"/>
+            <GradientStop Color="Brown" Offset="1"/>
+        </LinearGradientBrush>
+
+        <Style x:Key="NormalButtonStyle.CalendarCard.Bottom"
+               TargetType="controls:NormalButton"
+               BasedOn="NormalButtonStyle.Base">
+
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="CornerRadius" Value="0 0 9 10"/>
+            <Setter Property="Background" Value="{StaticResource BtnBackgroundBrush}"/>
+
+        </Style>
+
+        <Style x:Key="NormalButtonStyle.CalendarCard.Top"
+               TargetType="controls:NormalButton"
+               BasedOn="NormalButtonStyle.Base">
+
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="CornerRadius" Value="10 10 0 0"/>
+            <Setter Property="Background" Value="LightGray"/>
+
+        </Style>
+
+    </UserControl.Resources>
+    
     <Border
         CornerRadius="10"
         BorderThickness="2"
@@ -19,35 +53,110 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock
+            <controls:NormalButton
+                Panel.ZIndex="15"
+                Style="{StaticResource NormalButtonStyle.CalendarCard.Top}"
+                Command="{Binding}">
+
+                <TextBlock
                     TextAlignment="Center"
                     VerticalAlignment="Center"
                     FontSize="36"
                     Text="{Binding ElementName=CalendarDayCard,
                                    Path=Day}"/>
-            
-            <Border
-                Grid.Row="1"
-                CornerRadius="0 0 9 10">
-
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 1">
-                        <GradientStop Color="{Binding ElementName=CalendarDayCard,
-                            Path=Color}" Offset="0.0"/>
-                        <GradientStop Color="Brown" Offset="1"/>
-                    </LinearGradientBrush>
-                </Border.Background>
                 
-                <TextBlock 
-                    TextAlignment="Center"
-                    VerticalAlignment="Center"
-                    Margin="0 15 0 15"
-                    FontSize="12"
-                    Text="{Binding ElementName=CalendarDayCard,
-                                   Path=EventName}"/>
+            </controls:NormalButton>
 
-            </Border>
-            
+            <Grid
+                Grid.Row="1">
+                
+                <Border
+                    Panel.ZIndex="1"
+                    CornerRadius="0 0 9 10">
+
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 1">
+                            <GradientStop Color="{Binding ElementName=CalendarDayCard,
+                                Path=Color}" Offset="0.0"/>
+                            <GradientStop Color="Brown" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+
+                    <TextBlock 
+                            x:Name="EventNameTb"
+                            TextAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0 15 0 15"
+                            FontSize="12"
+                            Text="{Binding ElementName=CalendarDayCard,
+                                           Path=EventName}"/>
+
+                    <Border.RenderTransform>
+                        <TranslateTransform x:Name="TT"/>
+                    </Border.RenderTransform>
+                    
+                </Border>
+
+                <Border
+                    Panel.ZIndex="0"
+                    CornerRadius="0 0 9 10"
+                    Background="{StaticResource BtnBackgroundBrush}">
+
+                    <controls:NormalButton
+                        Style="{StaticResource NormalButtonStyle.CalendarCard.Bottom}"
+                        x:Name="ChangeBtn"
+                        Content="Change"
+                        Command="{Binding RelativeSource={RelativeSource AncestorType=Page},
+                                          Path=DataContext.ChangeCalendarEvent}"
+                        CommandParameter="{Binding ElementName=CalendarDayCard, Path=Day}"/>
+                    
+                </Border>
+
+                <Grid.Triggers>
+
+                    <EventTrigger RoutedEvent="MouseEnter">
+
+                        <BeginStoryboard>
+                            <Storyboard>
+
+                                <DoubleAnimation
+                                                Storyboard.TargetName="TT"
+                                                Storyboard.TargetProperty="Y"
+                                                From="0" To="10"/>
+
+                                <DoubleAnimation
+                                                Storyboard.TargetName="ChangeBtn"
+                                                Storyboard.TargetProperty="Opacity"
+                                                From="0" To="1"/>
+
+                            </Storyboard>
+                        </BeginStoryboard>
+
+                    </EventTrigger>
+
+                    <EventTrigger RoutedEvent="MouseLeave">
+
+                        <BeginStoryboard>
+                            <Storyboard>
+
+                                <DoubleAnimation
+                                                Storyboard.TargetName="TT"
+                                                Storyboard.TargetProperty="Y"
+                                                From="10" To="0"/>
+
+                                <DoubleAnimation
+                                                Storyboard.TargetName="ChangeBtn"
+                                                Storyboard.TargetProperty="Opacity"
+                                                From="1" To="0"/>
+
+                            </Storyboard>
+                        </BeginStoryboard>
+
+                    </EventTrigger>
+                    
+                </Grid.Triggers>
+                
+            </Grid>
         </Grid>
         
     </Border>
