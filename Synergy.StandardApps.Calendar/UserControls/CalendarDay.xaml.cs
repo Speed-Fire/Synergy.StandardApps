@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Synergy.StandardApps.EntityForms.Calendar;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,11 +26,33 @@ namespace Synergy.StandardApps.Calendar.UserControls
         public string EventName { get; set; } = "";
 
 
+        public CalendarDay(int day)
+        {
+            InitializeComponent();
+
+            Color = Colors.OrangeRed;
+        }
+
+        public CalendarDay(CalendarEventForm form)
+        {
+            InitializeComponent();
+
+            Day = form.Day;
+            EventName = form.Title;
+            Color = form.GetColor();
+        }
+
+#if DEBUG
+
         public CalendarDay()
         {
             InitializeComponent();
 
-            Color = Color.from
+            Day = 31;
+            Color = Colors.DarkRed;
+            EventName = "New Year";
         }
+
+#endif
     }
 }
