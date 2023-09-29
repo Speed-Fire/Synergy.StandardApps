@@ -1,8 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Synergy.StandardApps.Domain.Alarm;
+using Synergy.StandardApps.Domain.Calendar;
 using Synergy.StandardApps.Domain.Notes;
 using Synergy.StandardApps.EntityForms.Alarm;
 using Synergy.StandardApps.EntityForms.Alarm.Converters;
+using Synergy.StandardApps.EntityForms.Calendar;
+using Synergy.StandardApps.EntityForms.Calendar.Converters;
 using Synergy.StandardApps.EntityForms.Notes;
 using Synergy.StandardApps.EntityForms.Notes.Converters;
 using Synergy.StandardApps.Utility.Converters;
@@ -20,7 +23,8 @@ namespace Synergy.StandardApps.EntityForms.Extensions
         {
             services
                 .AddTransient<IConverter<Note, NoteForm>, NoteToNoteFormConverter>()
-                .AddTransient<IConverter<AlarmRecord, AlarmForm>, AlarmRecordToAlarmFormConverter>();
+                .AddTransient<IConverter<AlarmRecord, AlarmForm>, AlarmRecordToAlarmFormConverter>()
+                .AddTransient<IConverter<CalendarEvent, CalendarEventForm>, CalendarEventToCalendarEventFormConverter>();
 
             return services;
         }
