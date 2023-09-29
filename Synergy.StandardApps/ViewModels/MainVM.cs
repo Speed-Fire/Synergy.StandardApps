@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Synergy.StandardApps.Alarms;
+using Synergy.StandardApps.Calendar;
 using Synergy.StandardApps.Notes;
 using Synergy.WPF.Common.Tray;
 using System;
@@ -71,6 +72,19 @@ namespace Synergy.StandardApps.ViewModels
             {
                 var page = Program.AppHost.Services
                     .GetRequiredService<AlarmsPage>();
+
+                if (frame.CanGoBack)
+                    frame.GoBack();
+
+                frame.Navigate(page);
+            }));
+
+        private RelayCommand<Frame> navigateToCalendar;
+        public ICommand NavigateToCalendar => navigateToCalendar ??
+            (navigateToCalendar = new RelayCommand<Frame>(frame =>
+            {
+                var page = Program.AppHost.Services
+                    .GetRequiredService<CalendarPage>();
 
                 if (frame.CanGoBack)
                     frame.GoBack();

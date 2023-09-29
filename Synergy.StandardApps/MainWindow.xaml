@@ -68,6 +68,11 @@
                 Style="{StaticResource ThemedNavItemStyle}"
                 Icon="{StaticResource SitemapIcon}"/>
 
+            <controls:NavItem
+                NavCommand="{Binding NavigateToCalendar}"
+                Style="{StaticResource ThemedNavItemStyle}"
+                Icon="{StaticResource CalendarIcon}"/>
+
         </controls:Sidebar>
         
     </controls:NotifyingGrid>
