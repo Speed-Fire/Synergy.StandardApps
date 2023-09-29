@@ -27,13 +27,13 @@ namespace Synergy.StandardApps.Misc
 
         public static void PlaySound(AlarmSound sound)
         {
-            if (sound == AlarmSound.None)
-                return;
+            //if (sound == AlarmSound.None)
+            //    return;
 
-            var player = new MediaPlayer();
-            player.Open(new Uri(GetPath(sound)));
-            player.Play();
-            player.Close();
+            //var player = new MediaPlayer();
+            //player.Open(new Uri(GetPath(sound)));
+            //player.Play();
+            //player.Close();
         }
     }
 }
