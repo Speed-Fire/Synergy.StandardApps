@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Synergy.StandardApps.Alarms.Extensions;
 using Synergy.StandardApps.Background.Extensions;
+using Synergy.StandardApps.Calendar.Extensions;
 using Synergy.StandardApps.DAL.DbContexts;
 using Synergy.StandardApps.DAL.Extensions;
 using Synergy.StandardApps.EntityForms.Extensions;
@@ -51,6 +52,7 @@ namespace Synergy.StandardApps
                     .RegisterNotes()
                     .RegisterAlarmServices()
                     .RegisterAlarmsUI()
+                    .RegisterCalendarUI()
                     .RegisterBackground();
 
                 services.AddSingleton<App>();
