@@ -78,11 +78,11 @@
                     Text="Notes:"/>
             </DockPanel>
             
-            <ListView
+            <ListBox
                 x:Name="NoteList"
                 Grid.Row="1"
                 Margin="0 3 0 0"
-                Style="{StaticResource ListViewStyle}"
+                Style="{StaticResource ListBoxStyle}"
                 ItemsSource="{Binding Notes}"
                 SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
@@ -96,14 +96,14 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 
-                <ListView.ItemTemplate>
+                <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock
                             Style="{StaticResource ListViewStyle.TextBlock}"
                             Text="{Binding Name}"/>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
 
         <Border
