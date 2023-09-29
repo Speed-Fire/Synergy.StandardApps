@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Synergy.StandardApps.Calendar.Messages;
 using Synergy.StandardApps.EntityForms.Calendar;
+using Synergy.StandardApps.Service.Calendar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,24 +15,41 @@ namespace Synergy.StandardApps.Calendar.ViewModels
 {
     public class CalendarVM : ObservableRecipient
     {
+        #region Fields
+
+        private readonly ICalendarService _calendarService;
+
         private DateTime _currentDate;
+        private List<CalendarEventForm> _calendarEvents;
+
+        #endregion
+
+        #region Properties
+
         public DateTime CurrentDate
         {
             get => _currentDate;
             set => SetProperty(ref _currentDate, value);
         }
 
-        private List<CalendarEventForm> _calendarEvents;
         public IEnumerable<CalendarEventForm> CalendarEvents => _calendarEvents;
 
-        public CalendarVM()
+        #endregion
+
+        public CalendarVM(ICalendarService calendarService)
         {
+            _calendarService = calendarService;
+
             IsActive = true;
 
             _calendarEvents = new();
         }
 
         #region Commands
+
+        private AsyncRelayCommand? pageLoaded;
+        public ICommand PageLoaded => pageLoaded ??
+            (pageLoaded = new AsyncRelayCommand(PageLoadedAsync));
 
         private RelayCommand<string>? changeCalendarEvent;
         public ICommand ChangeCalendarEvent => changeCalendarEvent ??
@@ -53,17 +71,51 @@ namespace Synergy.StandardApps.Calendar.ViewModels
 
         private async Task LoadNextMonthAsync()
         {
-            WeakReferenceMessenger.Default
-                .Send(new MonthLoadedMessage(null));
+            CurrentDate = CurrentDate.AddMonths(1);
+
+            await LoadEvents();
         }
 
         private async Task LoadPreviousMonthAsync()
         {
+            CurrentDate = CurrentDate.AddMonths(-1);
+
+            await LoadEvents();
+        }
+
+        private async Task PageLoadedAsync()
+        {
+            await LoadEvents();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Methods
+
+        private async Task LoadEvents()
+        {
+            var _events = await _calendarService.GetEvents(CurrentDate.Month);
+
+            if (_events.StatusCode == Domain.Enums.StatusCode.OK)
+                FillEvents(_events.Data);
+            else
+                FillEvents(new List<CalendarEventForm>());
+
             WeakReferenceMessenger.Default
                 .Send(new MonthLoadedMessage(null));
         }
 
-        #endregion
+        private void FillEvents(IEnumerable<CalendarEventForm> events)
+        {
+            _calendarEvents.Clear();
+
+            foreach(var ev in events)
+            {
+                _calendarEvents.Add(ev);
+            }
+        }
 
         #endregion
     }
