@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="Synergy.StandardApps.Calendar.UserControls.CalendarDay"
+             x:Name="CalendarDayCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Synergy.StandardApps.Calendar.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="100">
+    <Border
+        CornerRadius="10"
+        BorderThickness="2"
+        Background="LightGray">
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                    TextAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="36"
+                    Text="{Binding ElementName=CalendarDayCard,
+                                   Path=Day}"/>
+            
+            <Border
+                Grid.Row="1"
+                CornerRadius="0 0 9 10">
+
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 1">
+                        <GradientStop Color="{Binding ElementName=CalendarDayCard,
+                            Path=Color}" Offset="0.0"/>
+                        <GradientStop Color="Brown" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                
+                <TextBlock 
+                    TextAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="0 15 0 15"
+                    FontSize="12"
+                    Text="{Binding ElementName=CalendarDayCard,
+                                   Path=EventName}"/>
+
+            </Border>
+            
+        </Grid>
+        
+    </Border>
+</UserControl>
