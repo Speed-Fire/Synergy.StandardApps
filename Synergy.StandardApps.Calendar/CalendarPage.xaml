@@ -1,6 +1,7 @@
 ﻿<Page x:Class="Synergy.StandardApps.Calendar.CalendarPage"
       x:Name="CalendarPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
@@ -34,6 +35,14 @@
         </Style>
         
     </Page.Resources>
+
+    <i:Interaction.Triggers>
+
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding PageLoaded}"/>
+        </i:EventTrigger>
+        
+    </i:Interaction.Triggers>
     
     <Grid>
 
@@ -135,7 +144,7 @@
                     Style="{StaticResource NormalButtonStyle}"
                     MinHeight="30"
                     HorizontalAlignment="Center"
-                    Command="{Binding Save}"
+                    Command="{Binding LoadPreviousMonth}"
                     Content="{StaticResource ArrowLeft}"/>
 
                 <TextBlock
@@ -148,11 +157,10 @@
                 <controls:NormalButton
                     Grid.Column="3"
                     Padding="2 0 2 0"
-                    Visibility="{Binding IsCancelEnabled, Converter={StaticResource b2vconv}}"
                     Style="{StaticResource NormalButtonStyle}"
                     MinHeight="30"
                     HorizontalAlignment="Center"
-                    Command="{Binding GoBack}"
+                    Command="{Binding LoadNextMonth}"
                     Content="{StaticResource ArrowRight}"/>
 
             </Grid>
