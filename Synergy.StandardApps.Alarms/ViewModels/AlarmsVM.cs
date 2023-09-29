@@ -164,8 +164,7 @@ namespace Synergy.StandardApps.Alarms.ViewModels
 
         private async Task SwitchAlarmEnabilityAsync(AlarmForm? alarm)
         {
-            var res = await _alarmService.SwitchAlarmEnability(alarm.Id, !alarm.IsEnabled);
-            alarm.IsEnabled = !alarm.IsEnabled;
+            var res = await _alarmService.SwitchAlarmEnability(alarm.Id, alarm.IsEnabled);
 
             if (res.StatusCode == Domain.Enums.StatusCode.Error)
                 return;
