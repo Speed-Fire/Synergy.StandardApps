@@ -33,7 +33,7 @@ namespace Synergy.StandardApps.Alarms.SubPages
             {
                 SundayBtn, MondayBtn, TuesdayBtn,
                 WednesdayBtn, ThursdayBtn, FridayBtn,
-                SundayBtn,
+                SaturdayBtn,
             };
 
             InitSettings(vm);
