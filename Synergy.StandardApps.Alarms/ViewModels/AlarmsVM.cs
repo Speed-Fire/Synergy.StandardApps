@@ -126,6 +126,9 @@ namespace Synergy.StandardApps.Alarms.ViewModels
 
         public async Task LoadAlarmsAsync()
         {
+            WeakReferenceMessenger.Default
+                    .Send(new AlarmNavigateMessage(new BlankAlarmPage()));
+
             var _alarms = await _alarmService.GetAlarms();
 
             if (_alarms.StatusCode == Domain.Enums.StatusCode.Error)
