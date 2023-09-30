@@ -5,6 +5,7 @@ using Synergy.StandardApps.Calendar.UserControls;
 using Synergy.StandardApps.Calendar.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -30,8 +32,13 @@ namespace Synergy.StandardApps.Calendar
         private readonly CalendarVM _vm;
         private readonly List<CalendarDay> _cards;
 
+        private readonly DoubleAnimation _calendarDisappearing;
+        private readonly DoubleAnimation _calendarAppearing;
+
         private const double _cardHeight = 112.5;
         private const double _cardWidth = 75;
+
+        private volatile bool _updated;
 
         public Thickness ItemMargin { get; }
 
@@ -40,6 +47,21 @@ namespace Synergy.StandardApps.Calendar
             InitializeComponent();
             ItemMargin = new Thickness(15, 10, 15, 10);
             _cards = new();
+
+            _calendarDisappearing = new DoubleAnimation()
+            {
+                From = 1,
+                To = 0,
+                Duration = TimeSpan.FromSeconds(0.5)
+            };
+
+            _calendarAppearing = new DoubleAnimation()
+            {
+                From = 0,
+                To = 1,
+                Duration = TimeSpan.FromSeconds(0.7)
+            };
+            _updated = false;
 
             WeakReferenceMessenger.Default
                 .RegisterAll(this);
@@ -51,10 +73,44 @@ namespace Synergy.StandardApps.Calendar
 
         void IRecipient<MonthLoadedMessage>.Receive(MonthLoadedMessage message)
         {
-            LoadMonth();
+            Dispatcher.BeginInvoke(LoadMonth);
         }
 
         #endregion
+
+        private void LoadBackgroundImage(int month)
+        {
+            switch (month)
+            {
+                case 12:
+                case 1:
+                case 2:
+                    ImageBrd.Background = (Brush)FindResource("WinterBrush");
+                    break;
+
+                case 3:
+                case 4:
+                case 5:
+                    ImageBrd.Background = (Brush)FindResource("SpringBrush");
+                    break;
+
+                case 6:
+                case 7:
+                case 8:
+                    ImageBrd.Background = (Brush)FindResource("SummerBrush");
+                    break;
+
+                case 9:
+                case 10:
+                case 11:
+                    ImageBrd.Background = (Brush)FindResource("AutumnBrush");
+                    break;
+
+                default:
+                    ImageBrd.Background = Brushes.Transparent;
+                    break;
+            }
+        }
 
         private void LoadMonth()
         {
@@ -152,6 +208,10 @@ namespace Synergy.StandardApps.Calendar
             }
 
             System.Diagnostics.Trace.WriteLine("Calendar loaded!");
+
+            LoadBackgroundImage(month);
+
+            ImageBrd.BeginAnimation(Control.OpacityProperty, _calendarAppearing);
         }
 
         private int DayOfWeekToOffset(DayOfWeek dayOfWeek)
@@ -175,6 +235,11 @@ namespace Synergy.StandardApps.Calendar
                 default:
                     return 0;
             }
+        }
+
+        private void NormalButton_Click(object sender, RoutedEventArgs e)
+        {
+            ImageBrd.BeginAnimation(Control.OpacityProperty, _calendarDisappearing);
         }
     }
 }

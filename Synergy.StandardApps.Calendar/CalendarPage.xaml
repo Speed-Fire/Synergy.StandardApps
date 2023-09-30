@@ -65,11 +65,11 @@
                 BorderBrush="{DynamicResource ListView.Background}"
                 Background="{DynamicResource ListView.Background}">
             <Border
+                x:Name="ImageBrd"
                 Padding="3"
                 CornerRadius="15"
                 BorderThickness="2"
-                BorderBrush="{StaticResource PrimaryBrush}"
-                Background="{DynamicResource SpringBrush}">
+                BorderBrush="{StaticResource PrimaryBrush}">
 
                 <Grid>
 
@@ -154,7 +154,8 @@
                     Style="{StaticResource NormalButtonStyle}"
                     MinHeight="30"
                     HorizontalAlignment="Center"
-                    Command="{Binding LoadPreviousMonth}">
+                    Command="{Binding LoadPreviousMonth, IsAsync=True}"
+                    Click="NormalButton_Click">
 
                     <Path
                         Data="{StaticResource ArrowLeft}"
@@ -176,7 +177,8 @@
                     Style="{StaticResource NormalButtonStyle}"
                     MinHeight="30"
                     HorizontalAlignment="Center"
-                    Command="{Binding LoadNextMonth}">
+                    Command="{Binding LoadNextMonth, IsAsync=True}"
+                    Click="NormalButton_Click">
 
                     <Path
                         Data="{StaticResource ArrowRight}"
