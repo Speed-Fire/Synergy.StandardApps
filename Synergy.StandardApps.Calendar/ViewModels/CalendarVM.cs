@@ -99,7 +99,7 @@ namespace Synergy.StandardApps.Calendar.ViewModels
             var _events = await _calendarService.GetEvents(CurrentDate.Month);
 
             if (_events.StatusCode == Domain.Enums.StatusCode.OK)
-                FillEvents(_events.Data);
+                FillEvents(_events.Data?.OrderBy(x => x.Day));
             else
                 FillEvents(new List<CalendarEventForm>());
 
