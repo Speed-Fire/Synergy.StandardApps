@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="clr-namespace:Synergy.WPF.Common.Controls;assembly=Synergy.WPF.Common"
-             xmlns:local="clr-namespace:Synergy.StandardApps.Calendar.UserControls"
+             xmlns:local="clr-namespace:Synergy.StandardApps.Calendar"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="100">
 
@@ -179,7 +179,7 @@
                         Style="{StaticResource NormalButtonStyle.CalendarCard.Bottom}"
                         x:Name="ChangeBtn"
                         Content="Change"
-                        Command="{Binding RelativeSource={RelativeSource AncestorType=Page},
+                        Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:CalendarPage}},
                                           Path=DataContext.ChangeCalendarEvent}"
                         CommandParameter="{Binding ElementName=CalendarDayCard, Path=Day}"/>
                     
