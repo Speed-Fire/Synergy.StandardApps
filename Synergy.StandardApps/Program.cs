@@ -52,6 +52,7 @@ namespace Synergy.StandardApps
                     .RegisterNotes()
                     .RegisterAlarmServices()
                     .RegisterAlarmsUI()
+                    .RegisterCalendarServices()
                     .RegisterCalendarUI()
                     .RegisterBackground();
 
