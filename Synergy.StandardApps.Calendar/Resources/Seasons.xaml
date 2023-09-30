@@ -325,8 +325,301 @@ z"/>
 
     <!--#endregion-->
     
+    <!--#region SpringBrush -->
+
+    <Pen x:Key="Spring.Pen" Thickness="1.5"
+         Brush="DarkGreen"/>
+
+    <Pen x:Key="Snowdrop.Bun.Pen" Thickness="1"
+         Brush="Snow"/>
+
+    <LinearGradientBrush x:Key="Snowdrop.Bun.Brush"
+                         StartPoint="0 0" EndPoint="0 1">
+        <GradientStop Color="AntiqueWhite" Offset="0"/>
+        <GradientStop Color="Snow" Offset="1"/>
+    </LinearGradientBrush>
+
+    <PathGeometry x:Key="Snowdrop.Bud"
+                  Figures="m 0,0 -5.56429,7.85119 -7.23356,8.58723 -2.78214,5.88839 -2.78214,7.36049
+v 5.88838
+l 1.66929,2.94421 1.39107,0.73604 2.2257,-0.9814 3.06035,-3.68024 1.11287,5.15234 1.39107,3.18953 2.78212,4.66166 2.78214,1.9628 3.89501,-3.18955 2.78214,-3.18955 1.9475,-3.92559 2.2257,-4.907 5.28606,7.3605 3.33857,2.20814 1.66929,-2.45349 0.83465,-5.15234
+v -5.3977 -6.13372
+l -2.78214,-9.32331 -4.45142,-6.62442 -5.28606,-8.64917
+z"/>
+
+    <CombinedGeometry x:Key="Snowdrop.Bud.Start" GeometryCombineMode="Exclude">
+        <CombinedGeometry.Geometry1>
+            <EllipseGeometry RadiusX="4" RadiusY="12" Center="8 0"/>
+        </CombinedGeometry.Geometry1>
+        <CombinedGeometry.Geometry2>
+            <RectangleGeometry Rect="0,4 16,10"/>
+        </CombinedGeometry.Geometry2>
+    </CombinedGeometry>
+        
     <DrawingBrush x:Key="SpringBrush" Stretch="None">
 
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+
+                <GeometryDrawing>
+
+                    <GeometryDrawing.Brush>
+                        <RadialGradientBrush>
+                            <GradientStop Color="Snow" Offset="0"/>
+                            <GradientStop Color="Snow" Offset="0.6"/>
+                            <GradientStop Color="#CAECF4" Offset="0.95"/>
+                            <GradientStop Color="LightBlue" Offset="1"/>
+                        </RadialGradientBrush>
+                    </GeometryDrawing.Brush>
+
+                    <GeometryDrawing.Geometry>
+                        <CombinedGeometry GeometryCombineMode="Union">
+                            <CombinedGeometry.Geometry1>
+                                <CombinedGeometry GeometryCombineMode="Union">
+                                    <CombinedGeometry.Geometry1>
+                                        <EllipseGeometry Center="-35 0" RadiusX="100" RadiusY="60"/>
+                                    </CombinedGeometry.Geometry1>
+                                    <CombinedGeometry.Geometry2>
+                                        <EllipseGeometry Center="50 -5" RadiusX="70" RadiusY="50"/>
+                                    </CombinedGeometry.Geometry2>
+                                </CombinedGeometry>
+                            </CombinedGeometry.Geometry1>
+                            <CombinedGeometry.Geometry2>
+                                <CombinedGeometry GeometryCombineMode="Union">
+                                    <CombinedGeometry.Geometry1>
+                                        <EllipseGeometry Center="10 -50" RadiusX="70" RadiusY="50"/>
+                                    </CombinedGeometry.Geometry1>
+                                    <CombinedGeometry.Geometry2>
+                                        <EllipseGeometry Center="100 30" RadiusX="40" RadiusY="40"/>
+                                    </CombinedGeometry.Geometry2>
+                                </CombinedGeometry>
+                            </CombinedGeometry.Geometry2>
+                        </CombinedGeometry>
+                        
+                    </GeometryDrawing.Geometry>
+                    
+                </GeometryDrawing>
+
+                <GeometryDrawing>
+
+                    <GeometryDrawing.Brush>
+                        <RadialGradientBrush>
+                            <GradientStop Color="LightGray" Offset="0.5"/>
+                            <GradientStop Color="Snow" Offset="1"/>
+                        </RadialGradientBrush>
+                    </GeometryDrawing.Brush>
+                    
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry Center="0 -5"
+                                         RadiusX="40" 
+                                         RadiusY="18"/>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+
+                <GeometryDrawing
+                    Pen="{StaticResource Spring.Pen}">
+
+                    <GeometryDrawing.Brush>
+                        <LinearGradientBrush StartPoint="0 1" EndPoint="1 0">
+                            <GradientStop Color="DarkOliveGreen" Offset="0"/>
+                            <GradientStop Color="Green" Offset="0.33"/>
+                            <GradientStop Color="ForestGreen" Offset="0.5"/>
+                            <GradientStop Color="LawnGreen" Offset="1"/>
+                        </LinearGradientBrush>
+                    </GeometryDrawing.Brush>
+                    
+                    <GeometryDrawing.Geometry>
+                        <GeometryGroup>
+
+                            <PathGeometry>
+                                <PathFigure StartPoint="10 5" IsClosed="True">
+                                    <QuadraticBezierSegment Point1="10 -300"
+                                                            Point2="120 -400"/>
+
+                                    <QuadraticBezierSegment Point1="180 -450"
+                                                            Point2="220 -405"/>
+
+                                    <QuadraticBezierSegment Point1="180 -455"
+                                                            Point2="115 -400"/>
+
+                                    <QuadraticBezierSegment Point1="-15 -300"
+                                                            Point2="-10 5"/>
+                                </PathFigure>
+                            </PathGeometry>
+
+                            <PathGeometry>
+                                <PathFigure StartPoint="160 -423">
+                                    <QuadraticBezierSegment Point1="175 -423"
+                                                            Point2="180 -383"/>
+                                    <LineSegment Point="182 -383"/>
+                                    <QuadraticBezierSegment Point1="175 -423"
+                                                            Point2="162 -421"/>
+                                </PathFigure>
+                            </PathGeometry>
+
+                            <PathGeometry>
+                                <PathFigure StartPoint="115 -395">
+                                    <QuadraticBezierSegment Point1="130 -395"
+                                                            Point2="135 -355"/>
+                                    <LineSegment Point="137 -355"/>
+                                    <QuadraticBezierSegment Point1="130 -395"
+                                                            Point2="117 -393"/>
+                                </PathFigure>
+                            </PathGeometry>
+                            
+                            <PathGeometry>
+                                <PathFigure StartPoint="80 -352">
+                                    <QuadraticBezierSegment Point1="95 -352"
+                                                            Point2="100 -312"/>
+                                    <LineSegment Point="102 -312"/>
+                                    <QuadraticBezierSegment Point1="95 -352"
+                                                            Point2="82 -350"/>
+                                </PathFigure>
+                            </PathGeometry>
+                            
+                        </GeometryGroup>
+                    </GeometryDrawing.Geometry>
+
+                </GeometryDrawing>
+
+                <GeometryDrawing
+                                 Pen="{StaticResource Spring.Pen}">
+
+                    <GeometryDrawing.Brush>
+                        <LinearGradientBrush StartPoint="1 1" EndPoint="0 0">
+                            <GradientStop Color="DarkOliveGreen" Offset="0"/>
+                            <GradientStop Color="Green" Offset="0.33"/>
+                            <GradientStop Color="ForestGreen" Offset="0.5"/>
+                            <GradientStop Color="LawnGreen" Offset="1"/>
+                        </LinearGradientBrush>
+                    </GeometryDrawing.Brush>
+                    
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry>
+
+                            <PathFigure StartPoint="-10 5" IsClosed="False">
+                                <QuadraticBezierSegment Point1="-120 -260"
+                                                            Point2="-280 -250"/>
+
+                                <QuadraticBezierSegment Point1="-230 -270"
+                                                            Point2="-195 -255"/>
+
+                                <QuadraticBezierSegment Point1="-50 -360"
+                                                            Point2="-9 -15"/>
+                            </PathFigure>
+
+                        </PathGeometry>
+                    </GeometryDrawing.Geometry>
+                    
+                </GeometryDrawing>
+
+                <GeometryDrawing Pen="{StaticResource Spring.Pen}">
+
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry>
+
+                            <PathFigure StartPoint="-9.5 -7.5" IsClosed="False">
+                                <QuadraticBezierSegment Point1="-80 -260"
+                                                            Point2="-195 -255"/>
+                            </PathFigure>
+
+                        </PathGeometry>
+                    </GeometryDrawing.Geometry>
+
+                </GeometryDrawing>
+
+                <!--#region Bud.Start -->
+                    
+                <DrawingGroup>
+
+                    <GeometryDrawing Pen="{StaticResource Spring.Pen}"
+                                 Brush="Green"
+                                 Geometry="{StaticResource Snowdrop.Bud.Start}"/>
+
+                    <DrawingGroup.Transform>
+                        <TranslateTransform X="93" Y="-299"/>
+                    </DrawingGroup.Transform>
+                    
+                </DrawingGroup>
+
+                <DrawingGroup>
+
+                    <GeometryDrawing Pen="{StaticResource Spring.Pen}"
+                                 Brush="Green"
+                                 Geometry="{StaticResource Snowdrop.Bud.Start}"/>
+
+                    <DrawingGroup.Transform>
+                        <TranslateTransform X="128" Y="-342"/>
+                    </DrawingGroup.Transform>
+
+                </DrawingGroup>
+
+                <DrawingGroup>
+
+                    <GeometryDrawing Pen="{StaticResource Spring.Pen}"
+                                 Brush="Green"
+                                 Geometry="{StaticResource Snowdrop.Bud.Start}"/>
+
+                    <DrawingGroup.Transform>
+                        <TranslateTransform X="173" Y="-370"/>
+                    </DrawingGroup.Transform>
+
+                </DrawingGroup>
+
+                <!--#endregion-->
+                    
+                <!--#region Bud-->
+                    
+                <DrawingGroup>
+
+                    <GeometryDrawing Pen="{StaticResource Snowdrop.Bun.Pen}"
+                                     Brush="{StaticResource Snowdrop.Bun.Brush}"
+                                     Geometry="{StaticResource Snowdrop.Bud}"/>
+
+                    <DrawingGroup.Transform>
+                        <TranslateTransform X="97" Y="-293"/>
+                    </DrawingGroup.Transform>
+                    
+                </DrawingGroup>
+
+                <DrawingGroup>
+
+                    <GeometryDrawing Pen="{StaticResource Snowdrop.Bun.Pen}"
+                                     Brush="{StaticResource Snowdrop.Bun.Brush}"
+                                     Geometry="{StaticResource Snowdrop.Bud}"/>
+
+                    <DrawingGroup.Transform>
+                        <TranslateTransform X="132" Y="-337"/>
+                    </DrawingGroup.Transform>
+
+                </DrawingGroup>
+
+                <DrawingGroup>
+
+                    <GeometryDrawing Pen="{StaticResource Snowdrop.Bun.Pen}"
+                                     Brush="{StaticResource Snowdrop.Bun.Brush}"
+                                     Geometry="{StaticResource Snowdrop.Bud}"/>
+
+                    <DrawingGroup.Transform>
+                        <TranslateTransform X="177" Y="-364"/>
+                    </DrawingGroup.Transform>
+
+                </DrawingGroup>
+
+                <!--#endregion-->
+                    
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+
+        <DrawingBrush.RelativeTransform>
+            <TransformGroup>
+                <ScaleTransform ScaleX="0.75" ScaleY="0.75"/>
+                <TranslateTransform X="-0.25" Y="0.4"/>
+            </TransformGroup>
+        </DrawingBrush.RelativeTransform>
+        
     </DrawingBrush>
 
+    <!--#endregion-->
+        
 </ResourceDictionary>
