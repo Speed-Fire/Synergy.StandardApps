@@ -127,6 +127,20 @@
                         </Grid>
                     </ScrollViewer>
 
+                    <Border
+                        x:Name="FrameBrd"
+                        Grid.Column="2"
+                        Padding="2"
+                        CornerRadius="15 0 0 15">
+                        <Frame
+                            x:Name="EventFrame"
+                            Style="{StaticResource FrameStyle}"/>
+
+                        <Border.RenderTransform>
+                            <TranslateTransform x:Name="TT"/>
+                        </Border.RenderTransform>
+                    </Border>
+                    
                 </Grid>
 
             </Border>
