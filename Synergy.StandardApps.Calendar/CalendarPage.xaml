@@ -1,11 +1,12 @@
 ﻿<Page x:Class="Synergy.StandardApps.Calendar.CalendarPage"
-      x:Name="CalendarPage"
+      x:Name="CalendarMain"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:controls="clr-namespace:Synergy.WPF.Common.Controls;assembly=Synergy.WPF.Common"
+      xmlns:ucs="clr-namespace:Synergy.StandardApps.Calendar.UserControls"
       xmlns:local="clr-namespace:Synergy.StandardApps.Calendar"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -21,19 +22,15 @@
             m 98.112907,92.086366 -3.367236,1.413867 V 93.05995 l 2.821533,-1.159619 -2.821533,-1.159619 v -0.440283 l 3.373438,1.416968 z
         </Geometry>
 
-        <Style x:Key="WeekDayGridStyle" TargetType="Grid">
-            <Style.Resources>
-                <Style TargetType="TextBlock"
+        <Style x:Key="WeekDayTbStyle" TargetType="TextBlock"
                        BasedOn="{StaticResource TextBlockStyle}">
-                    <Setter Property="FontSize" Value="20"/>
-                    <Setter Property="MinWidth" Value="40"/>
-                    <Setter Property="HorizontalAlignment" Value="Center"/>
-                    <Setter Property="TextAlignment" Value="Center"/>
-                    <Setter Property="Margin" Value="{Binding ElementName=CalendarPage, Path=ItemMargin}"/>
-                </Style>
-            </Style.Resources>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="MinWidth" Value="40"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="{Binding ElementName=CalendarMain, Path=ItemMargin}"/>
         </Style>
-        
+
     </Page.Resources>
 
     <i:Interaction.Triggers>
@@ -65,58 +62,50 @@
             BorderBrush="{StaticResource PrimaryBrush}"
             Background="{DynamicResource ListView.Background}">
 
-            <Grid>
+            <Grid x:Name="CalendarGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Grid Style="{StaticResource WeekDayGridStyle}">
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Column="1" Text="Mn"/>
-                    <TextBlock Grid.Column="2" Text="Tu"/>
-                    <TextBlock Grid.Column="3" Text="Wd"/>
-                    <TextBlock Grid.Column="4" Text="Th"/>
-                    <TextBlock Grid.Column="5" Text="Fr"/>
-                    <TextBlock Grid.Column="6" Text="St"/>
-                    <TextBlock Grid.Column="7" Text="Sn"/>
-
-                </Grid>
-
-                <Grid x:Name="CalendarGrid">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                </Grid>
+                <TextBlock Grid.Column="1"
+                           Style="{StaticResource WeekDayTbStyle}"
+                           Text="Mn"/>
+                <TextBlock Grid.Column="2"
+                           Style="{StaticResource WeekDayTbStyle}"
+                           Text="Tu"/>
+                <TextBlock Grid.Column="3"
+                           Style="{StaticResource WeekDayTbStyle}"
+                           Text="Wd"/>
+                <TextBlock Grid.Column="4"
+                           Style="{StaticResource WeekDayTbStyle}"
+                           Text="Th"/>
+                <TextBlock Grid.Column="5"
+                           Style="{StaticResource WeekDayTbStyle}"
+                           Text="Fr"/>
+                <TextBlock Grid.Column="6"
+                           Style="{StaticResource WeekDayTbStyle}"
+                           Text="St"/>
+                <TextBlock Grid.Column="7"
+                           Style="{StaticResource WeekDayTbStyle}"
+                           Text="Sn"/>
             </Grid>
 
         </Border>
@@ -144,8 +133,14 @@
                     Style="{StaticResource NormalButtonStyle}"
                     MinHeight="30"
                     HorizontalAlignment="Center"
-                    Command="{Binding LoadPreviousMonth}"
-                    Content="{StaticResource ArrowLeft}"/>
+                    Command="{Binding LoadPreviousMonth}">
+
+                    <Path
+                        Data="{StaticResource ArrowLeft}"
+                        Stretch="Uniform"
+                        Fill="{StaticResource Text.Foreground}"/>
+
+                </controls:NormalButton>
 
                 <TextBlock
                     Grid.Column="2"
@@ -160,8 +155,14 @@
                     Style="{StaticResource NormalButtonStyle}"
                     MinHeight="30"
                     HorizontalAlignment="Center"
-                    Command="{Binding LoadNextMonth}"
-                    Content="{StaticResource ArrowRight}"/>
+                    Command="{Binding LoadNextMonth}">
+
+                    <Path
+                        Data="{StaticResource ArrowRight}"
+                        Stretch="Uniform"
+                        Fill="{StaticResource Text.Foreground}"/>
+
+                </controls:NormalButton>
 
             </Grid>
         </Border>
