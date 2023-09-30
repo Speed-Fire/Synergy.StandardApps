@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace Synergy.StandardApps.Calendar.ViewModels.ChangeCalendarEventVMs
 {
-    internal class CreateCalendarEventVM : ChangeCalendarEventVM
+    public class CreateCalendarEventVM : ChangeCalendarEventVM
     {
         public CreateCalendarEventVM(ICalendarService calendarService, int day, int month)
             : base(calendarService, day, month)

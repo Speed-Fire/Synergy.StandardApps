@@ -12,7 +12,7 @@ using System.Windows.Media;
 
 namespace Synergy.StandardApps.Calendar.ViewModels.ChangeCalendarEventVMs
 {
-    internal abstract class ChangeCalendarEventVM : ObservableObject
+    public abstract class ChangeCalendarEventVM : ObservableObject
     {
         protected readonly ICalendarService _calendarService;
         protected long _id;

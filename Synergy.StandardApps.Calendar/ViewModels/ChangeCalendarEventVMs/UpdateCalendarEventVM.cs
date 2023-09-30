@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace Synergy.StandardApps.Calendar.ViewModels.ChangeCalendarEventVMs
 {
-    internal class UpdateCalendarEventVM : ChangeCalendarEventVM
+    public class UpdateCalendarEventVM : ChangeCalendarEventVM
     {
         public UpdateCalendarEventVM(ICalendarService calendarService, CalendarEventForm form) 
             : base(calendarService, form)
