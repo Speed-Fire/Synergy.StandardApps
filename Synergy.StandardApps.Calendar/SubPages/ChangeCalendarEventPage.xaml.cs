@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Synergy.StandardApps.Calendar.ViewModels.ChangeCalendarEventVMs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,13 @@ namespace Synergy.StandardApps.Calendar.SubPages
     /// </summary>
     public partial class ChangeCalendarEventPage : Page
     {
-        public ChangeCalendarEventPage()
+        private readonly ChangeCalendarEventVM _vm;
+
+        public ChangeCalendarEventPage(ChangeCalendarEventVM vm)
         {
             InitializeComponent();
+
+            DataContext = _vm = vm;
         }
     }
 }
