@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Synergy.StandardApps.Service.Alarm;
+using Synergy.StandardApps.Service.Calendar;
 using Synergy.StandardApps.Service.Notes;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,14 @@ namespace Synergy.StandardApps.Service.Extensions
         {
             services
                 .AddTransient<IAlarmService, AlarmService>();
+
+            return services;
+        }
+
+        public static IServiceCollection RegisterCalendarServices(this IServiceCollection services)
+        {
+            services
+                .AddTransient<ICalendarService, CalendarService>();
 
             return services;
         }
