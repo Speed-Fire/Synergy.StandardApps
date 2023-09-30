@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.Logging;
 using Synergy.StandardApps.Calendar.Messages;
 using Synergy.StandardApps.Calendar.UserControls;
 using Synergy.StandardApps.Calendar.ViewModels;
@@ -28,6 +29,9 @@ namespace Synergy.StandardApps.Calendar
     {
         private readonly CalendarVM _vm;
         private readonly List<CalendarDay> _cards;
+
+        private const double _cardHeight = 112.5;
+        private const double _cardWidth = 75;
 
         public Thickness ItemMargin { get; }
 
@@ -71,11 +75,12 @@ namespace Synergy.StandardApps.Calendar
                                   _vm.CurrentDate.Month, 1);
             var month = dt.Month;
             var dtStart = dt;
+            DateTime dtEnd = dt;
 
             var str = 0;
             for(int i = DayOfWeekToOffset(dt.DayOfWeek);
                 dt.Month == month;
-                dt = dt.AddDays(1), i++, str = i % 7)
+                dt = dt.AddDays(1), i++, str = i / 7)
             {
                 var ev = events.FirstOrDefault(e => e.Day == dt.Day);
                 var col = DayOfWeekToOffset(dt.DayOfWeek);
@@ -92,10 +97,15 @@ namespace Synergy.StandardApps.Calendar
                 }
 
                 card.SetValue(Grid.RowProperty, str + 1);
-                card.SetValue(Grid.RowProperty, col + 1);
+                card.SetValue(Grid.ColumnProperty, col);
+                card.SetValue(Control.MarginProperty, ItemMargin);
+                card.SetValue(Control.MinHeightProperty, _cardHeight);
+                card.SetValue(Control.MinWidthProperty, _cardWidth);
 
                 _cards.Add(card);
                 CalendarGrid.Children.Add(card);
+
+                dtEnd = dt;
             }
 
 
@@ -106,7 +116,10 @@ namespace Synergy.StandardApps.Calendar
                 var card = new CalendarDay(_dt.Day, _dt.Month, true);
 
                 card.SetValue(Grid.RowProperty, str);
-                card.SetValue(Grid.RowProperty, col + 1);
+                card.SetValue(Grid.ColumnProperty, col);
+                card.SetValue(Control.MarginProperty, ItemMargin);
+                card.SetValue(Control.MinHeightProperty, _cardHeight);
+                card.SetValue(Control.MinWidthProperty, _cardWidth);
 
                 _cards.Add(card);
                 CalendarGrid.Children.Add(card);
@@ -127,16 +140,18 @@ namespace Synergy.StandardApps.Calendar
 
 
             // filling days after the month
-            if (dt.DayOfWeek != DayOfWeek.Sunday)
+            if (dtEnd.DayOfWeek != DayOfWeek.Sunday)
             {
                 do
                 {
-                    dtStart = dtStart.AddDays(1);
+                    dtEnd = dtEnd.AddDays(1);
 
-                    AddBlankDay(dtStart, str + 1);
+                    AddBlankDay(dtEnd, str + 1);
                 }
-                while (dt.DayOfWeek != DayOfWeek.Sunday);
+                while (dtEnd.DayOfWeek != DayOfWeek.Sunday);
             }
+
+            System.Diagnostics.Trace.WriteLine("Calendar loaded!");
         }
 
         private int DayOfWeekToOffset(DayOfWeek dayOfWeek)
@@ -144,19 +159,19 @@ namespace Synergy.StandardApps.Calendar
             switch (dayOfWeek)
             {
                 case DayOfWeek.Sunday:
-                    return 0;
-                case DayOfWeek.Monday:
-                    return 1;
-                case DayOfWeek.Tuesday:
-                    return 2;
-                case DayOfWeek.Wednesday:
-                    return 3;
-                case DayOfWeek.Thursday:
-                    return 4;
-                case DayOfWeek.Friday:
-                    return 5;
-                case DayOfWeek.Saturday:
                     return 6;
+                case DayOfWeek.Monday:
+                    return 0;
+                case DayOfWeek.Tuesday:
+                    return 1;
+                case DayOfWeek.Wednesday:
+                    return 2;
+                case DayOfWeek.Thursday:
+                    return 3;
+                case DayOfWeek.Friday:
+                    return 4;
+                case DayOfWeek.Saturday:
+                    return 5;
                 default:
                     return 0;
             }

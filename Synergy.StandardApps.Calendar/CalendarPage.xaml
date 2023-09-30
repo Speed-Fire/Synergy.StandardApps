@@ -15,11 +15,11 @@
     <Page.Resources>
 
         <Geometry x:Key="ArrowLeft">
-            m 92.230377,92.931802 3.370337,-1.413867 v 0.440283 l -2.824634,1.15962 2.824634,1.159619 v 0.440283 l -3.373437,-1.420068 z
+            m 75.704026,103.25691 26.718444,-7.143933 v 2.224644 l -22.392363,5.859279 22.392363,5.85927 v 2.22465 l -26.743014,-7.17526 z
         </Geometry>
 
         <Geometry x:Key="ArrowRight">
-            m 98.112907,92.086366 -3.367236,1.413867 V 93.05995 l 2.821533,-1.159619 -2.821533,-1.159619 v -0.440283 l 3.373438,1.416968 z
+            M 102.3979,103.25691 75.679456,96.112977 v 2.224644 l 22.392363,5.859279 -22.392363,5.85927 v 2.22465 l 26.743014,-7.17526 z
         </Geometry>
 
         <Style x:Key="WeekDayTbStyle" TargetType="TextBlock"
@@ -62,50 +62,62 @@
             BorderBrush="{StaticResource PrimaryBrush}"
             Background="{DynamicResource ListView.Background}">
 
-            <Grid x:Name="CalendarGrid">
+            <Grid>
+
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+                
+                <ScrollViewer
+                    Grid.Column="1"
+                    Style="{StaticResource ScrollViewerStyle}">
+                    <Grid x:Name="CalendarGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-                <TextBlock Grid.Column="1"
-                           Style="{StaticResource WeekDayTbStyle}"
-                           Text="Mn"/>
-                <TextBlock Grid.Column="2"
-                           Style="{StaticResource WeekDayTbStyle}"
-                           Text="Tu"/>
-                <TextBlock Grid.Column="3"
-                           Style="{StaticResource WeekDayTbStyle}"
-                           Text="Wd"/>
-                <TextBlock Grid.Column="4"
-                           Style="{StaticResource WeekDayTbStyle}"
-                           Text="Th"/>
-                <TextBlock Grid.Column="5"
-                           Style="{StaticResource WeekDayTbStyle}"
-                           Text="Fr"/>
-                <TextBlock Grid.Column="6"
-                           Style="{StaticResource WeekDayTbStyle}"
-                           Text="St"/>
-                <TextBlock Grid.Column="7"
-                           Style="{StaticResource WeekDayTbStyle}"
-                           Text="Sn"/>
+                        <TextBlock Grid.Column="0"
+                                   Style="{StaticResource WeekDayTbStyle}"
+                                   Text="Mn"/>
+                        <TextBlock Grid.Column="1"
+                                   Style="{StaticResource WeekDayTbStyle}"
+                                   Text="Tu"/>
+                        <TextBlock Grid.Column="2"
+                                   Style="{StaticResource WeekDayTbStyle}"
+                                   Text="Wd"/>
+                        <TextBlock Grid.Column="3"
+                                   Style="{StaticResource WeekDayTbStyle}"
+                                   Text="Th"/>
+                        <TextBlock Grid.Column="4"
+                                   Style="{StaticResource WeekDayTbStyle}"
+                                   Text="Fr"/>
+                        <TextBlock Grid.Column="5"
+                                   Style="{StaticResource WeekDayTbStyle}"
+                                   Text="St"/>
+                        <TextBlock Grid.Column="6"
+                                   Style="{StaticResource WeekDayTbStyle}"
+                                   Text="Sn"/>
+                    </Grid>
+                </ScrollViewer>
+
             </Grid>
 
         </Border>
@@ -147,7 +159,7 @@
                     Margin="15 0 15 0"
                     Style="{StaticResource TextBlockStyle}"
                     FontSize="20"
-                    Text="{Binding CurrentDate, StringFormat={}{Y}}"/>
+                    Text="{Binding CurrentDate, StringFormat={}{0:MMMM yyyy}}"/>
 
                 <controls:NormalButton
                     Grid.Column="3"

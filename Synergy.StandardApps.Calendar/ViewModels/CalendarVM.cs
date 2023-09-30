@@ -43,6 +43,7 @@ namespace Synergy.StandardApps.Calendar.ViewModels
             IsActive = true;
 
             _calendarEvents = new();
+            CurrentDate = DateTime.Now;
         }
 
         #region Commands
@@ -51,11 +52,11 @@ namespace Synergy.StandardApps.Calendar.ViewModels
         public ICommand PageLoaded => pageLoaded ??
             (pageLoaded = new AsyncRelayCommand(PageLoadedAsync));
 
-        private RelayCommand<string>? changeCalendarEvent;
+        private RelayCommand<int>? changeCalendarEvent;
         public ICommand ChangeCalendarEvent => changeCalendarEvent ??
-            (changeCalendarEvent = new RelayCommand<string>(_day =>
+            (changeCalendarEvent = new RelayCommand<int>(day =>
             {
-                var day = int.Parse(_day);
+                
             }));
 
         private AsyncRelayCommand? loadNextMonth;
