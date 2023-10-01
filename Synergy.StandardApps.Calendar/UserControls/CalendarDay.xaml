@@ -6,6 +6,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="clr-namespace:Synergy.WPF.Common.Controls;assembly=Synergy.WPF.Common"
              xmlns:local="clr-namespace:Synergy.StandardApps.Calendar"
+             Loaded="CalendarDayCard_Loaded"
+             Unloaded="CalendarDayCard_Unloaded"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="100">
 
