@@ -222,8 +222,10 @@
                 <TextBlock
                     Text="Event name:"/>
 
-                <TextBox
+                <controls:AdvancedTextBox
                     DockPanel.Dock="Top"
+                    Style="{StaticResource AdvancedTextBoxStyle}"
+                    Placeholder="Birthday"
                     Text="{Binding Form.Title, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Separator/>
@@ -231,8 +233,11 @@
                 <TextBlock
                     Text="Description:"/>
 
-                <TextBox
+                <controls:AdvancedTextBox
                     DockPanel.Dock="Top"
+                    Style="{StaticResource AdvancedTextBoxStyle}"
+                    TextWrapping="Wrap"
+                    Placeholder="The happiest day for me. Used to be..."
                     MinLines="5"
                     Text="{Binding Form.Description}"/>
 
@@ -256,32 +261,32 @@
                     </Grid.ColumnDefinitions>
 
                     <RadioButton Grid.Column="1"
-                                 Background="{StaticResource Primary3Brush}"
-                                 CommandParameter="Primary3Brush"/>
+                                 Background="BlueViolet"
+                                 CommandParameter="{x:Static Colors.BlueViolet}"/>
 
                     <RadioButton Grid.Column="2"
-                                 Background="{StaticResource Primary3Brush}"
-                                 CommandParameter="Primary3Brush"/>
+                                 Background="Red"
+                                 CommandParameter="{x:Static Colors.Red}"/>
 
                     <RadioButton Grid.Column="3"
-                                 Background="{StaticResource Primary3Brush}"
-                                 CommandParameter="Primary3Brush"/>
+                                 Background="OliveDrab"
+                                 CommandParameter="{x:Static Colors.OliveDrab}"/>
 
                     <RadioButton Grid.Column="4"
-                                 Background="{StaticResource Primary3Brush}"
-                                 CommandParameter="Primary3Brush"/>
+                                 Background="CornflowerBlue"
+                                 CommandParameter="{x:Static Colors.CornflowerBlue}"/>
 
                     <RadioButton Grid.Column="5"
-                                 Background="{StaticResource Primary3Brush}"
-                                 CommandParameter="Primary3Brush"/>
+                                 Background="DarkOrchid"
+                                 CommandParameter="{x:Static Colors.DarkOrchid}"/>
 
                     <RadioButton Grid.Column="6"
-                                 Background="{StaticResource Primary3Brush}"
-                                 CommandParameter="Primary3Brush"/>
+                                 Background="Goldenrod"
+                                 CommandParameter="{x:Static Colors.Goldenrod}"/>
 
                     <RadioButton Grid.Column="7"
-                                 Background="{StaticResource Primary3Brush}"
-                                 CommandParameter="Primary3Brush"/>
+                                 Background="HotPink"
+                                 CommandParameter="{x:Static Colors.HotPink}"/>
                 </Grid>
 
                 <Separator/>
