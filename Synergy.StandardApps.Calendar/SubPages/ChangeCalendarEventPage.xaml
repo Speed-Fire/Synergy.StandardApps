@@ -118,6 +118,8 @@
         </Style>
 
         <convs:Bool2VisibilityConverter x:Key="b2vconv"/>
+        <convs:LongStroryShortConverter x:Key="lssconv"/>
+        <sys:Int32 x:Key="MaxPreviewLength">12</sys:Int32>
     </Page.Resources>
 
     <Grid Margin="5 0 0 5">
@@ -196,7 +198,8 @@
                                         Margin="0 8 0 8"
                                         Style="{x:Null}"
                                         FontSize="16"
-                                        Text="{Binding Form.Title}"/>
+                                        Text="{Binding Form.Title, Converter={StaticResource lssconv},
+                                                                   ConverterParameter={StaticResource MaxPreviewLength}}"/>
 
                                 </Border>
 
