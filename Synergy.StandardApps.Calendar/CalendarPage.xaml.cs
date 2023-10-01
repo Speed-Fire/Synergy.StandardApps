@@ -53,6 +53,8 @@ namespace Synergy.StandardApps.Calendar
             ItemMargin = new Thickness(15, 10, 15, 10);
             _cards = new();
 
+            FrameBrd.Visibility = Visibility.Hidden;
+
             #region Animations
 
             _calendarDisappearing = new DoubleAnimation()
@@ -80,6 +82,8 @@ namespace Synergy.StandardApps.Calendar
                 DecelerationRatio = 1,
                 Duration = TimeSpan.FromSeconds(1.5)
             };
+
+            _frameDisappearing.Completed += (sender, e) => { FrameBrd.Visibility = Visibility.Hidden; };
 
             #endregion
 
@@ -134,17 +138,14 @@ namespace Synergy.StandardApps.Calendar
         {
             var navserv = EventFrame.NavigationService;
 
+            navserv.Navigate(message.Value);
+
             if (message.Value is null)
             {
                 HideFrame();
-
-                if (navserv.CanGoBack)
-                    navserv.GoBack();
             }
             else
             {
-                navserv.Navigate(message.Value);
-
                 ShowFrame();
             }
         }
@@ -318,8 +319,10 @@ namespace Synergy.StandardApps.Calendar
 
         private void ShowFrame()
         {
+            FrameBrd.Visibility = Visibility.Visible;
+
             _frameAppearing.From = FrameBrd.ActualWidth;
-            _frameAppearing.To = 0;
+            _frameAppearing.To = 12;
 
             TT.BeginAnimation(TranslateTransform.XProperty, _frameAppearing);
         }
