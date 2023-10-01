@@ -88,11 +88,11 @@ namespace Synergy.StandardApps.Calendar.ViewModels.ChangeCalendarEventVMs
         public abstract ICommand Save { get; }
         public abstract ICommand Delete { get; }
 
-        private RelayCommand<string>? setColor;
+        private RelayCommand<Color>? setColor;
         public ICommand SetColor => setColor ??
-            (setColor = new RelayCommand<string>(e =>
+            (setColor = new RelayCommand<Color>(color =>
             {
-
+                Form.Color = color;
             }));
 
         #endregion
