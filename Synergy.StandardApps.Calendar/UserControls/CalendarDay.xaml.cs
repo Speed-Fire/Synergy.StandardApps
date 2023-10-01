@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Synergy.StandardApps.Calendar.Messages;
+using Synergy.StandardApps.Calendar.Misc;
 using Synergy.StandardApps.EntityForms.Calendar;
 using System;
 using System.Collections.Generic;
@@ -179,40 +180,7 @@ namespace Synergy.StandardApps.Calendar.UserControls
 
         private void SetSeasonColor(int month)
         {
-            switch (month)
-            {
-                // winter
-                case 12:
-                case 1:
-                case 2:
-                    SeasonColor = Colors.SkyBlue;
-                    break;
-
-                // spring
-                case 3:
-                case 4:
-                case 5:
-                    SeasonColor = Colors.LawnGreen;
-                    break;
-
-                // summer
-                case 6:
-                case 7:
-                case 8:
-                    SeasonColor = Colors.Orange;
-                    break;
-
-                // autumn
-                case 9:
-                case 10:
-                case 11:
-                    SeasonColor = Colors.DarkRed;
-                    break;
-
-                default:
-                    SeasonColor = Colors.LightGray;
-                    break;
-            }
+            SeasonColor = Misc.SeasonColor.Get(month);
         }
 
         private void OnPropertyChanged(string propertyName)
