@@ -45,6 +45,7 @@ namespace Synergy.StandardApps.Calendar
         public Thickness ItemMargin { get; }
 
         private int num;
+        private bool _isRegistered;
 
         public CalendarPage(CalendarVM vm)
         {
@@ -84,6 +85,7 @@ namespace Synergy.StandardApps.Calendar
 
             WeakReferenceMessenger.Default
                 .RegisterAll(this);
+            _isRegistered = true;
 
             DataContext = _vm = vm;
 
@@ -100,8 +102,13 @@ namespace Synergy.StandardApps.Calendar
 
         private void CalendarMain_Loaded(object sender, RoutedEventArgs e)
         {
-            WeakReferenceMessenger.Default
-                .RegisterAll(this);
+            if (!_isRegistered)
+            {
+                WeakReferenceMessenger.Default
+                    .RegisterAll(this);
+
+                _isRegistered = true;
+            }
 
             HideFrame();
         }
@@ -110,6 +117,8 @@ namespace Synergy.StandardApps.Calendar
         {
             WeakReferenceMessenger.Default
                 .UnregisterAll(this);
+
+            _isRegistered = false;
         }
 
         #endregion
