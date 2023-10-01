@@ -44,6 +44,8 @@ namespace Synergy.StandardApps.Calendar
 
         public Thickness ItemMargin { get; }
 
+        private int num;
+
         public CalendarPage(CalendarVM vm)
         {
             InitializeComponent();
@@ -86,6 +88,14 @@ namespace Synergy.StandardApps.Calendar
             DataContext = _vm = vm;
 
             Loaded += (sender, e) => { HideFrame(); };
+
+            num = Random.Shared.Next(100);
+            System.Diagnostics.Trace.WriteLine($"[{num}]: Calendar constructed! {DateTime.Now}");
+        }
+
+        ~CalendarPage()
+        {
+            System.Diagnostics.Trace.WriteLine($"[{num}]: Calendar destructed! {DateTime.Now}");
         }
 
         #region Messages
@@ -213,7 +223,7 @@ namespace Synergy.StandardApps.Calendar
                 while (dtEnd.DayOfWeek != DayOfWeek.Sunday);
             }
 
-            System.Diagnostics.Trace.WriteLine("Calendar loaded!");
+            System.Diagnostics.Trace.WriteLine($"[{num}]: Calendar loaded!");
 
             LoadBackgroundImage(month);
 

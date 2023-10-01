@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Synergy.StandardApps.Alarms;
 using Synergy.StandardApps.Calendar;
 using Synergy.StandardApps.Notes;
+using Synergy.WPF.Common.Extensions;
 using Synergy.WPF.Common.Tray;
 using System;
 using System.Collections.Generic;
@@ -57,39 +58,33 @@ namespace Synergy.StandardApps.ViewModels
         public ICommand NavigateToNotes => navigateToNotes ??
             (navigateToNotes = new RelayCommand<Frame>(frame =>
             {
-                var page = Program.AppHost.Services
-                    .GetRequiredService<NotesPage>();
-                
-                if(frame.CanGoBack)
-                    frame.GoBack();
+                //var page = Program.AppHost.Services
+                //    .GetRequiredService<NotesPage>();             
 
-                frame.Navigate(page);
+                frame.NavigateNoJournal(Program.AppHost.Services
+                    .GetRequiredService<NotesPage>);
             }));
 
         private RelayCommand<Frame> navigateToAlarms;
         public ICommand NavigateToAlarms => navigateToAlarms ??
             (navigateToAlarms = new RelayCommand<Frame>(frame =>
             {
-                var page = Program.AppHost.Services
-                    .GetRequiredService<AlarmsPage>();
+                //var page = Program.AppHost.Services
+                //    .GetRequiredService<AlarmsPage>();
 
-                if (frame.CanGoBack)
-                    frame.GoBack();
-
-                frame.Navigate(page);
+                frame.NavigateNoJournal(Program.AppHost.Services
+                    .GetRequiredService<AlarmsPage>);
             }));
 
         private RelayCommand<Frame> navigateToCalendar;
         public ICommand NavigateToCalendar => navigateToCalendar ??
             (navigateToCalendar = new RelayCommand<Frame>(frame =>
             {
-                var page = Program.AppHost.Services
-                    .GetRequiredService<CalendarPage>();
+                //var page = Program.AppHost.Services
+                //    .GetRequiredService<CalendarPage>();
 
-                if (frame.CanGoBack)
-                    frame.GoBack();
-
-                frame.Navigate(page);
+                frame.NavigateNoJournal(Program.AppHost.Services
+                    .GetRequiredService<CalendarPage>);
             }));
 
         #endregion
