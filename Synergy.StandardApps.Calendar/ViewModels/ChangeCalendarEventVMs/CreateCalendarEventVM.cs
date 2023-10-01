@@ -48,21 +48,7 @@ namespace Synergy.StandardApps.Calendar.ViewModels.ChangeCalendarEventVMs
 
         private async Task DeleteAsync()
         {
-            var res = await _calendarService.DeleteEvent(_id);
-
-            if (res.StatusCode == Domain.Enums.StatusCode.Error)
-            {
-                await NotifyingGrid.ShowNotificationAsync("MainGrid",
-                        "Error", "Specified name is already taken!",
-                        System.Windows.MessageBoxButton.OK);
-
-                return;
-            }
-
-            WeakReferenceMessenger.Default
-                .Send(new CalendarEventDeletedMessage(Form.Day));
-            WeakReferenceMessenger.Default
-                .Send(new CloseCalendarEventChangingMessage(null));
+            
         }
     }
 }
