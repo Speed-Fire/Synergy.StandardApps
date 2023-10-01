@@ -87,8 +87,6 @@ namespace Synergy.StandardApps.Calendar
 
             DataContext = _vm = vm;
 
-            Loaded += (sender, e) => { HideFrame(); };
-
             num = Random.Shared.Next(100);
             System.Diagnostics.Trace.WriteLine($"[{num}]: Calendar constructed! {DateTime.Now}");
         }
@@ -97,6 +95,24 @@ namespace Synergy.StandardApps.Calendar
         {
             System.Diagnostics.Trace.WriteLine($"[{num}]: Calendar destructed! {DateTime.Now}");
         }
+
+        #region Page loading handlers
+
+        private void CalendarMain_Loaded(object sender, RoutedEventArgs e)
+        {
+            WeakReferenceMessenger.Default
+                .RegisterAll(this);
+
+            HideFrame();
+        }
+
+        private void CalendarMain_Unloaded(object sender, RoutedEventArgs e)
+        {
+            WeakReferenceMessenger.Default
+                .UnregisterAll(this);
+        }
+
+        #endregion
 
         #region Messages
 

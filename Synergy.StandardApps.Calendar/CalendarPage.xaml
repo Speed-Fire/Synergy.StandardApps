@@ -8,7 +8,9 @@
       xmlns:controls="clr-namespace:Synergy.WPF.Common.Controls;assembly=Synergy.WPF.Common"
       xmlns:ucs="clr-namespace:Synergy.StandardApps.Calendar.UserControls"
       xmlns:local="clr-namespace:Synergy.StandardApps.Calendar"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
+      Loaded="CalendarMain_Loaded"
+      Unloaded="CalendarMain_Unloaded"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CalendarPage">
 
