@@ -1,4 +1,6 @@
-﻿using Synergy.StandardApps.Calendar.ViewModels.ChangeCalendarEventVMs;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Synergy.StandardApps.Calendar.Messages;
+using Synergy.StandardApps.Calendar.ViewModels.ChangeCalendarEventVMs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +21,9 @@ namespace Synergy.StandardApps.Calendar.SubPages
     /// <summary>
     /// Логика взаимодействия для ChangeCalendarEventPage.xaml
     /// </summary>
-    public partial class ChangeCalendarEventPage : Page
+    public partial class ChangeCalendarEventPage :
+        PageFunction<Object>,
+        IRecipient<CloseCalendarEventChangingMessage>
     {
         private readonly ChangeCalendarEventVM _vm;
 
@@ -27,7 +31,15 @@ namespace Synergy.StandardApps.Calendar.SubPages
         {
             InitializeComponent();
 
+            WeakReferenceMessenger.Default
+                .Register(this);
+
             DataContext = _vm = vm;
+        }
+
+        void IRecipient<CloseCalendarEventChangingMessage>.Receive(CloseCalendarEventChangingMessage message)
+        {
+            OnReturn(null);
         }
     }
 }
