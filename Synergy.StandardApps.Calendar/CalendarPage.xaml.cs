@@ -84,6 +84,8 @@ namespace Synergy.StandardApps.Calendar
                 .RegisterAll(this);
 
             DataContext = _vm = vm;
+
+            Loaded += (sender, e) => { HideFrame(); };
         }
 
         #region Messages
@@ -281,16 +283,16 @@ namespace Synergy.StandardApps.Calendar
 
         private void ShowFrame()
         {
-            _frameAppearing.From = 0;
-            _frameAppearing.To = FrameBrd.Width;
+            _frameAppearing.From = FrameBrd.ActualWidth;
+            _frameAppearing.To = 0;
 
             TT.BeginAnimation(TranslateTransform.XProperty, _frameAppearing);
         }
 
         private void HideFrame()
         {
-            _frameDisappearing.From = FrameBrd.Width;
-            _frameDisappearing.To = 0;
+            _frameDisappearing.From = 0;
+            _frameDisappearing.To = FrameBrd.ActualWidth;
 
             TT.BeginAnimation(TranslateTransform.XProperty, _frameDisappearing);
         }

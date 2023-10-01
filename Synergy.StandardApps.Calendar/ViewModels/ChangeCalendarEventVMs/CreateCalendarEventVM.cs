@@ -20,9 +20,16 @@ namespace Synergy.StandardApps.Calendar.ViewModels.ChangeCalendarEventVMs
         public override ICommand Save => save ??
             (save = new AsyncRelayCommand(SaveAsync));
 
-        public override ICommand Delete => throw new NotImplementedException();
+        private AsyncRelayCommand? delete;
+        public override ICommand Delete => delete ??
+            (delete = new AsyncRelayCommand(DeleteAsync));
 
         private async Task SaveAsync()
+        {
+
+        }
+
+        private async Task DeleteAsync()
         {
 
         }

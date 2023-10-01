@@ -76,6 +76,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="10"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
@@ -129,11 +130,19 @@
 
                     <Border
                         x:Name="FrameBrd"
-                        Grid.Column="2"
-                        Padding="2"
-                        CornerRadius="15 0 0 15">
+                        Grid.Column="3"
+                        Padding="5"
+                        CornerRadius="15 0 0 15"
+                        Background="{StaticResource Gray600Brush}"
+                        BorderThickness="2 2 0 2">
+
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="{StaticResource Yellow100Accent}"/>
+                        </Border.BorderBrush>
+                        
                         <Frame
                             x:Name="EventFrame"
+                            Background="Transparent"
                             Style="{StaticResource FrameStyle}"/>
 
                         <Border.RenderTransform>

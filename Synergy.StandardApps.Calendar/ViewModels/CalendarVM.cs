@@ -2,6 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Synergy.StandardApps.Calendar.Messages;
+using Synergy.StandardApps.Calendar.SubPages;
+using Synergy.StandardApps.Calendar.ViewModels.ChangeCalendarEventVMs;
 using Synergy.StandardApps.EntityForms.Calendar;
 using Synergy.StandardApps.Service.Calendar;
 using System;
@@ -56,7 +58,25 @@ namespace Synergy.StandardApps.Calendar.ViewModels
         public ICommand ChangeCalendarEvent => changeCalendarEvent ??
             (changeCalendarEvent = new RelayCommand<int>(day =>
             {
-                
+                var ev = CalendarEvents.FirstOrDefault(e => e.Day == day);
+
+                if(ev is null)
+                {
+                    WeakReferenceMessenger.Default
+                        .Send(new CalendarNavigateMessage(new ChangeCalendarEventPage(new CreateCalendarEventVM(_calendarService, day, CurrentDate.Month))));
+                }
+                else
+                {
+                    WeakReferenceMessenger.Default
+                        .Send(new CalendarNavigateMessage(new ChangeCalendarEventPage(new UpdateCalendarEventVM(_calendarService, ev))));
+                }
+            }));
+
+        private RelayCommand? openCalendarEvent;
+        public ICommand OpenCalendarEvent => openCalendarEvent ??
+            (openCalendarEvent = new RelayCommand(() =>
+            {
+
             }));
 
         private AsyncRelayCommand? loadNextMonth;
