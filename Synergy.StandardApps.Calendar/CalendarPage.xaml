@@ -82,6 +82,17 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
+                    <Border x:Name="SurfaceBrd_Top"
+                            Panel.ZIndex="10"
+                            Grid.ColumnSpan="4"
+                            CornerRadius="15"
+                            Margin="-3"
+                            Background="{StaticResource Gray950Brush}"
+                            Visibility="Collapsed"
+                            Opacity="0">
+                        
+                    </Border>
+
                     <ScrollViewer
                         Grid.Column="1"
                         Style="{StaticResource ScrollViewerStyle}">
@@ -132,6 +143,7 @@
 
                     <Border
                         x:Name="FrameBrd"
+                        Panel.ZIndex="11"
                         Grid.Column="3"
                         Padding="5"
                         CornerRadius="15 0 0 15"
@@ -172,6 +184,15 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+
+                <Border x:Name="SurfaceBrd_Bottom"
+                        Panel.ZIndex="10"
+                        Margin="-10 -7.5 -10 -7.5"
+                        CornerRadius="15 15 0 0"
+                        Grid.ColumnSpan="5"
+                        Background="{StaticResource Gray950Brush}"
+                        Visibility="Collapsed"
+                        Opacity="0"/>
 
                 <controls:NormalButton
                     Grid.Column="1"

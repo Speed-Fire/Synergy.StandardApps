@@ -36,8 +36,20 @@ namespace Synergy.StandardApps.Calendar
         private readonly DoubleAnimation _calendarDisappearing;
         private readonly DoubleAnimation _calendarAppearing;
 
+        #region Frame opened animations
+
         private readonly DoubleAnimation _frameDisappearing;
         private readonly DoubleAnimation _frameAppearing;
+
+        private const double _surfaceMaxOpacity = 0.8;
+
+        private readonly DoubleAnimation _surfaceTopDisappearing;
+        private readonly DoubleAnimation _surfaceTopAppearing;
+
+        private readonly DoubleAnimation _surfaceBottomDisappearing;
+        private readonly DoubleAnimation _surfaceBottomAppearing;
+
+        #endregion
 
         private const double _cardHeight = 112.5;
         private const double _cardWidth = 75;
@@ -83,7 +95,41 @@ namespace Synergy.StandardApps.Calendar
                 Duration = TimeSpan.FromSeconds(1.5)
             };
 
+            _surfaceTopAppearing = new DoubleAnimation()
+            {
+                From = 0,
+                To = _surfaceMaxOpacity,
+                Duration = TimeSpan.FromSeconds(1),
+                DecelerationRatio = 1
+            };
+
+            _surfaceTopDisappearing = new DoubleAnimation()
+            {
+                From = _surfaceMaxOpacity,
+                To = 0,
+                Duration = TimeSpan.FromSeconds(1),
+                DecelerationRatio = 1
+            };
+
+            _surfaceBottomAppearing = new DoubleAnimation()
+            {
+                From = 0,
+                To = _surfaceMaxOpacity,
+                Duration = TimeSpan.FromSeconds(1),
+                DecelerationRatio = 1
+            };
+
+            _surfaceBottomDisappearing = new DoubleAnimation()
+            {
+                From = _surfaceMaxOpacity,
+                To = 0,
+                Duration = TimeSpan.FromSeconds(1),
+                DecelerationRatio = 1
+            };
+
             _frameDisappearing.Completed += (sender, e) => { FrameBrd.Visibility = Visibility.Hidden; };
+            _surfaceTopDisappearing.Completed += (sender, e) => { SurfaceBrd_Top.Visibility = Visibility.Collapsed; };
+            _surfaceBottomDisappearing.Completed += (sender, e) => { SurfaceBrd_Bottom.Visibility = Visibility.Collapsed; };
 
             #endregion
 
@@ -320,11 +366,15 @@ namespace Synergy.StandardApps.Calendar
         private void ShowFrame()
         {
             FrameBrd.Visibility = Visibility.Visible;
+            SurfaceBrd_Top.Visibility = Visibility.Visible;
+            SurfaceBrd_Bottom.Visibility = Visibility.Visible;
 
             _frameAppearing.From = FrameBrd.ActualWidth;
             _frameAppearing.To = 12;
 
             TT.BeginAnimation(TranslateTransform.XProperty, _frameAppearing);
+            SurfaceBrd_Top.BeginAnimation(Control.OpacityProperty, _surfaceTopAppearing);
+            SurfaceBrd_Bottom.BeginAnimation(Control.OpacityProperty, _surfaceBottomAppearing); 
         }
 
         private void HideFrame()
@@ -333,6 +383,8 @@ namespace Synergy.StandardApps.Calendar
             _frameDisappearing.To = FrameBrd.ActualWidth;
 
             TT.BeginAnimation(TranslateTransform.XProperty, _frameDisappearing);
+            SurfaceBrd_Top.BeginAnimation(Control.OpacityProperty, _surfaceTopDisappearing);
+            SurfaceBrd_Bottom.BeginAnimation(Control.OpacityProperty, _surfaceBottomDisappearing);
         }
 
         #endregion
