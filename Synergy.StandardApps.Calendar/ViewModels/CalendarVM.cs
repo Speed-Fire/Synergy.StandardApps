@@ -15,7 +15,11 @@ using System.Windows.Input;
 
 namespace Synergy.StandardApps.Calendar.ViewModels
 {
-    public class CalendarVM : ObservableRecipient
+    public class CalendarVM : 
+        ObservableRecipient,
+        IRecipient<CalendarEventCreatedMessage>,
+        IRecipient<CalendarEventUpdatedMessage>,
+        IRecipient<CalendarEventDeletedMessage>
     {
         #region Fields
 
@@ -47,6 +51,31 @@ namespace Synergy.StandardApps.Calendar.ViewModels
             _calendarEvents = new();
             CurrentDate = DateTime.Now;
         }
+
+        #region Messages
+
+        void IRecipient<CalendarEventCreatedMessage>.Receive(CalendarEventCreatedMessage message)
+        {
+            _calendarEvents.Add(message.Value);
+        }
+
+        void IRecipient<CalendarEventUpdatedMessage>.Receive(CalendarEventUpdatedMessage message)
+        {
+            var pos = _calendarEvents.FindIndex(ev => ev.Day == message.Value.Day &&
+                ev.Month == message.Value.Month);
+
+            _calendarEvents.RemoveAt(pos);
+            _calendarEvents.Insert(pos, message.Value);
+        }
+
+        void IRecipient<CalendarEventDeletedMessage>.Receive(CalendarEventDeletedMessage message)
+        {
+            var pos = _calendarEvents.FindIndex(ev => ev.Day == message.Value);
+
+            _calendarEvents.RemoveAt(pos);
+        }
+
+        #endregion
 
         #region Commands
 
