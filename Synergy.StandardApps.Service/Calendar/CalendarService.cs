@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Synergy.StandardApps.DAL.Repositories;
 using Synergy.StandardApps.Domain.Calendar;
+using Synergy.StandardApps.Domain.Notes;
 using Synergy.StandardApps.Domain.Responses;
 using Synergy.StandardApps.EntityForms.Calendar;
 using Synergy.StandardApps.Utility.Converters;
@@ -26,12 +27,58 @@ namespace Synergy.StandardApps.Service.Calendar
 
         public async Task<IResponse<CalendarEventForm>> CreateEvent(CalendarEventCreationForm form)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (form.HasErrors)
+                    throw new("Invalid form!");
+
+                var ev = new CalendarEvent()
+                {
+                    Title = form.Title,
+                    Description = form.Description,
+                    Day = form.Day,
+                    Month = form.Month,
+                    Color = form.ColorNum
+                };
+
+                await _calendarRepository.Create(ev);
+
+                return ResponseFactory.OK(_converter.Convert(ev));
+            }
+            catch (Exception ex)
+            {
+                return ResponseFactory.BadResponse<CalendarEventForm>(ex);
+            }
         }
 
         public async Task<IResponse<CalendarEventForm>> UpdateEvent(CalendarEventCreationForm form, long id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (form.HasErrors)
+                    throw new("Invalid form!");
+
+                var ev = await _calendarRepository
+                    .GetAll()
+                    .FirstOrDefaultAsync(e => e.Id == id);
+
+                if (ev is null)
+                    throw new("Invalid id!");
+
+                ev.Title = form.Title;
+                ev.Description = form.Description;
+                ev.Day = form.Day;
+                ev.Month = form.Month;
+                ev.Color = form.ColorNum;
+
+                ev = await _calendarRepository.Update(ev);
+
+                return ResponseFactory.OK(_converter.Convert(ev));
+            }
+            catch (Exception ex)
+            {
+                return ResponseFactory.BadResponse<CalendarEventForm>(ex);
+            }
         }
 
         public async Task<IResponse<IEnumerable<CalendarEventForm>>> GetEvents(int month)
@@ -54,7 +101,25 @@ namespace Synergy.StandardApps.Service.Calendar
 
         public async Task<IResponse<bool>> DeleteEvent(long id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var ev = await _calendarRepository
+                    .GetAll()
+                    .FirstOrDefaultAsync(e => e.Id == id);
+
+                if (ev is null)
+                {
+                    return ResponseFactory.BadResponse<bool>(Domain.Enums.ErrorCode.NotFound);
+                }
+
+                await _calendarRepository.Delete(ev);
+
+                return ResponseFactory.OK(true);
+            }
+            catch (Exception ex)
+            {
+                return ResponseFactory.BadResponse<bool>(ex);
+            }
         }
     }
 }
