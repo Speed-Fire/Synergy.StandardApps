@@ -1,12 +1,187 @@
 ﻿<UserControl
+    x:Name="CalendarEventViewer"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:sys="clr-namespace:System;assembly=System.Runtime"
     x:Class="Synergy.StandardApps.Calendar.Views.CalendarEventView"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:bh="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:Synergy.StandardApps.Calendar.Views"
+    xmlns:convs="clr-namespace:Synergy.WPF.Common.Converters;assembly=Synergy.WPF.Common"
+    Loaded="CalendarEventViewer_Loaded"
     mc:Ignorable="d"
     d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <LinearGradientBrush x:Key="BtnBackgroundBrush"
+            StartPoint="0, 0" EndPoint="1, 1">
+            <GradientStop Color="#F99A26" Offset="0.0"/>
+            <GradientStop Color="Brown" Offset="1"/>
+        </LinearGradientBrush>
+
+        <RadialGradientBrush x:Key="DayBtnBackgroundBrush"
+                             GradientOrigin="0.5, 0.5"
+                             RadiusX="1.5" RadiusY="1.5">
+            <GradientStop Color="LightGray" Offset="0"/>
+            <GradientStop Color="{Binding ElementName=CalendarEventViewer,
+                                          Path=SeasonColor}"
+                          Offset="1"/>
+        </RadialGradientBrush>
+
+        <Style TargetType="Separator">
+            <Setter Property="Height" Value="2"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="Margin" Value="0 15 0 15"/>
+            <Setter Property="DockPanel.Dock" Value="Top"/>
+        </Style>
+
+        <Style TargetType="TextBlock"
+               BasedOn="{StaticResource TextBlockStyle}">
+            <Setter Property="Margin" Value="15 0 0 3"/>
+            <Setter Property="DockPanel.Dock" Value="Top"/>
+        </Style>
+
+        <convs:LongStroryShortConverter x:Key="lssconv"/>
+        <sys:Int32 x:Key="MaxPreviewLength">12</sys:Int32>
+    </UserControl.Resources>
+
+    <bh:Interaction.Triggers>
+        <bh:EventTrigger EventName="Loaded">
+            <bh:InvokeCommandAction Command="{Binding ViewLoaded}"/>
+        </bh:EventTrigger>
+
+        <bh:EventTrigger EventName="Unloaded">
+            <bh:InvokeCommandAction Command="{Binding ViewUnloaded}"/>
+        </bh:EventTrigger>
+    </bh:Interaction.Triggers>
+
+    <ScrollViewer
+        Margin="5 0 0 5"
+            Style="{StaticResource ScrollViewerStyle}">
+        <DockPanel>
+            <Border DockPanel.Dock="Top"
+                        CornerRadius="15"
+                        Margin="0 20 0 20"
+                        Padding="50 10 50 10"
+                        BorderThickness="3"
+                        HorizontalAlignment="Center"
+                        Background="{StaticResource Gray200Brush}"
+                        BorderBrush="{StaticResource PrimaryBrush}">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!--#region Calendar day card-->
+
+                    <Border
+                            MinHeight="150"
+                            MinWidth="100"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            CornerRadius="10"
+                            BorderThickness="1"
+                            Background="LightGray">
+
+                        <Border.BorderBrush>
+                            <SolidColorBrush x:Name="BrdBrush" Color="Black"/>
+                        </Border.BorderBrush>
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Border
+                                    CornerRadius="10 10 0 0"
+                                    Background="{StaticResource DayBtnBackgroundBrush}">
+
+                                <TextBlock
+                                        TextAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Style="{x:Null}"
+                                        FontSize="35"
+                                        Text="{Binding Day}"/>
+
+                            </Border>
+
+                            <Border
+                                    Grid.Row="1"
+                                    CornerRadius="0 0 9 10">
+
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 1">
+                                        <GradientStop Color="{Binding Color}" Offset="0.0"/>
+                                        <GradientStop Color="Brown" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+
+                                <TextBlock 
+                                        x:Name="EventNameTb"
+                                        TextAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Margin="0 8 0 8"
+                                        Style="{x:Null}"
+                                        FontSize="16"
+                                        Text="{Binding Title, Converter={StaticResource lssconv},
+                                                                   ConverterParameter={StaticResource MaxPreviewLength}}"/>
+
+                            </Border>
+
+                        </Grid>
+                    </Border>
+
+                    <!--#endregion-->
+
+                    <TextBlock
+                            Grid.Row="1"
+                            Style="{x:Null}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0 10 0 0"
+                            FontSize="20"
+                            Text="{Binding Month}"/>
+
+                </Grid>
+
+            </Border>
+
+            <Separator/>
+
+            <TextBlock
+                    Text="Event name:"/>
+
+            <Border
+                DockPanel.Dock="Top"
+                Style="{StaticResource BorderStyle.TextBlock}">
+                <TextBlock
+                    Style="{StaticResource TextBlockStyle.Bordered}"
+                    Text="{Binding Title}"/>
+            </Border>
+
+            <Separator/>
+
+            <TextBlock
+                    Text="Description:"/>
+
+            <Border
+                DockPanel.Dock="Top"
+                MinHeight="100"
+                Style="{StaticResource BorderStyle.TextBlock}">
+                <TextBlock
+                    TextWrapping="Wrap"
+                    Style="{StaticResource TextBlockStyle.Bordered}"
+                    Text="{Binding Description}"/>
+            </Border>
+
+            <Separator/>
+        </DockPanel>
+    </ScrollViewer>
 
 </UserControl>
