@@ -10,6 +10,7 @@ using Synergy.StandardApps.EntityForms.Extensions;
 using Synergy.StandardApps.Notes.Extensions;
 using Synergy.StandardApps.Service.Extensions;
 using Synergy.StandardApps.Utility.Misc;
+using Synergy.StandardApps.ViewModels;
 using Synergy.WPF.Common.Extensions;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,7 @@ namespace Synergy.StandardApps
 
                 services.AddSingleton<App>();
                 services.AddSingleton<MainWindow>();
+                services.AddSingleton<MainVM>();
             });
 
             AppHost = builder.Build();
