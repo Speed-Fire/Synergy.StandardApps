@@ -61,8 +61,11 @@ namespace Synergy.StandardApps.Calendar
 
         public Thickness ItemMargin { get; }
 
+        private volatile bool _isFrameHidden;
+
         private int num;
         private bool _isRegistered;
+        private List<DependencyObject> _hitResultList = new();
 
         public CalendarPage(CalendarVM vm)
         {
@@ -132,7 +135,16 @@ namespace Synergy.StandardApps.Calendar
                 DecelerationRatio = 1
             };
 
-            _frameDisappearing.Completed += (sender, e) => { FrameBrd.Visibility = Visibility.Hidden; };
+            _frameDisappearing.Completed += (sender, e) => 
+            {
+                FrameBrd.Visibility = Visibility.Hidden;
+            };
+
+            _frameAppearing.Completed += (sender, e) =>
+            {
+                _isFrameHidden = false;
+            };
+
             _surfaceTopDisappearing.Completed += (sender, e) => { SurfaceBrd_Top.Visibility = Visibility.Collapsed; };
             _surfaceBottomDisappearing.Completed += (sender, e) => { SurfaceBrd_Bottom.Visibility = Visibility.Collapsed; };
 
@@ -159,6 +171,8 @@ namespace Synergy.StandardApps.Calendar
 
         private void CalendarMain_Loaded(object sender, RoutedEventArgs e)
         {
+            AddMouseHandler();
+
             if (!_isRegistered)
             {
                 WeakReferenceMessenger.Default
@@ -172,10 +186,28 @@ namespace Synergy.StandardApps.Calendar
 
         private void CalendarMain_Unloaded(object sender, RoutedEventArgs e)
         {
+            RemoveMouseHandler();
+
             WeakReferenceMessenger.Default
                 .UnregisterAll(this);
 
             _isRegistered = false;
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void AddMouseHandler()
+        {
+            AddHandler(Mouse.PreviewMouseDownEvent,
+                new MouseButtonEventHandler(HandleClickOutsideOfControl), true);
+        }
+
+        private void RemoveMouseHandler()
+        {
+            RemoveHandler(Mouse.PreviewMouseDownEvent,
+                new MouseButtonEventHandler(HandleClickOutsideOfControl));
         }
 
         #endregion
@@ -391,6 +423,8 @@ namespace Synergy.StandardApps.Calendar
 
         private void HideFrame()
         {
+            _isFrameHidden = true;
+
             _frameDisappearing.From = 0;
             _frameDisappearing.To = FrameBrd.ActualWidth;
 
@@ -398,6 +432,43 @@ namespace Synergy.StandardApps.Calendar
             SurfaceBrd_Top.BeginAnimation(Control.OpacityProperty, _surfaceTopDisappearing);
             SurfaceBrd_Bottom.BeginAnimation(Control.OpacityProperty, _surfaceBottomDisappearing);
         }
+
+        #endregion
+
+        #region Handlers
+
+        private void HandleClickOutsideOfControl(object sender, MouseButtonEventArgs e)
+        {
+            if(_isFrameHidden) return;
+
+            var pt = e.GetPosition((UIElement)sender);
+            _hitResultList.Clear();
+
+            //Retrieving all the elements under the cursor
+            VisualTreeHelper.HitTest(this, null,
+                new HitTestResultCallback(MyHitTestResultCallback),
+                new PointHitTestParameters(pt));
+
+
+
+            //Testing if the page is under the cursor
+            //var contains = _hitResultList.Contains(this);
+            if (!_hitResultList.Contains(FrameBrd))
+            {
+                WeakReferenceMessenger.Default
+                    .Send(new CloseCalendarEventChangingMessage(null));
+            }
+        }
+
+        #region Callbacks
+
+        private HitTestResultBehavior MyHitTestResultCallback(HitTestResult result)
+        {
+            _hitResultList.Add(result.VisualHit);
+            return HitTestResultBehavior.Continue;
+        }
+
+        #endregion
 
         #endregion
 
