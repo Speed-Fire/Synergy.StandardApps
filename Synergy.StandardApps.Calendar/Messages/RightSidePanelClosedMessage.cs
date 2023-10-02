@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace Synergy.StandardApps.Calendar.Messages
 {
-    internal class CalendarNavigateMessage : ValueChangedMessage<Page?>
+    internal class RightSidePanelClosedMessage : ValueChangedMessage<object?>
     {
-        public CalendarNavigateMessage(Page? value) : base(value)
+        public RightSidePanelClosedMessage(object? value) : base(value)
         {
         }
     }

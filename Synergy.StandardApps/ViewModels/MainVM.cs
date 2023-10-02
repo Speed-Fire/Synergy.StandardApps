@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Synergy.StandardApps.Alarms;
 using Synergy.StandardApps.Calendar;
+using Synergy.StandardApps.Calendar.ViewModels;
 using Synergy.StandardApps.Notes;
 using Synergy.WPF.Common.Extensions;
 using Synergy.WPF.Common.Tray;
@@ -22,9 +23,14 @@ namespace Synergy.StandardApps.ViewModels
 {
     public class MainVM : ViewModel
     {
-        private readonly INavigationService _navigationService;
-
         #region Properties
+
+        private INavigationService _navigation;
+        public INavigationService Navigation
+        {
+            get => _navigation;
+            set => SetProperty(ref _navigation, value);
+        }
 
         private bool _showInTaskbar;
         public bool ShowInTaskbar
@@ -56,7 +62,7 @@ namespace Synergy.StandardApps.ViewModels
 
         public MainVM(INavigationService navigationService)
         {
-            _navigationService = navigationService;
+            Navigation = navigationService;
         }
 
         #region Commands
@@ -95,7 +101,7 @@ namespace Synergy.StandardApps.ViewModels
                 //frame.NavigateNoJournal(Program.AppHost.Services
                 //    .GetRequiredService<CalendarPage>);
 
-                //_navigationService.NavigateTo<>
+                Navigation.NavigateTo<CalendarVM>();
             }));
 
         #endregion

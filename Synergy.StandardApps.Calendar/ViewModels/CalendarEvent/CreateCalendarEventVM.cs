@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Synergy.StandardApps.Calendar.Messages;
 using Synergy.StandardApps.Service.Calendar;
 using Synergy.WPF.Common.Controls;
+using Synergy.WPF.Navigation.Services.Local;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Synergy.StandardApps.Calendar.ViewModels.ChangeCalendarEventVMs
+namespace Synergy.StandardApps.Calendar.ViewModels.CalendarEvent
 {
     public class CreateCalendarEventVM : ChangeCalendarEventVM
     {
-        public CreateCalendarEventVM(ICalendarService calendarService, int day, int month)
+        public CreateCalendarEventVM(ICalendarService calendarService,
+            int day, int month)
             : base(calendarService, day, month)
         {
         }

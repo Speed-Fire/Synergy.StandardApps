@@ -1,16 +1,15 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Synergy.StandardApps.Calendar.Messages;
-using Synergy.StandardApps.Calendar.SubPages;
-using Synergy.StandardApps.Calendar.ViewModels.ChangeCalendarEventVMs;
+using Synergy.StandardApps.Calendar.ViewModels.CalendarEvent;
 using Synergy.StandardApps.EntityForms.Calendar;
 using Synergy.StandardApps.Service.Calendar;
+using Synergy.WPF.Navigation.Services;
+using Synergy.WPF.Navigation.Services.Local;
 using Synergy.WPF.Navigation.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -20,18 +19,28 @@ namespace Synergy.StandardApps.Calendar.ViewModels
         ViewModel,
         IRecipient<CalendarEventCreatedMessage>,
         IRecipient<CalendarEventUpdatedMessage>,
-        IRecipient<CalendarEventDeletedMessage>
+        IRecipient<CalendarEventDeletedMessage>,
+        IRecipient<CloseCalendarEventChangingMessage>,
+        IRecipient<RightSidePanelClosedMessage>
     {
         #region Fields
 
         private readonly ICalendarService _calendarService;
+        private readonly INavigationService _navigationService;
+        private ILocalNavigationService _localNavigationService;
 
         private DateTime _currentDate;
-        private List<CalendarEventForm> _calendarEvents;
+        private readonly List<CalendarEventForm> _calendarEvents;
 
         #endregion
 
         #region Properties
+
+        public ILocalNavigationService LocalNavigationService
+        {
+            get => _localNavigationService;
+            set => SetProperty(ref _localNavigationService, value);
+        }
 
         public DateTime CurrentDate
         {
@@ -39,21 +48,28 @@ namespace Synergy.StandardApps.Calendar.ViewModels
             set => SetProperty(ref _currentDate, value);
         }
 
-        public IEnumerable<CalendarEventForm> CalendarEvents => _calendarEvents;
-
         #endregion
 
-        public CalendarVM(ICalendarService calendarService)
+        #region Constructor
+
+        public CalendarVM(ICalendarService calendarService,
+            INavigationService navigationService,
+            ILocalNavigationService localNavigationService)
         {
             _calendarService = calendarService;
+            _navigationService = navigationService;
+            _localNavigationService = localNavigationService;
 
             IsActive = true;
 
             _calendarEvents = new();
-            CurrentDate = DateTime.Now;
         }
 
+        #endregion
+
         #region Messages
+
+        #region CalendarEvent CRUD
 
         void IRecipient<CalendarEventCreatedMessage>.Receive(CalendarEventCreatedMessage message)
         {
@@ -78,28 +94,51 @@ namespace Synergy.StandardApps.Calendar.ViewModels
 
         #endregion
 
+        void IRecipient<CloseCalendarEventChangingMessage>.Receive(CloseCalendarEventChangingMessage message)
+        {
+            WeakReferenceMessenger.Default
+                .Send(new SetRightSidePanelVisibilityMessage(false));
+        }
+
+        void IRecipient<RightSidePanelClosedMessage>.Receive(RightSidePanelClosedMessage message)
+        {
+            if (_localNavigationService.CurrentView is null ||
+                _localNavigationService.CurrentView.GetType() != typeof(CalendarEventVM))
+            {
+                _localNavigationService.NavigateTo<CalendarEventVM>();
+            }
+
+            WeakReferenceMessenger.Default
+                    .Send(new OpenCalendarEventMessage(null));
+        }
+
+        #endregion
+
         #region Commands
 
-        private AsyncRelayCommand? pageLoaded;
-        public ICommand PageLoaded => pageLoaded ??
-            (pageLoaded = new AsyncRelayCommand(PageLoadedAsync));
+        private AsyncRelayCommand? viewLoaded;
+        public ICommand ViewLoaded => viewLoaded ??
+            (viewLoaded = new AsyncRelayCommand(ViewLoadedAsync));
 
         private RelayCommand<int>? changeCalendarEvent;
         public ICommand ChangeCalendarEvent => changeCalendarEvent ??
             (changeCalendarEvent = new RelayCommand<int>(day =>
             {
-                var ev = CalendarEvents.FirstOrDefault(e => e.Day == day);
+                var ev = _calendarEvents.FirstOrDefault(e => e.Day == day);
 
                 if(ev is null)
                 {
-                    WeakReferenceMessenger.Default
-                        .Send(new CalendarNavigateMessage(new ChangeCalendarEventPage(new CreateCalendarEventVM(_calendarService, day, CurrentDate.Month))));
+                    _localNavigationService
+                        .NavigateTo<CreateCalendarEventVM>(_calendarService, day, CurrentDate.Month);
                 }
                 else
                 {
-                    WeakReferenceMessenger.Default
-                        .Send(new CalendarNavigateMessage(new ChangeCalendarEventPage(new UpdateCalendarEventVM(_calendarService, ev))));
+                    _localNavigationService
+                        .NavigateTo<UpdateCalendarEventVM>(_calendarService, ev);
                 }
+
+                WeakReferenceMessenger.Default
+                    .Send(new SetRightSidePanelVisibilityMessage(true));
             }));
 
         private RelayCommand<int>? openCalendarEvent;
@@ -113,6 +152,9 @@ namespace Synergy.StandardApps.Calendar.ViewModels
 
                 WeakReferenceMessenger.Default
                     .Send(new OpenCalendarEventMessage(ev));
+
+                WeakReferenceMessenger.Default
+                    .Send(new SetRightSidePanelVisibilityMessage(true));
             }));
 
         private AsyncRelayCommand? loadNextMonth;
@@ -140,8 +182,10 @@ namespace Synergy.StandardApps.Calendar.ViewModels
             await LoadEvents();
         }
 
-        private async Task PageLoadedAsync()
+        private async Task ViewLoadedAsync()
         {
+            CurrentDate = DateTime.Now;
+
             await LoadEvents();
         }
 
@@ -161,7 +205,8 @@ namespace Synergy.StandardApps.Calendar.ViewModels
                 FillEvents(new List<CalendarEventForm>());
 
             WeakReferenceMessenger.Default
-                .Send(new MonthLoadedMessage(null));
+                .Send(new MonthLoadedMessage(Tuple
+                    .Create((IEnumerable<CalendarEventForm>)_calendarEvents, CurrentDate)));
         }
 
         private void FillEvents(IEnumerable<CalendarEventForm> events)

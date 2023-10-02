@@ -2,6 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using Synergy.StandardApps.EntityForms.Calendar;
 using Synergy.StandardApps.Service.Calendar;
+using Synergy.WPF.Navigation.Services.Local;
+using Synergy.WPF.Navigation.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +12,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace Synergy.StandardApps.Calendar.ViewModels.ChangeCalendarEventVMs
+namespace Synergy.StandardApps.Calendar.ViewModels.CalendarEvent
 {
-    public abstract class ChangeCalendarEventVM : ObservableObject
+    public abstract class ChangeCalendarEventVM : ViewModel
     {
         protected readonly ICalendarService _calendarService;
         protected long _id;
@@ -63,7 +65,8 @@ namespace Synergy.StandardApps.Calendar.ViewModels.ChangeCalendarEventVMs
             SetMonth(Form.Month);
         }
 
-        public ChangeCalendarEventVM(ICalendarService calendarService, int day, int month)
+        public ChangeCalendarEventVM(ICalendarService calendarService,
+            int day, int month)
         {
             _calendarService = calendarService;
             IsUpdatingMode = false;

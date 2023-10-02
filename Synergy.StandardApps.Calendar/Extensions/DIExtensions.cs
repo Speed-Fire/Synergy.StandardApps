@@ -14,8 +14,7 @@ namespace Synergy.StandardApps.Calendar.Extensions
         public static IServiceCollection RegisterCalendarUI(this IServiceCollection services)
         {
             services
-                .AddTransient<CalendarVM>()
-                .AddTransient<CalendarPage>();
+                .AddSingleton<CalendarVM>();
 
             return services;
         }

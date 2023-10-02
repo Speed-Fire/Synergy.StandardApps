@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Synergy.StandardApps.Calendar.Messages;
-using Synergy.StandardApps.Calendar.ViewModels.ChangeCalendarEventVMs;
+using Synergy.StandardApps.Calendar.ViewModels.CalendarEvent;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,18 +17,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Synergy.StandardApps.Calendar.SubPages
+namespace Synergy.StandardApps.Calendar.Views
 {
     /// <summary>
-    /// Логика взаимодействия для ChangeCalendarEventPage.xaml
+    /// Логика взаимодействия для ChangeCalendarEventView.xaml
     /// </summary>
-    public partial class ChangeCalendarEventPage :
-        PageFunction<Object>,
-        INotifyPropertyChanged,
-        IRecipient<CloseCalendarEventChangingMessage>
+    public partial class ChangeCalendarEventView :
+        UserControl,
+        INotifyPropertyChanged
     {
-        private readonly ChangeCalendarEventVM _vm;
-
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private Color seasonColor;
@@ -45,9 +42,17 @@ namespace Synergy.StandardApps.Calendar.SubPages
             }
         }
 
-        public ChangeCalendarEventPage(ChangeCalendarEventVM vm)
+        public ChangeCalendarEventView()
         {
             InitializeComponent();
+        }
+
+        #region Methods
+
+        private void Init()
+        {
+            var vm = DataContext as ChangeCalendarEventVM;
+            DataContext = null;
 
             SeasonColor = Misc.SeasonColor.Get(vm.Form.Month);
 
@@ -57,22 +62,8 @@ namespace Synergy.StandardApps.Calendar.SubPages
                 ColorBtn0.IsChecked = true;
             }
 
-            DataContext = _vm = vm;
+            DataContext = vm;
         }
-
-        #region Messages
-
-        void IRecipient<CloseCalendarEventChangingMessage>.Receive(CloseCalendarEventChangingMessage message)
-        {
-            Dispatcher?.Invoke(() =>
-            {
-                OnReturn(new ReturnEventArgs<object>(null));
-            });
-        }
-
-        #endregion
-
-        #region Methods
 
         private bool SetCurrentColorButton(Color color)
         {
@@ -116,14 +107,7 @@ namespace Synergy.StandardApps.Calendar.SubPages
 
         private void CalendarEventChanger_Loaded(object sender, RoutedEventArgs e)
         {
-            WeakReferenceMessenger.Default
-                .Register(this);
-        }
-
-        private void CalendarEventChanger_Unloaded(object sender, RoutedEventArgs e)
-        {
-            WeakReferenceMessenger.Default
-                .UnregisterAll(this);
+            Init();
         }
 
         #endregion

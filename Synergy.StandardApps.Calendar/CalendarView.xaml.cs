@@ -1,25 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.Extensions.Logging;
 using Synergy.StandardApps.Calendar.Messages;
-using Synergy.StandardApps.Calendar.SubPages;
 using Synergy.StandardApps.Calendar.UserControls;
-using Synergy.StandardApps.Calendar.ViewModels;
+using Synergy.StandardApps.EntityForms.Calendar;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Synergy.StandardApps.Calendar
 {
@@ -29,12 +19,10 @@ namespace Synergy.StandardApps.Calendar
     public partial class CalendarPage : 
         UserControl,
         IRecipient<MonthLoadedMessage>,
-        IRecipient<CalendarNavigateMessage>,
-        IRecipient<CloseCalendarEventChangingMessage>,
-        IRecipient<OpenCalendarEventMessage>
+        IRecipient<SetRightSidePanelVisibilityMessage>
     {
-        private readonly CalendarVM _vm;
         private readonly List<CalendarDay> _cards;
+        private readonly List<DependencyObject> _hitResultList = new();
 
         #region Animations
 
@@ -58,21 +46,62 @@ namespace Synergy.StandardApps.Calendar
 
         #endregion
 
+        #region Constants
+
         private const double _cardHeight = 112.5;
         private const double _cardWidth = 75;
 
-        public Thickness ItemMargin { get; }
+        public Thickness ItemMargin { get; } = new Thickness(15, 10, 15, 10);
 
-        private volatile bool _isFrameHidden;
+        #endregion
 
-        private int num;
+        private volatile bool _isRightSidePanelVisible;
+        public bool IsRightSidePanelVisible
+        {
+            get => _isRightSidePanelVisible;
+
+            set
+            {
+                _isRightSidePanelVisible = value;
+
+                if (!value)
+                {
+                    HideFrame();
+                }
+                else
+                {
+                    ShowFrame();
+                }
+            }
+        }
+
         private bool _isRegistered;
-        private List<DependencyObject> _hitResultList = new();
+        private bool IsRegistered
+        {
+            get => _isRegistered;
+            set
+            {
+                if (_isRegistered == value)
+                    return;
 
-        public CalendarPage(CalendarVM vm)
+                _isRegistered = value;
+
+                if (value)
+                {
+                    WeakReferenceMessenger.Default
+                        .RegisterAll(this);
+                }
+                else
+                {
+                    WeakReferenceMessenger.Default
+                        .UnregisterAll(this);
+                }
+            }
+        }
+
+        public CalendarPage()
         {
             InitializeComponent();
-            ItemMargin = new Thickness(15, 10, 15, 10);
             _cards = new();
 
             FrameBrd.Visibility = Visibility.Hidden;
@@ -142,29 +171,13 @@ namespace Synergy.StandardApps.Calendar
                 FrameBrd.Visibility = Visibility.Hidden;
 
                 WeakReferenceMessenger.Default
-                    .Send(new OpenCalendarEventMessage(null));
-            };
-
-            _frameAppearing.Completed += (sender, e) =>
-            {
-                _isFrameHidden = false;
+                    .Send(new RightSidePanelClosedMessage(null));
             };
 
             _surfaceTopDisappearing.Completed += (sender, e) => { SurfaceBrd_Top.Visibility = Visibility.Collapsed; };
             _surfaceBottomDisappearing.Completed += (sender, e) => { SurfaceBrd_Bottom.Visibility = Visibility.Collapsed; };
 
             #endregion
-
-            WeakReferenceMessenger.Default
-                .RegisterAll(this);
-            _isRegistered = true;
-
-            DataContext = _vm = vm;
-
-            //EventFrame.Navigate(new CalendarEventViewPage());
-
-            num = Random.Shared.Next(100);
-            System.Diagnostics.Trace.WriteLine($"[{num}]: Calendar constructed! {DateTime.Now}");
         }
 
         #region Page loading handlers
@@ -173,13 +186,7 @@ namespace Synergy.StandardApps.Calendar
         {
             AddMouseHandler();
 
-            if (!_isRegistered)
-            {
-                WeakReferenceMessenger.Default
-                    .RegisterAll(this);
-
-                _isRegistered = true;
-            }
+            IsRegistered = true;
 
             HideFrame();
         }
@@ -188,10 +195,7 @@ namespace Synergy.StandardApps.Calendar
         {
             RemoveMouseHandler();
 
-            WeakReferenceMessenger.Default
-                .UnregisterAll(this);
-
-            _isRegistered = false;
+            IsRegistered = false;
         }
 
         #endregion
@@ -216,41 +220,19 @@ namespace Synergy.StandardApps.Calendar
 
         void IRecipient<MonthLoadedMessage>.Receive(MonthLoadedMessage message)
         {
-            Dispatcher.BeginInvoke(LoadMonth);
+            LoadMonth(message.Value.Item1, message.Value.Item2);
         }
 
-        void IRecipient<CalendarNavigateMessage>.Receive(CalendarNavigateMessage message)
+        void IRecipient<SetRightSidePanelVisibilityMessage>.Receive(SetRightSidePanelVisibilityMessage message)
         {
-            if (message.Value is null)
-            {
-                HideFrame();
-            }
-            else
-            {
-                ShowFrame();
-            }
-
-            EventFrame.Navigate(message.Value);
-        }
-
-        void IRecipient<CloseCalendarEventChangingMessage>.Receive(CloseCalendarEventChangingMessage message)
-        {
-            HideFrame();
-        }
-
-        void IRecipient<OpenCalendarEventMessage>.Receive(OpenCalendarEventMessage message)
-        {
-            if (message.Value is null)
-                return;
-
-            ShowFrame();
+            IsRightSidePanelVisible = message.Value;
         }
 
         #endregion
 
         #region Month loading
 
-        private void LoadMonth()
+        private void LoadMonth(IEnumerable<CalendarEventForm> events, DateTime currentDate)
         {
             // remove all cards from grid
             foreach (CalendarDay day in _cards)
@@ -260,13 +242,9 @@ namespace Synergy.StandardApps.Calendar
             _cards.Clear();
 
 
-            // getting events
-            var events = _vm.CalendarEvents;
-
-
             // filling current month daycards
-            var dt = new DateTime(_vm.CurrentDate.Year,
-                                  _vm.CurrentDate.Month, 1);
+            var dt = new DateTime(currentDate.Year,
+                                  currentDate.Month, 1);
             var month = dt.Month;
             var dtStart = dt;
             DateTime dtEnd = dt;
@@ -344,8 +322,6 @@ namespace Synergy.StandardApps.Calendar
                 }
                 while (dtEnd.DayOfWeek != DayOfWeek.Sunday);
             }
-
-            System.Diagnostics.Trace.WriteLine($"[{num}]: Calendar loaded!");
 
             LoadBackgroundImage(month);
 
@@ -429,9 +405,7 @@ namespace Synergy.StandardApps.Calendar
 
         private void HideFrame()
         {
-            _isFrameHidden = true;
-
-            _frameDisappearing.From = 12;
+            _frameDisappearing.From = TT.X;
             _frameDisappearing.To = FrameBrd.ActualWidth + 12;
 
             TT.BeginAnimation(TranslateTransform.XProperty, _frameDisappearing);
@@ -445,7 +419,7 @@ namespace Synergy.StandardApps.Calendar
 
         private void HandleClickOutsideOfControl(object sender, MouseButtonEventArgs e)
         {
-            if(_isFrameHidden) return;
+            if(!_isRightSidePanelVisible) return;
 
             var pt = e.GetPosition((UIElement)sender);
             _hitResultList.Clear();
@@ -454,8 +428,6 @@ namespace Synergy.StandardApps.Calendar
             VisualTreeHelper.HitTest(this, null,
                 new HitTestResultCallback(MyHitTestResultCallback),
                 new PointHitTestParameters(pt));
-
-
 
             //Testing if the page is under the cursor
             //var contains = _hitResultList.Contains(this);

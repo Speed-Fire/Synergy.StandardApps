@@ -4,6 +4,7 @@ using Synergy.StandardApps.Calendar.Messages;
 using Synergy.StandardApps.EntityForms.Calendar;
 using Synergy.StandardApps.Service.Calendar;
 using Synergy.WPF.Common.Controls;
+using Synergy.WPF.Navigation.Services.Local;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Synergy.StandardApps.Calendar.ViewModels.ChangeCalendarEventVMs
+namespace Synergy.StandardApps.Calendar.ViewModels.CalendarEvent
 {
     public class UpdateCalendarEventVM : ChangeCalendarEventVM
     {
-        public UpdateCalendarEventVM(ICalendarService calendarService, CalendarEventForm form) 
+        public UpdateCalendarEventVM(ICalendarService calendarService,
+            CalendarEventForm form) 
             : base(calendarService, form)
         {
         }

@@ -8,7 +8,13 @@
       xmlns:controls="clr-namespace:Synergy.WPF.Common.Controls;assembly=Synergy.WPF.Common"
       xmlns:ucs="clr-namespace:Synergy.StandardApps.Calendar.UserControls"
       xmlns:local="clr-namespace:Synergy.StandardApps.Calendar"
-      mc:Ignorable="d"
+      
+      Background="{DynamicResource FrameBackground}"
+      
+      xmlns:vms="clr-namespace:Synergy.StandardApps.Calendar.ViewModels.CalendarEvent"
+      xmlns:views="clr-namespace:Synergy.StandardApps.Calendar.Views"
+             
+             mc:Ignorable="d"
       Loaded="CalendarMain_Loaded"
       Unloaded="CalendarMain_Unloaded"
       d:DesignHeight="450" d:DesignWidth="800">
@@ -19,6 +25,22 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Seasons.xaml"/>
 
+                <ResourceDictionary>
+
+                    <DataTemplate DataType="{x:Type TypeName=vms:CreateCalendarEventVM}">
+                        <views:ChangeCalendarEventView/>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type TypeName=vms:UpdateCalendarEventVM}">
+                        <views:ChangeCalendarEventView/>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type TypeName=vms:CalendarEventVM}">
+                        <views:CalendarEventView/>
+                    </DataTemplate>
+                    
+                </ResourceDictionary>
+                
                 <ResourceDictionary>
 
                     <Geometry x:Key="ArrowLeft">
@@ -48,7 +70,7 @@
     <i:Interaction.Triggers>
 
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding PageLoaded}"/>
+            <i:InvokeCommandAction Command="{Binding ViewLoaded}"/>
         </i:EventTrigger>
         
     </i:Interaction.Triggers>
@@ -152,11 +174,10 @@
                         <Border.BorderBrush>
                             <SolidColorBrush Color="{StaticResource Yellow100Accent}"/>
                         </Border.BorderBrush>
-                        
-                        <Frame
-                            x:Name="EventFrame"
+
+                        <ContentControl
                             Background="Transparent"
-                            Style="{StaticResource FrameStyle}"/>
+                            Content="{Binding LocalNavigationService.CurrentView}"/>
 
                         <Border.RenderTransform>
                             <TranslateTransform x:Name="TT"/>

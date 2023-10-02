@@ -130,6 +130,8 @@ namespace Synergy.StandardApps.Calendar.UserControls
         {
             InitializeComponent();
 
+            _disappearing.Completed += UpdateVisualHandler;
+
             InitAppearance(form);
         }
 

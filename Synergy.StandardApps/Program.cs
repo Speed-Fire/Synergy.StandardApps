@@ -12,6 +12,7 @@ using Synergy.StandardApps.Service.Extensions;
 using Synergy.StandardApps.Utility.Misc;
 using Synergy.StandardApps.ViewModels;
 using Synergy.WPF.Common.Extensions;
+using Synergy.WPF.Navigation.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -55,7 +56,8 @@ namespace Synergy.StandardApps
                     .RegisterAlarmsUI()
                     .RegisterCalendarServices()
                     .RegisterCalendarUI()
-                    .RegisterBackground();
+                    .RegisterBackground()
+                    .RegisterNavigation();
 
                 services.AddSingleton<App>();
                 services.AddSingleton<MainWindow>();
