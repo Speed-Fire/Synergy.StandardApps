@@ -38,6 +38,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Synergy.WPF.Common\Synergy.WPF.Common\Synergy.WPF.Common.csproj" />
+    <ProjectReference Include="..\..\Synergy.WPF.Navigation\Synergy.WPF.Navigation\Synergy.WPF.Navigation.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.Alarms\Synergy.StandardApps.Alarms.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.Background\Synergy.StandardApps.Background.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.Calendar\Synergy.StandardApps.Calendar.csproj" />
