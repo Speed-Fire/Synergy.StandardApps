@@ -55,6 +55,8 @@ namespace Synergy.StandardApps.Calendar
 
         #endregion
 
+        #region Properties
+
         private volatile bool _isRightSidePanelVisible;
         public bool IsRightSidePanelVisible
         {
@@ -98,6 +100,8 @@ namespace Synergy.StandardApps.Calendar
                 }
             }
         }
+
+        #endregion
 
         public CalendarPage()
         {
@@ -268,7 +272,7 @@ namespace Synergy.StandardApps.Calendar
                     card = new(ev);
                 }
 
-                card.SetValue(Grid.RowProperty, str + 1);
+                card.SetValue(Grid.RowProperty, str);
                 card.SetValue(Grid.ColumnProperty, col);
                 card.SetValue(Control.MarginProperty, ItemMargin);
                 card.SetValue(Control.MinHeightProperty, _cardHeight);
@@ -305,7 +309,7 @@ namespace Synergy.StandardApps.Calendar
                 {
                     dtStart = dtStart.AddDays(-1);
 
-                    AddBlankDay(dtStart, 1);
+                    AddBlankDay(dtStart, 0);
                 }
                 while (dtStart.DayOfWeek != DayOfWeek.Monday);
             }
@@ -318,7 +322,7 @@ namespace Synergy.StandardApps.Calendar
                 {
                     dtEnd = dtEnd.AddDays(1);
 
-                    AddBlankDay(dtEnd, str + 1);
+                    AddBlankDay(dtEnd, str);
                 }
                 while (dtEnd.DayOfWeek != DayOfWeek.Sunday);
             }

@@ -114,53 +114,76 @@
                         
                     </Border>
 
-                    <ScrollViewer
-                        Grid.Column="1"
-                        Style="{StaticResource ScrollViewerStyle}">
-                        <Grid x:Name="CalendarGrid">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
+                    <Grid
+                        Grid.Column="1">
 
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                        </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0"
-                                       Style="{StaticResource WeekDayTbStyle}"
-                                       Text="Mn"/>
-                            <TextBlock Grid.Column="1"
-                                       Style="{StaticResource WeekDayTbStyle}"
-                                       Text="Tu"/>
-                            <TextBlock Grid.Column="2"
-                                       Style="{StaticResource WeekDayTbStyle}"
-                                       Text="Wd"/>
-                            <TextBlock Grid.Column="3"
-                                       Style="{StaticResource WeekDayTbStyle}"
-                                       Text="Th"/>
-                            <TextBlock Grid.Column="4"
-                                       Style="{StaticResource WeekDayTbStyle}"
-                                       Text="Fr"/>
-                            <TextBlock Grid.Column="5"
-                                       Style="{StaticResource WeekDayTbStyle}"
-                                       Text="St"/>
-                            <TextBlock Grid.Column="6"
-                                       Style="{StaticResource WeekDayTbStyle}"
-                                       Text="Sn"/>
-                        </Grid>
-                    </ScrollViewer>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!--#region Week days-->
+                        
+                        <TextBlock Grid.Column="0"
+                                           Style="{StaticResource WeekDayTbStyle}"
+                                           Text="Mn"/>
+                        <TextBlock Grid.Column="1"
+                                           Style="{StaticResource WeekDayTbStyle}"
+                                           Text="Tu"/>
+                        <TextBlock Grid.Column="2"
+                                           Style="{StaticResource WeekDayTbStyle}"
+                                           Text="Wd"/>
+                        <TextBlock Grid.Column="3"
+                                           Style="{StaticResource WeekDayTbStyle}"
+                                           Text="Th"/>
+                        <TextBlock Grid.Column="4"
+                                           Style="{StaticResource WeekDayTbStyle}"
+                                           Text="Fr"/>
+                        <TextBlock Grid.Column="5"
+                                           Style="{StaticResource WeekDayTbStyle}"
+                                           Text="St"/>
+                        <TextBlock Grid.Column="6"
+                                           Style="{StaticResource WeekDayTbStyle}"
+                                           Text="Sn"/>
+
+                        <!--#endregion-->
+                        
+                        <ScrollViewer
+                            Grid.Row="1"
+                            Grid.ColumnSpan="7"
+                            Style="{StaticResource ScrollViewerStyle}">
+                            <Grid x:Name="CalendarGrid">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                            </Grid>
+                        </ScrollViewer>
+                    </Grid>
 
                     <Border
                         x:Name="FrameBrd"
