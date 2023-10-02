@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace Synergy.StandardApps.EntityForms.Calendar
 {
-    public class CalendarEventCreationForm : ObservableObject
+    public class CalendarEventCreationForm : ObservableValidator
     {
         private string title;
         private string description;
