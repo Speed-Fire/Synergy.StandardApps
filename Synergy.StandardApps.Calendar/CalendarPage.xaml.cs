@@ -425,8 +425,8 @@ namespace Synergy.StandardApps.Calendar
         {
             _isFrameHidden = true;
 
-            _frameDisappearing.From = 0;
-            _frameDisappearing.To = FrameBrd.ActualWidth;
+            _frameDisappearing.From = 12;
+            _frameDisappearing.To = FrameBrd.ActualWidth + 12;
 
             TT.BeginAnimation(TranslateTransform.XProperty, _frameDisappearing);
             SurfaceBrd_Top.BeginAnimation(Control.OpacityProperty, _surfaceTopDisappearing);
