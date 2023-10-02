@@ -6,6 +6,7 @@ using Synergy.StandardApps.Calendar.SubPages;
 using Synergy.StandardApps.Calendar.ViewModels.ChangeCalendarEventVMs;
 using Synergy.StandardApps.EntityForms.Calendar;
 using Synergy.StandardApps.Service.Calendar;
+using Synergy.WPF.Navigation.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ using System.Windows.Input;
 namespace Synergy.StandardApps.Calendar.ViewModels
 {
     public class CalendarVM : 
-        ObservableRecipient,
+        ViewModel,
         IRecipient<CalendarEventCreatedMessage>,
         IRecipient<CalendarEventUpdatedMessage>,
         IRecipient<CalendarEventDeletedMessage>
