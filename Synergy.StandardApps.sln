@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synergy.StandardApps.Backgr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synergy.StandardApps.Misc", "Synergy.StandardApps.Misc\Synergy.StandardApps.Misc.csproj", "{A3FE8937-39F1-4B94-8058-D3E61E142BB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synergy.StandardApps.Calendar", "Synergy.StandardApps.Calendar\Synergy.StandardApps.Calendar.csproj", "{66AC0F15-9FD2-4F21-83D4-F62A0B386500}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synergy.StandardApps.Calendar", "Synergy.StandardApps.Calendar\Synergy.StandardApps.Calendar.csproj", "{66AC0F15-9FD2-4F21-83D4-F62A0B386500}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synergy.WPF.Navigation", "..\Synergy.WPF.Navigation\Synergy.WPF.Navigation\Synergy.WPF.Navigation.csproj", "{6BC010B4-0DA6-4037-9D21-7AB584E4E927}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +87,10 @@ Global
 		{66AC0F15-9FD2-4F21-83D4-F62A0B386500}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66AC0F15-9FD2-4F21-83D4-F62A0B386500}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66AC0F15-9FD2-4F21-83D4-F62A0B386500}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BC010B4-0DA6-4037-9D21-7AB584E4E927}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BC010B4-0DA6-4037-9D21-7AB584E4E927}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BC010B4-0DA6-4037-9D21-7AB584E4E927}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BC010B4-0DA6-4037-9D21-7AB584E4E927}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
