@@ -14,6 +14,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -31,6 +32,29 @@ namespace Synergy.StandardApps.Calendar.UserControls
         IRecipient<CalendarEventDeletedMessage>
     {
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        #region Animations
+
+        private readonly DoubleAnimation _appearing = new()
+        {
+            Duration = TimeSpan.FromSeconds(0.5),
+            DecelerationRatio = 0.8,
+            From = 0,
+            To = 1,
+            BeginTime = TimeSpan.FromSeconds(0.5)
+        };
+
+        private readonly DoubleAnimation _disappearing = new()
+        {
+            Duration = TimeSpan.FromSeconds(0.5),
+            DecelerationRatio = 0.8,
+            From = 1,
+            To = 0,
+        };
+
+        #endregion
+
+        private Action? _visualUpdater;
 
         private bool _outOfMonth;
         private int _month;
@@ -95,6 +119,8 @@ namespace Synergy.StandardApps.Calendar.UserControls
         {
             InitializeComponent();
 
+            _disappearing.Completed += UpdateVisualHandler;
+
             _outOfMonth = outOfMonth;
 
             InitAppearance(day, month);
@@ -128,26 +154,57 @@ namespace Synergy.StandardApps.Calendar.UserControls
         {
             if (_outOfMonth || message.Value.Day != Day) return;
 
-            InitAppearance(message.Value);
+            UpdateVisual(message.Value);
         }
 
         void IRecipient<CalendarEventUpdatedMessage>.Receive(CalendarEventUpdatedMessage message)
         {
             if (_outOfMonth || message.Value.Day != Day) return;
 
-            InitAppearance(message.Value);
+            UpdateVisual(message.Value);
         }
 
         void IRecipient<CalendarEventDeletedMessage>.Receive(CalendarEventDeletedMessage message)
         {
             if (_outOfMonth || message.Value != Day) return;
 
-            InitAppearance(Day, _month);
+            UpdateVisual(Day, _month);
         }
 
         #endregion
 
         #region Methods
+
+        #region Update visual
+
+        private void UpdateVisual(CalendarEventForm form)
+        {
+            _visualUpdater = () =>
+            {
+                InitAppearance(form);
+            };
+
+            BeginAnimation(Control.OpacityProperty, _disappearing);
+        }
+
+        private void UpdateVisual(int day, int month)
+        {
+            _visualUpdater = () =>
+            {
+                InitAppearance(day, month);
+            };
+
+            BeginAnimation(Control.OpacityProperty, _disappearing);
+        }
+
+        private void UpdateVisualHandler(object? sender, EventArgs e)
+        {
+            _visualUpdater?.Invoke();
+
+            BeginAnimation(Control.OpacityProperty, _appearing);
+        }
+
+        #endregion
 
         private void InitAppearance(int day, int month)
         {
