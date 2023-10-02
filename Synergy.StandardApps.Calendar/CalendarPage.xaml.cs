@@ -28,10 +28,13 @@ namespace Synergy.StandardApps.Calendar
     public partial class CalendarPage : 
         Page,
         IRecipient<MonthLoadedMessage>,
-        IRecipient<CalendarNavigateMessage>
+        IRecipient<CalendarNavigateMessage>,
+        IRecipient<CloseCalendarEventChangingMessage>
     {
         private readonly CalendarVM _vm;
         private readonly List<CalendarDay> _cards;
+
+        #region Animations
 
         private readonly DoubleAnimation _calendarDisappearing;
         private readonly DoubleAnimation _calendarAppearing;
@@ -48,6 +51,8 @@ namespace Synergy.StandardApps.Calendar
 
         private readonly DoubleAnimation _surfaceBottomDisappearing;
         private readonly DoubleAnimation _surfaceBottomAppearing;
+
+        #endregion
 
         #endregion
 
@@ -139,6 +144,8 @@ namespace Synergy.StandardApps.Calendar
 
             DataContext = _vm = vm;
 
+            var p = Parent;
+
             num = Random.Shared.Next(100);
             System.Diagnostics.Trace.WriteLine($"[{num}]: Calendar constructed! {DateTime.Now}");
         }
@@ -184,8 +191,6 @@ namespace Synergy.StandardApps.Calendar
         {
             var navserv = EventFrame.NavigationService;
 
-            navserv.Navigate(message.Value);
-
             if (message.Value is null)
             {
                 HideFrame();
@@ -194,6 +199,13 @@ namespace Synergy.StandardApps.Calendar
             {
                 ShowFrame();
             }
+
+            navserv.Navigate(message.Value);
+        }
+
+        void IRecipient<CloseCalendarEventChangingMessage>.Receive(CloseCalendarEventChangingMessage message)
+        {
+            HideFrame();
         }
 
         #endregion

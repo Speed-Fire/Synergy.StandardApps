@@ -13,6 +13,8 @@
     
     RemoveFromJournal="True"
     
+    Loaded="CalendarEventChanger_Loaded"
+    Unloaded="CalendarEventChanger_Unloaded"
     mc:Ignorable="d"
     d:DesignHeight="450" d:DesignWidth="800"
     Title="ChangeCalendarEventPage">
@@ -237,7 +239,7 @@
                 <TextBlock
                     Text="Description:"/>
 
-                <controls:AdvancedTextBox
+                <controls:AdvancedTextBox x:Name="DescriptionBox"
                     DockPanel.Dock="Top"
                     Style="{StaticResource AdvancedTextBoxStyle}"
                     TextWrapping="Wrap"

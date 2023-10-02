@@ -63,10 +63,16 @@ namespace Synergy.StandardApps.Calendar.SubPages
             DataContext = _vm = vm;
         }
 
+        #region Messages
+
         void IRecipient<CloseCalendarEventChangingMessage>.Receive(CloseCalendarEventChangingMessage message)
         {
             OnReturn(null);
         }
+
+        #endregion
+
+        #region Methods
 
         private bool SetCurrentColorButton(Color color)
         {
@@ -103,5 +109,42 @@ namespace Synergy.StandardApps.Calendar.SubPages
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private void AddMouseHandler()
+        {
+            AddHandler(Mouse.PreviewMouseDownOutsideCapturedElementEvent,
+                new MouseButtonEventHandler(HandleClickOutsideOfControl), true);
+        }
+
+        private void RemoveMouseHandler()
+        {
+            RemoveHandler(Mouse.PreviewMouseDownOutsideCapturedElementEvent,
+                new MouseButtonEventHandler(HandleClickOutsideOfControl));
+        }
+
+        #endregion
+
+        #region Event handlers
+
+        private void CalendarEventChanger_Loaded(object sender, RoutedEventArgs e)
+        {
+            Mouse.Capture(this, CaptureMode.SubTree);
+            AddMouseHandler();
+        }
+
+        private void CalendarEventChanger_Unloaded(object sender, RoutedEventArgs e)
+        {
+            RemoveMouseHandler();
+        }
+
+        private void HandleClickOutsideOfControl(object sender, MouseButtonEventArgs e)
+        {
+            WeakReferenceMessenger.Default
+                .Send(new CloseCalendarEventChangingMessage(null));
+
+            ReleaseMouseCapture();
+        }
+
+        #endregion
     }
 }
