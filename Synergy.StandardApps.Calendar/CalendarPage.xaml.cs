@@ -27,7 +27,7 @@ namespace Synergy.StandardApps.Calendar
     /// Логика взаимодействия для CalendarPage.xaml
     /// </summary>
     public partial class CalendarPage : 
-        Page,
+        UserControl,
         IRecipient<MonthLoadedMessage>,
         IRecipient<CalendarNavigateMessage>,
         IRecipient<CloseCalendarEventChangingMessage>,
@@ -167,11 +167,6 @@ namespace Synergy.StandardApps.Calendar
             System.Diagnostics.Trace.WriteLine($"[{num}]: Calendar constructed! {DateTime.Now}");
         }
 
-        ~CalendarPage()
-        {
-            System.Diagnostics.Trace.WriteLine($"[{num}]: Calendar destructed! {DateTime.Now}");
-        }
-
         #region Page loading handlers
 
         private void CalendarMain_Loaded(object sender, RoutedEventArgs e)
@@ -235,17 +230,7 @@ namespace Synergy.StandardApps.Calendar
                 ShowFrame();
             }
 
-            if(message.Value is ChangeCalendarEventPage p)
-            {
-                p.Return += ChangingPageReturned;
-            }
-
             EventFrame.Navigate(message.Value);
-        }
-
-        private void ChangingPageReturned(object sender, ReturnEventArgs<object> e)
-        {
-            Console.WriteLine();
         }
 
         void IRecipient<CloseCalendarEventChangingMessage>.Receive(CloseCalendarEventChangingMessage message)
