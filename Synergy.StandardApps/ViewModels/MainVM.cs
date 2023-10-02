@@ -95,7 +95,7 @@ namespace Synergy.StandardApps.ViewModels
                 //frame.NavigateNoJournal(Program.AppHost.Services
                 //    .GetRequiredService<CalendarPage>);
 
-                _navigationService.NavigateTo<>
+                //_navigationService.NavigateTo<>
             }));
 
         #endregion
