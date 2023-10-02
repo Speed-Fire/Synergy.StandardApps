@@ -64,7 +64,10 @@ namespace Synergy.StandardApps.Calendar.SubPages
 
         void IRecipient<CloseCalendarEventChangingMessage>.Receive(CloseCalendarEventChangingMessage message)
         {
-            OnReturn(null);
+            Dispatcher?.Invoke(() =>
+            {
+                OnReturn(new ReturnEventArgs<object>(null));
+            });
         }
 
         #endregion

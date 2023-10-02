@@ -130,7 +130,9 @@
 
                 <controls:NormalButton
                     Style="{StaticResource NormalButtonStyle.CalendarCard.Top}"
-                    Command="{Binding}">
+                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:CalendarPage}},
+                                          Path=DataContext.OpenCalendarEvent}"
+                    CommandParameter="{Binding ElementName=CalendarDayCard, Path=Day}">
 
                     <TextBlock
                         TextAlignment="Center"

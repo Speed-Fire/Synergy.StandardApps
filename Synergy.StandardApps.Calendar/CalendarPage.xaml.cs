@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using Synergy.StandardApps.Calendar.Messages;
+using Synergy.StandardApps.Calendar.SubPages;
 using Synergy.StandardApps.Calendar.UserControls;
 using Synergy.StandardApps.Calendar.ViewModels;
 using System;
@@ -29,7 +30,8 @@ namespace Synergy.StandardApps.Calendar
         Page,
         IRecipient<MonthLoadedMessage>,
         IRecipient<CalendarNavigateMessage>,
-        IRecipient<CloseCalendarEventChangingMessage>
+        IRecipient<CloseCalendarEventChangingMessage>,
+        IRecipient<OpenCalendarEventMessage>
     {
         private readonly CalendarVM _vm;
         private readonly List<CalendarDay> _cards;
@@ -138,6 +140,9 @@ namespace Synergy.StandardApps.Calendar
             _frameDisappearing.Completed += (sender, e) => 
             {
                 FrameBrd.Visibility = Visibility.Hidden;
+
+                WeakReferenceMessenger.Default
+                    .Send(new OpenCalendarEventMessage(null));
             };
 
             _frameAppearing.Completed += (sender, e) =>
@@ -156,7 +161,7 @@ namespace Synergy.StandardApps.Calendar
 
             DataContext = _vm = vm;
 
-            var p = Parent;
+            //EventFrame.Navigate(new CalendarEventViewPage());
 
             num = Random.Shared.Next(100);
             System.Diagnostics.Trace.WriteLine($"[{num}]: Calendar constructed! {DateTime.Now}");
@@ -221,8 +226,6 @@ namespace Synergy.StandardApps.Calendar
 
         void IRecipient<CalendarNavigateMessage>.Receive(CalendarNavigateMessage message)
         {
-            var navserv = EventFrame.NavigationService;
-
             if (message.Value is null)
             {
                 HideFrame();
@@ -232,12 +235,30 @@ namespace Synergy.StandardApps.Calendar
                 ShowFrame();
             }
 
-            navserv.Navigate(message.Value);
+            if(message.Value is ChangeCalendarEventPage p)
+            {
+                p.Return += ChangingPageReturned;
+            }
+
+            EventFrame.Navigate(message.Value);
+        }
+
+        private void ChangingPageReturned(object sender, ReturnEventArgs<object> e)
+        {
+            Console.WriteLine();
         }
 
         void IRecipient<CloseCalendarEventChangingMessage>.Receive(CloseCalendarEventChangingMessage message)
         {
             HideFrame();
+        }
+
+        void IRecipient<OpenCalendarEventMessage>.Receive(OpenCalendarEventMessage message)
+        {
+            if (message.Value is null)
+                return;
+
+            ShowFrame();
         }
 
         #endregion

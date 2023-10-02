@@ -101,11 +101,17 @@ namespace Synergy.StandardApps.Calendar.ViewModels
                 }
             }));
 
-        private RelayCommand? openCalendarEvent;
+        private RelayCommand<int>? openCalendarEvent;
         public ICommand OpenCalendarEvent => openCalendarEvent ??
-            (openCalendarEvent = new RelayCommand(() =>
+            (openCalendarEvent = new RelayCommand<int>(day =>
             {
+                var ev = _calendarEvents.FirstOrDefault(e => e.Day == day);
 
+                if (ev is null)
+                    return;
+
+                WeakReferenceMessenger.Default
+                    .Send(new OpenCalendarEventMessage(ev));
             }));
 
         private AsyncRelayCommand? loadNextMonth;

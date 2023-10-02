@@ -9,6 +9,8 @@
     xmlns:local="clr-namespace:Synergy.StandardApps.Calendar.SubPages"
     mc:Ignorable="d"
     d:DesignHeight="450" d:DesignWidth="800"
-    Title="CalendarEventViewPage">
+    Title="CalendarEventViewPage"
+    Loaded="PageFunction_Loaded"
+    Unloaded="PageFunction_Unloaded">
 
 </PageFunction>
