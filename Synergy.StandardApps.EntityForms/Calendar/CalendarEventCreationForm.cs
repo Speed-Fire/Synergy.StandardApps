@@ -66,6 +66,8 @@ namespace Synergy.StandardApps.EntityForms.Calendar
             }
         }
 
+        public int ColorNum => color;
+
         public static ValidationResult ValidateTitle(string title, ValidationContext context)
         {
             if(string.IsNullOrWhiteSpace(title))
