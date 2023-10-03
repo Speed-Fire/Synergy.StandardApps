@@ -14,7 +14,7 @@ using System.Windows.Input;
 
 namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
 {
-    internal class CreateNoteVM : ChangeNoteVM
+    public class CreateNoteVM : ChangeNoteVM
     {
         private NoteCreationForm protoNote;
         public override NoteCreationForm ProtoNote
@@ -25,14 +25,14 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
 
         public override string Created => string.Empty;
 
-        internal CreateNoteVM(INoteService noteService) : base(noteService)
+        public CreateNoteVM(INoteService noteService) : base(noteService)
         {
             protoNote = new();
         }
 
-        private RelayCommand? save;
-        public override ICommand? Save => save ??
-            (save = new RelayCommand(async () =>
+        private RelayCommand? saveCommand;
+        public override ICommand? SaveCommand => saveCommand ??
+            (saveCommand = new RelayCommand(async () =>
             {
                 var res = await _noteService.CreateNote(ProtoNote);
 
@@ -46,7 +46,6 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
                 }
 
                 WeakReferenceMessenger.Default.Send(new NoteCreatedMessage(res.Data));
-                WeakReferenceMessenger.Default.Send(new NoteNavigateMessage(null));
-            }/*, () => { return !ProtoNote.HasErrors; }*/));
+            }));
     }
 }

@@ -13,8 +13,7 @@ namespace Synergy.StandardApps.Notes.Extensions
         public static IServiceCollection RegisterNotesUI(this IServiceCollection services)
         {
             services
-                .AddTransient<NotesVM>()
-                .AddTransient<NotesPage>();
+                .AddSingleton<NotesVM>();
 
             return services;
         }

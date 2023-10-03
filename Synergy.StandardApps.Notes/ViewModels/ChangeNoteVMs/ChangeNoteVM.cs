@@ -4,6 +4,8 @@ using CommunityToolkit.Mvvm.Messaging;
 using Synergy.StandardApps.EntityForms.Notes;
 using Synergy.StandardApps.Notes.Messages;
 using Synergy.StandardApps.Service.Notes;
+using Synergy.WPF.Navigation.Services.Local;
+using Synergy.WPF.Navigation.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,7 @@ using System.Windows.Input;
 
 namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
 {
-    public abstract class ChangeNoteVM : ObservableObject
+    public abstract class ChangeNoteVM : ViewModel
     {
         protected readonly INoteService _noteService;
 
@@ -25,13 +27,12 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
             _noteService = noteService;
         }
 
-        public abstract ICommand? Save { get; }
+        public abstract ICommand? SaveCommand { get; }
 
-        private RelayCommand? goBack;
-        public ICommand? GoBack => goBack ??
-            (goBack = new RelayCommand(() =>
+        private RelayCommand? goBackCommand;
+        public ICommand? GoBackCommand => goBackCommand ??
+            (goBackCommand = new RelayCommand(() =>
             {
-                WeakReferenceMessenger.Default.Send(new NoteNavigateMessage(null));
                 WeakReferenceMessenger.Default.Send(new NoteChangingCanceledMessage(null));
             }));
     }

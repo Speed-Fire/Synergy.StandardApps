@@ -5,6 +5,7 @@ using Synergy.StandardApps.Alarms;
 using Synergy.StandardApps.Calendar;
 using Synergy.StandardApps.Calendar.ViewModels;
 using Synergy.StandardApps.Notes;
+using Synergy.StandardApps.Notes.ViewModels;
 using Synergy.WPF.Common.Extensions;
 using Synergy.WPF.Common.Tray;
 using Synergy.WPF.Navigation.Services;
@@ -78,6 +79,8 @@ namespace Synergy.StandardApps.ViewModels
 
                 //frame.NavigateNoJournal(Program.AppHost.Services
                 //    .GetRequiredService<NotesPage>);
+
+                Navigation.NavigateTo<NotesVM>();
             }));
 
         private RelayCommand<Frame> navigateToAlarms;

@@ -1,27 +1,54 @@
-﻿<Page x:Class="Synergy.StandardApps.Notes.NotesPage"
+﻿<UserControl x:Class="Synergy.StandardApps.Notes.NotesView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Synergy.StandardApps.Notes"
+      xmlns:vms="clr-namespace:Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs"
+      xmlns:views="clr-namespace:Synergy.StandardApps.Notes.Views"
       xmlns:controls="clr-namespace:Synergy.WPF.Common.Controls;assembly=Synergy.WPF.Common"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:convs="clr-namespace:Synergy.WPF.Common.Converters;assembly=Synergy.WPF.Common"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Notes"
-      KeepAlive="True">
+             
+      Background="{DynamicResource FrameBackground}"
+             
+      d:DesignHeight="450" d:DesignWidth="800">
 
-    <Page.Resources>
+    <UserControl.Resources>
+
         <ResourceDictionary>
-            <convs:Bool2VisibilityConverter x:Key="b2Visibility"/>
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary>
+
+                    <DataTemplate DataType="{x:Type vms:NoteViewVM}">
+                        <views:NoteView/>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type vms:CreateNoteVM}">
+                        <views:ChangeNoteView/>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type vms:UpdateNoteVM}">
+                        <views:ChangeNoteView/>
+                    </DataTemplate>
+
+                </ResourceDictionary>
+                
+                <ResourceDictionary>
+                    <convs:Bool2VisibilityConverter x:Key="b2Visibility"/>
+                </ResourceDictionary>
+                
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-    </Page.Resources>
+
+    </UserControl.Resources>
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction
-                Command="{Binding LoadNotes}"/>
+                Command="{Binding LoadNotesCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
     
@@ -58,7 +85,7 @@
                     HorizontalAlignment="Right"
                     Margin="0 0 10 0"
                     Content="Delete"
-                    Command="{Binding DeleteNote}"
+                    Command="{Binding DeleteNoteCommand}"
                     CommandParameter="{Binding ElementName=NoteList,
                         Path=SelectedItem}"/>
                 
@@ -68,7 +95,7 @@
                     HorizontalAlignment="Right"
                     Margin="0 0 10 0"
                     Content="Add"
-                    Command="{Binding OpenNoteCreation}"/>
+                    Command="{Binding OpenNoteCreationCommand}"/>
 
                 <TextBlock
                     DockPanel.Dock="Left"
@@ -84,15 +111,16 @@
                 Margin="0 3 0 0"
                 Style="{StaticResource ListBoxStyle}"
                 ItemsSource="{Binding Notes}"
+                SelectionMode="Single"
                 SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <i:InvokeCommandAction
-                            Command="{Binding OpenNote}"
+                            Command="{Binding OpenNoteCommand}"
                             CommandParameter="{Binding Path=DataContext.SelectedItem,
                                 RelativeSource={RelativeSource FindAncestor,
-                                AncestorType={x:Type ListView}}}"/>
+                                AncestorType={x:Type ListBox}}}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 
@@ -120,10 +148,9 @@
             HorizontalAlignment="Center"
             Fill="{StaticResource Gray200Brush}"/>
 
-        <Frame
-            x:Name="NoteFrame"
+        <ContentControl
             Grid.Column="2"
-            NavigationUIVisibility="Hidden"
-            JournalOwnership="OwnsJournal"/>
+            Content="{Binding LocalNavigationService.CurrentView}"/>
+
     </Grid>
-</Page>
+</UserControl>

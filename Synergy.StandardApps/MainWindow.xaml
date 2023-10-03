@@ -11,6 +11,9 @@
         xmlns:calendarVMs="clr-namespace:Synergy.StandardApps.Calendar.ViewModels;assembly=Synergy.StandardApps.Calendar"
         xmlns:calendarViews="clr-namespace:Synergy.StandardApps.Calendar;assembly=Synergy.StandardApps.Calendar"
         
+        xmlns:notesVMs="clr-namespace:Synergy.StandardApps.Notes.ViewModels;assembly=Synergy.StandardApps.Notes"
+        xmlns:notesViews="clr-namespace:Synergy.StandardApps.Notes;assembly=Synergy.StandardApps.Notes"
+        
         mc:Ignorable="d"
         WindowState="{Binding WindowState}"
         ShowInTaskbar="{Binding ShowInTaskbar}"
@@ -31,6 +34,10 @@
             <calendarViews:CalendarPage/>
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type TypeName=notesVMs:NotesVM}">
+            <notesViews:NotesView/>
+        </DataTemplate>
+        
     </Window.Resources>
     
     <controls:NotifyingGrid

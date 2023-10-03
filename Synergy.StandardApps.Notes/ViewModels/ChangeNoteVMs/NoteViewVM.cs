@@ -2,17 +2,22 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Synergy.StandardApps.Notes.Messages;
+using Synergy.WPF.Navigation.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Synergy.StandardApps.Notes.ViewModels
+namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
 {
-    internal class NoteViewVM : ObservableRecipient, IRecipient<OpenNoteMessage>
+    internal class NoteViewVM : 
+        ViewModel,
+        IRecipient<OpenNoteMessage>
     {
         private long _id = 0;
+
+        #region Properties
 
         private string name = "";
         public string Name
@@ -35,17 +40,19 @@ namespace Synergy.StandardApps.Notes.ViewModels
             set => SetProperty(ref created, value);
         }
 
+        #endregion
+
         public NoteViewVM()
         {
             IsActive = true;
         }
 
-        private RelayCommand? openNoteEdit;
-        public RelayCommand OpenNoteEdit => openNoteEdit ??
-            (openNoteEdit = new RelayCommand(() =>
+        private RelayCommand? openNoteEditCommand;
+        public RelayCommand OpenNoteEditCommand => openNoteEditCommand ??
+            (openNoteEditCommand = new RelayCommand(() =>
             {
                 WeakReferenceMessenger.Default.Send(new OpenNoteEditMessage(null));
-            }/*, () => { return _id != 0; }*/));
+            }));
 
         public void Receive(OpenNoteMessage message)
         {

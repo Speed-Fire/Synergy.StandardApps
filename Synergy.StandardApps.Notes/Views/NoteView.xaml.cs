@@ -14,18 +14,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Synergy.StandardApps.Notes.SubPages
+namespace Synergy.StandardApps.Notes.Views
 {
     /// <summary>
     /// Логика взаимодействия для NoteViewPage.xaml
     /// </summary>
-    public partial class NoteViewPage : Page
+    public partial class NoteView : UserControl
     {
-        public NoteViewPage()
+        public NoteView()
         {
             InitializeComponent();
-
-            DataContext = new NoteViewVM();
         }
     }
 }

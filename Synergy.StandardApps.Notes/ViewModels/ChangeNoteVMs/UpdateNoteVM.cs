@@ -14,7 +14,7 @@ using System.Windows.Input;
 
 namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
 {
-    internal class UpdateNoteVM : ChangeNoteVM
+    public class UpdateNoteVM : ChangeNoteVM
     {
         private readonly long id;
 
@@ -32,7 +32,7 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
             //set => SetProperty(ref created, value);
         }
 
-        public UpdateNoteVM(NoteForm form, INoteService noteService) :
+        public UpdateNoteVM(INoteService noteService, NoteForm form) :
             base(noteService)
         {
             protoNote = new()
@@ -45,9 +45,9 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
             created = form.Created.ToString();
         }
 
-        private AsyncRelayCommand? save;
-        public override ICommand? Save => save ??
-            (save = new AsyncRelayCommand(UpdateNote));
+        private AsyncRelayCommand? saveCommand;
+        public override ICommand? SaveCommand => saveCommand ??
+            (saveCommand = new AsyncRelayCommand(UpdateNote));
 
         private async Task UpdateNote()
         {
@@ -64,7 +64,6 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
                 return;
             }
 
-            WeakReferenceMessenger.Default.Send(new NoteNavigateMessage(null));
             WeakReferenceMessenger.Default.Send(new NoteUpdatedMessage(res.Data));
         }
     }

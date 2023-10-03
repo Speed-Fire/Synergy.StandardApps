@@ -16,18 +16,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Synergy.StandardApps.Notes.SubPages
+namespace Synergy.StandardApps.Notes.Views
 {
     /// <summary>
     /// Логика взаимодействия для CreateNotePage.xaml
     /// </summary>
-    public partial class ChangeNotePage : Page
+    public partial class ChangeNoteView : UserControl
     {
-        public ChangeNotePage(ChangeNoteVM vm)
+        public ChangeNoteView()
         {
             InitializeComponent();
-
-            DataContext = vm;
         }
     }
 }
