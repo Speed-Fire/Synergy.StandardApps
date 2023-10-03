@@ -43,6 +43,17 @@
                 
                 <ResourceDictionary>
 
+                    <LinearGradientBrush x:Key="BackgroundBrush"
+                                         StartPoint="0,0.8"
+                                         EndPoint="1,0.2">
+                        <GradientStop Color="{DynamicResource Gray700}"
+                                      Offset="0"/>
+                        <GradientStop Color="{DynamicResource Gray900}"
+                                      Offset="0.6"/>
+                        <GradientStop Color="{DynamicResource Gray950}"
+                                      Offset="1"/>
+                    </LinearGradientBrush>
+                    
                     <Geometry x:Key="ArrowLeft">
                         m 75.704026,103.25691 26.718444,-7.143933 v 2.224644 l -22.392363,5.859279 22.392363,5.85927 v 2.22465 l -26.743014,-7.17526 z
                     </Geometry>
@@ -86,7 +97,7 @@
                 BorderThickness="2"
                 CornerRadius="15"
                 BorderBrush="{DynamicResource ListView.Background}"
-                Background="{DynamicResource ListView.Background}">
+                Background="{StaticResource BackgroundBrush}">
             <Border
                 x:Name="ImageBrd"
                 Padding="3"
