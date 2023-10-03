@@ -17,6 +17,7 @@ namespace Synergy.StandardApps.Background.Notifications
             var builder = new ToastContentBuilder();
 
             builder
+                .SetToastScenario(ToastScenario.Reminder)
                 .AddArgument("action", "alarm")
                 .AddArgument("alarmId", notificationId)
                 .AddText(entity.Name)
