@@ -48,15 +48,10 @@ namespace Synergy.StandardApps
 
                 services
                     .RegisterSynergyWPFCommon()
-                    .RegisterRepositories()
-                    .RegisterEntityFormsConverters()
-                    .RegisterNoteServices()
+                    .RegisterStandardAppsServices()
                     .RegisterNotes()
-                    .RegisterAlarmServices()
                     .RegisterAlarmsUI()
-                    .RegisterCalendarServices()
                     .RegisterCalendarUI()
-                    .RegisterBackground()
                     .RegisterNavigation();
 
                 services.AddSingleton<App>();

@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Synergy.StandardApps.Background.Extensions;
+using Synergy.StandardApps.DAL.Extensions;
+using Synergy.StandardApps.EntityForms.Extensions;
 using Synergy.StandardApps.Service.Alarm;
 using Synergy.StandardApps.Service.Calendar;
 using Synergy.StandardApps.Service.Notes;
@@ -13,6 +16,19 @@ namespace Synergy.StandardApps.Service.Extensions
 {
     public static class DIExtensions
     {
+        public static IServiceCollection RegisterStandardAppsServices(this IServiceCollection services)
+        {
+            services
+                .RegisterNoteServices()
+                .RegisterCalendarServices()
+                .RegisterAlarmServices()
+                .RegisterBackground()
+                .RegisterEntityFormsConverters()
+                .RegisterRepositories();
+
+            return services;
+        }
+
         public static IServiceCollection RegisterNoteServices(this IServiceCollection services)
         {
             services
