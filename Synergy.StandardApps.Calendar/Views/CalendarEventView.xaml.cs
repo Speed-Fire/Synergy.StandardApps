@@ -23,56 +23,11 @@ namespace Synergy.StandardApps.Calendar.Views
     /// Логика взаимодействия для CalendarEventView.xaml
     /// </summary>
     public partial class CalendarEventView :
-        UserControl,
-        INotifyPropertyChanged
+        UserControl
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private Color seasonColor;
-        public Color SeasonColor
-        {
-            get
-            {
-                return seasonColor;
-            }
-            set
-            {
-                seasonColor = value;
-                OnPropertyChanged(nameof(SeasonColor));
-            }
-        }
-
         public CalendarEventView()
         {
             InitializeComponent();
         }
-
-        #region Methods
-
-        private void Init()
-        {
-            var vm = DataContext as CalendarEventVM;
-            DataContext = null;
-
-            SeasonColor = Misc.SeasonColor.Get(vm.MonthNum);
-
-            DataContext = vm;
-        }
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        #endregion
-
-        #region Event handlers
-
-        private void CalendarEventViewer_Loaded(object sender, RoutedEventArgs e)
-        {
-            Init();
-        }
-
-        #endregion
     }
 }

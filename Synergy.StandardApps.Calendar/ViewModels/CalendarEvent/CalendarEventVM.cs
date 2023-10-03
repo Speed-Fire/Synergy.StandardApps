@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Synergy.StandardApps.Calendar.Messages;
+using Synergy.StandardApps.Calendar.Misc;
 using Synergy.WPF.Navigation.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,12 @@ namespace Synergy.StandardApps.Calendar.ViewModels.CalendarEvent
             set => SetProperty(ref _month, value);
         }
 
-        public int MonthNum { get; private set; }
+        private int _monthNum;
+        public int MonthNum
+        {
+            get => _monthNum;
+            private set => SetProperty(ref _monthNum, value);
+        }
 
         private string _title;
         public string Title
@@ -55,6 +61,13 @@ namespace Synergy.StandardApps.Calendar.ViewModels.CalendarEvent
             set => SetProperty(ref _color, value);
         }
 
+        private Color _seasonColor;
+        public Color SeasonColor
+        {
+            get => _seasonColor;
+            set => SetProperty(ref _seasonColor, value);
+        }
+
         #endregion
 
         public CalendarEventVM()
@@ -65,6 +78,7 @@ namespace Synergy.StandardApps.Calendar.ViewModels.CalendarEvent
             _title = string.Empty;
             _description = string.Empty;
             _color = Colors.White;
+            _seasonColor = Misc.SeasonColor.Get(MonthNum);
         }
 
         #region Messages
@@ -88,6 +102,8 @@ namespace Synergy.StandardApps.Calendar.ViewModels.CalendarEvent
                 Description = message.Value.Description;
                 Color = message.Value.GetColor();
             }
+
+            SeasonColor = Misc.SeasonColor.Get(MonthNum);
         }
 
         #endregion
