@@ -37,6 +37,8 @@ namespace Synergy.StandardApps.Background.Workers
 
         private readonly LinkedList<CalendarEvent> _calendarEvents;
 
+        private readonly int _sleepDelay;
+
         #endregion
 
         private DateTime _lastDay;
@@ -54,6 +56,12 @@ namespace Synergy.StandardApps.Background.Workers
             _calendarEvents = new();
 
             _lastDay = DateTime.Now.AddDays(-1);
+
+#if DEBUG
+            _sleepDelay = 1000 * 5;
+#else
+            _sleepDelay = 1000 * 60 * 60;
+#endif
 
             WeakReferenceMessenger.Default
                 .RegisterAll(this);
@@ -77,7 +85,7 @@ namespace Synergy.StandardApps.Background.Workers
 
                 if(_calendarEvents.First is null)
                 {
-                    await Task.Delay(1000 * 60 * 60, stoppingToken);
+                    await Task.Delay(_sleepDelay, stoppingToken);
                     continue;
                 }
 
