@@ -7,6 +7,7 @@ using Synergy.StandardApps.Calendar.Extensions;
 using Synergy.StandardApps.DAL.DbContexts;
 using Synergy.StandardApps.DAL.Extensions;
 using Synergy.StandardApps.EntityForms.Extensions;
+using Synergy.StandardApps.Extensions;
 using Synergy.StandardApps.Notes.Extensions;
 using Synergy.StandardApps.Service.Extensions;
 using Synergy.StandardApps.Utility.Misc;
@@ -47,16 +48,9 @@ namespace Synergy.StandardApps
                 });
 
                 services
-                    .RegisterSynergyWPFCommon()
                     .RegisterStandardAppsServices()
-                    .RegisterNotes()
-                    .RegisterAlarmsUI()
-                    .RegisterCalendarUI()
-                    .RegisterNavigation();
+                    .RegisterStandardAppsUI();
 
-                services.AddSingleton<App>();
-                services.AddSingleton<MainWindow>();
-                services.AddSingleton<MainVM>();
             });
 
             AppHost = builder.Build();
