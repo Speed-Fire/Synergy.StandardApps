@@ -26,21 +26,22 @@ namespace Synergy.StandardApps.Calendar
 
         #region Animations
 
+        #region Calendar animations
+
         private readonly DoubleAnimation _calendarDisappearing;
         private readonly DoubleAnimation _calendarAppearing;
 
+        #endregion
+
         #region Frame opened animations
+
+        private readonly Storyboard _rightSidePanelAppearing;
+        private readonly Storyboard _rightSidePanelDisappearing;
 
         private readonly DoubleAnimation _frameDisappearing;
         private readonly DoubleAnimation _frameAppearing;
 
         private const double _surfaceMaxOpacity = 0.8;
-
-        private readonly DoubleAnimation _surfaceTopDisappearing;
-        private readonly DoubleAnimation _surfaceTopAppearing;
-
-        private readonly DoubleAnimation _surfaceBottomDisappearing;
-        private readonly DoubleAnimation _surfaceBottomAppearing;
 
         #endregion
 
@@ -57,6 +58,8 @@ namespace Synergy.StandardApps.Calendar
 
         #region Properties
 
+        private volatile bool _isRightSidePanelSliding;
+
         private volatile bool _isRightSidePanelVisible;
         public bool IsRightSidePanelVisible
         {
@@ -64,6 +67,11 @@ namespace Synergy.StandardApps.Calendar
 
             set
             {
+                if (_isRightSidePanelSliding) return;
+
+                if (_isRightSidePanelVisible == value)
+                    return;
+
                 _isRightSidePanelVisible = value;
 
                 if (!value)
@@ -112,6 +120,8 @@ namespace Synergy.StandardApps.Calendar
 
             #region Animations
 
+            #region Calendar
+
             _calendarDisappearing = new DoubleAnimation()
             {
                 From = 1,
@@ -126,11 +136,11 @@ namespace Synergy.StandardApps.Calendar
                 Duration = TimeSpan.FromSeconds(0.7)
             };
 
-            _frameDisappearing = new DoubleAnimation()
-            {
-                DecelerationRatio = 1,
-                Duration = TimeSpan.FromSeconds(1.5)
-            };
+            #endregion
+
+            #region RightSidePanel
+
+            #region Appearing
 
             _frameAppearing = new DoubleAnimation()
             {
@@ -138,7 +148,7 @@ namespace Synergy.StandardApps.Calendar
                 Duration = TimeSpan.FromSeconds(1.5)
             };
 
-            _surfaceTopAppearing = new DoubleAnimation()
+            var _surfaceTopAppearing = new DoubleAnimation()
             {
                 From = 0,
                 To = _surfaceMaxOpacity,
@@ -146,15 +156,7 @@ namespace Synergy.StandardApps.Calendar
                 DecelerationRatio = 1
             };
 
-            _surfaceTopDisappearing = new DoubleAnimation()
-            {
-                From = _surfaceMaxOpacity,
-                To = 0,
-                Duration = TimeSpan.FromSeconds(1),
-                DecelerationRatio = 1
-            };
-
-            _surfaceBottomAppearing = new DoubleAnimation()
+            var _surfaceBottomAppearing = new DoubleAnimation()
             {
                 From = 0,
                 To = _surfaceMaxOpacity,
@@ -162,7 +164,40 @@ namespace Synergy.StandardApps.Calendar
                 DecelerationRatio = 1
             };
 
-            _surfaceBottomDisappearing = new DoubleAnimation()
+            #region Storyboard
+
+            _rightSidePanelAppearing = new Storyboard();
+
+            Storyboard.SetTargetName(_frameAppearing, "TT");
+            Storyboard.SetTarget(_surfaceTopAppearing, SurfaceBrd_Top);
+            Storyboard.SetTarget(_surfaceBottomAppearing, SurfaceBrd_Bottom);
+
+            Storyboard.SetTargetProperty(_frameAppearing, new PropertyPath(TranslateTransform.XProperty));
+            Storyboard.SetTargetProperty(_surfaceTopAppearing, new PropertyPath(Border.OpacityProperty));
+            Storyboard.SetTargetProperty(_surfaceBottomAppearing, new PropertyPath(Border.OpacityProperty));
+
+            _rightSidePanelAppearing.Children.Add(_frameAppearing);
+            _rightSidePanelAppearing.Children.Add(_surfaceTopAppearing);
+            _rightSidePanelAppearing.Children.Add(_surfaceBottomAppearing);
+
+            _rightSidePanelAppearing.Completed += (sender, e) =>
+            {
+                _isRightSidePanelSliding = false;
+            };
+
+            #endregion
+
+            #endregion
+
+            #region Disappearing
+
+            _frameDisappearing = new DoubleAnimation()
+            {
+                DecelerationRatio = 1,
+                Duration = TimeSpan.FromSeconds(1.5)
+            };
+
+            var _surfaceTopDisappearing = new DoubleAnimation()
             {
                 From = _surfaceMaxOpacity,
                 To = 0,
@@ -170,16 +205,47 @@ namespace Synergy.StandardApps.Calendar
                 DecelerationRatio = 1
             };
 
-            _frameDisappearing.Completed += (sender, e) => 
+            var _surfaceBottomDisappearing = new DoubleAnimation()
+            {
+                From = _surfaceMaxOpacity,
+                To = 0,
+                Duration = TimeSpan.FromSeconds(1),
+                DecelerationRatio = 1
+            };
+
+            _surfaceTopDisappearing.Completed += (sender, e) => { SurfaceBrd_Top.Visibility = Visibility.Collapsed; };
+            _surfaceBottomDisappearing.Completed += (sender, e) => { SurfaceBrd_Bottom.Visibility = Visibility.Collapsed; };
+
+            #region Storyboard
+
+            _rightSidePanelDisappearing = new Storyboard();
+
+            Storyboard.SetTargetName(_frameDisappearing, "TT");
+            Storyboard.SetTarget(_surfaceTopDisappearing, SurfaceBrd_Top);
+            Storyboard.SetTarget(_surfaceBottomDisappearing, SurfaceBrd_Bottom);
+
+            Storyboard.SetTargetProperty(_frameDisappearing, new PropertyPath(TranslateTransform.XProperty));
+            Storyboard.SetTargetProperty(_surfaceTopDisappearing, new PropertyPath(Border.OpacityProperty));
+            Storyboard.SetTargetProperty(_surfaceBottomDisappearing, new PropertyPath(Border.OpacityProperty));
+
+            _rightSidePanelDisappearing.Children.Add(_frameDisappearing);
+            _rightSidePanelDisappearing.Children.Add(_surfaceTopDisappearing);
+            _rightSidePanelDisappearing.Children.Add(_surfaceBottomDisappearing);
+
+            _rightSidePanelDisappearing.Completed += (sender, e) =>
             {
                 FrameBrd.Visibility = Visibility.Hidden;
+                _isRightSidePanelSliding = false;
 
                 WeakReferenceMessenger.Default
                     .Send(new RightSidePanelClosedMessage(null));
             };
 
-            _surfaceTopDisappearing.Completed += (sender, e) => { SurfaceBrd_Top.Visibility = Visibility.Collapsed; };
-            _surfaceBottomDisappearing.Completed += (sender, e) => { SurfaceBrd_Bottom.Visibility = Visibility.Collapsed; };
+            #endregion
+
+            #endregion
+
+            #endregion
 
             #endregion
         }
@@ -395,6 +461,9 @@ namespace Synergy.StandardApps.Calendar
 
         private void ShowFrame()
         {
+            if (_isRightSidePanelSliding) return;
+            _isRightSidePanelSliding = true;
+
             FrameBrd.Visibility = Visibility.Visible;
             SurfaceBrd_Top.Visibility = Visibility.Visible;
             SurfaceBrd_Bottom.Visibility = Visibility.Visible;
@@ -402,19 +471,18 @@ namespace Synergy.StandardApps.Calendar
             _frameAppearing.From = FrameBrd.ActualWidth;
             _frameAppearing.To = 12;
 
-            TT.BeginAnimation(TranslateTransform.XProperty, _frameAppearing);
-            SurfaceBrd_Top.BeginAnimation(Control.OpacityProperty, _surfaceTopAppearing);
-            SurfaceBrd_Bottom.BeginAnimation(Control.OpacityProperty, _surfaceBottomAppearing); 
+            _rightSidePanelAppearing.Begin(this);     
         }
 
         private void HideFrame()
         {
+            if (_isRightSidePanelSliding) return;
+            _isRightSidePanelSliding = true;
+
             _frameDisappearing.From = TT.X;
             _frameDisappearing.To = FrameBrd.ActualWidth + 12;
 
-            TT.BeginAnimation(TranslateTransform.XProperty, _frameDisappearing);
-            SurfaceBrd_Top.BeginAnimation(Control.OpacityProperty, _surfaceTopDisappearing);
-            SurfaceBrd_Bottom.BeginAnimation(Control.OpacityProperty, _surfaceBottomDisappearing);
+            _rightSidePanelDisappearing.Begin(this);
         }
 
         #endregion
