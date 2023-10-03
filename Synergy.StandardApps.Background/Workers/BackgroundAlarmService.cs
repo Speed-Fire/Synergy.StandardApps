@@ -62,7 +62,7 @@ namespace Synergy.StandardApps.Background.Workers
             {
                 var date = DateTime.Now/*.Date*/;
 
-                if (_lastDay.AddDays(1).Equals(date))
+                if (_lastDay.AddDays(1).Date.Equals(date.Date))
                 {
                     await LoadAlarmsFromDb(date);
 
