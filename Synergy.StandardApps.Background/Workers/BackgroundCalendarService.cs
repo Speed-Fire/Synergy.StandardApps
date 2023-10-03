@@ -73,7 +73,7 @@ namespace Synergy.StandardApps.Background.Workers
             {
                 var date = DateTime.Now;
 
-                if (_lastDay.AddDays(1).Date.Equals(_lastDay.Date))
+                if (_lastDay.AddDays(1).Date.Equals(date.Date))
                 {
                     await LoadCalendarEventsFromDb(date);
 
@@ -90,6 +90,7 @@ namespace Synergy.StandardApps.Background.Workers
                 }
 
                 var ev = _calendarEvents.First.Value;
+                _calendarEvents.Remove(ev);
 
                 _notifier.Notify(ev);
 
@@ -107,7 +108,7 @@ namespace Synergy.StandardApps.Background.Workers
         private async Task LoadCalendarEventsFromDb(DateTime today)
         {
             var _calendarEventRepository = _serviceProvider
-                .GetRequiredService<CalendarRepository>();
+                .GetRequiredService<IRepository<CalendarEvent>>();
 
             _calendarEvents.Clear();
 
