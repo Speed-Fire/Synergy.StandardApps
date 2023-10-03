@@ -21,7 +21,7 @@ namespace Synergy.StandardApps.Extensions
                 .RegisterCommonUILibraries()
                 .RegisterAlarmsUI()
                 .RegisterCalendarUI()
-                .RegisterNotes();
+                .RegisterNotesUI();
 
             services.AddSingleton<App>();
             services.AddSingleton<MainWindow>();

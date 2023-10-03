@@ -10,7 +10,7 @@ namespace Synergy.StandardApps.Notes.Extensions
 {
     public static class DIExtensions
     {
-        public static IServiceCollection RegisterNotes(this IServiceCollection services)
+        public static IServiceCollection RegisterNotesUI(this IServiceCollection services)
         {
             services
                 .AddTransient<NotesVM>()
