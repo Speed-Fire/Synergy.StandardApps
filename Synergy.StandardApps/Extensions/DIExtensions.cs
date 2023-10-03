@@ -34,7 +34,7 @@ namespace Synergy.StandardApps.Extensions
         {
             services
                 .RegisterSynergyWPFCommon()
-                .RegisterNavigation();
+                .RegisterSynergyWPFNavigation();
 
             return services;
         }
