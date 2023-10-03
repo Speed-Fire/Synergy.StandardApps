@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.EntityFrameworkCore;
+using Synergy.StandardApps.Background.Messages.Calendar;
 using Synergy.StandardApps.DAL.Repositories;
 using Synergy.StandardApps.Domain.Calendar;
 using Synergy.StandardApps.Domain.Notes;
@@ -43,6 +45,9 @@ namespace Synergy.StandardApps.Service.Calendar
 
                 await _calendarRepository.Create(ev);
 
+                WeakReferenceMessenger.Default
+                    .Send(new AddCalendarEventMessage(ev));
+
                 return ResponseFactory.OK(_converter.Convert(ev));
             }
             catch (Exception ex)
@@ -72,6 +77,9 @@ namespace Synergy.StandardApps.Service.Calendar
                 ev.Color = form.ColorNum;
 
                 ev = await _calendarRepository.Update(ev);
+
+                WeakReferenceMessenger.Default
+                    .Send(new AddCalendarEventMessage(ev));
 
                 return ResponseFactory.OK(_converter.Convert(ev));
             }
@@ -113,6 +121,9 @@ namespace Synergy.StandardApps.Service.Calendar
                 }
 
                 await _calendarRepository.Delete(ev);
+
+                WeakReferenceMessenger.Default
+                    .Send(new DeleteCalendarEventMessage(ev.Id));
 
                 return ResponseFactory.OK(true);
             }
