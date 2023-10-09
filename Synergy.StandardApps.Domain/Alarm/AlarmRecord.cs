@@ -21,6 +21,6 @@ namespace Synergy.StandardApps.Domain.Alarm
         public bool IsEnabled { get; set; }
 
         public DateTime Created { get; set; }
-        public DateTime? Updated { get; set; }
+        public DateTime Updated { get; set; }
     }
 }
