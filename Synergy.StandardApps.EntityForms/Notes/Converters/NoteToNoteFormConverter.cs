@@ -17,7 +17,8 @@ namespace Synergy.StandardApps.EntityForms.Notes.Converters
                 Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
-                Created = DateOnly.FromDateTime(entity.Created)
+                Created = DateOnly.FromDateTime(entity.Created),
+                Updated = DateOnly.FromDateTime(entity.Updated)
             };
         }
     }

@@ -13,6 +13,7 @@ namespace Synergy.StandardApps.EntityForms.Notes
         private string name;
         private string description;
         private DateOnly created;
+        private DateOnly updated;
 
         public long Id
         {
@@ -36,6 +37,12 @@ namespace Synergy.StandardApps.EntityForms.Notes
         {
             get => created;
             set => created = value;
+        }
+
+        public DateOnly Updated
+        {
+            get => updated;
+            set => SetProperty(ref updated, value);
         }
     }
 }
