@@ -30,16 +30,6 @@ namespace Synergy.StandardApps.Service.Notes
                 if (form.HasErrors)
                     throw new("Invalid form.");
 
-                //var note = await _noteRepository
-                //    .GetAll()
-                //    .Where(n => n.Name.Equals(form.Name))
-                //    .FirstOrDefaultAsync();
-
-                //if(note is not null)
-                //{
-                //    return ResponseFactory.BadResponse<NoteForm>(Domain.Enums.ErrorCode.NameAlreadyTaken);
-                //}
-
                 var note = new Note()
                 {
                     Name = form.Name,
