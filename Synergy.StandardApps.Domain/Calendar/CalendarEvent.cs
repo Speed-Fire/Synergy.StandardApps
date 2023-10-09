@@ -17,6 +17,6 @@ namespace Synergy.StandardApps.Domain.Calendar
         public int Month { get; set; } = 1;
         public int Day { get; set; } = 1;
         public DateTime Created { get; set; }
-        public DateTime? Updated { get; set; }
+        public DateTime Updated { get; set; }
     }
 }
