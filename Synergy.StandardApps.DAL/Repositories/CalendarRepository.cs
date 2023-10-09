@@ -19,7 +19,7 @@ namespace Synergy.StandardApps.DAL.Repositories
 
         public async Task Create(CalendarEvent entity)
         {
-            entity.Created = DateTime.Now;
+            entity.Created = entity.Updated = DateTime.Now;
 
             await context.CalendarEvents.AddAsync(entity);
             await context.SaveChangesAsync();
