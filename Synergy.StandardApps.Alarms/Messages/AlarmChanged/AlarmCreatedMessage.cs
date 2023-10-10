@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Synergy.StandardApps.Alarms.Messages
 {
-    internal class AlarmCreatedMessage : ValueChangedMessage<AlarmForm>
+    public class AlarmCreatedMessage : ValueChangedMessage<AlarmForm>
     {
         public AlarmCreatedMessage(AlarmForm value) : base(value)
         {

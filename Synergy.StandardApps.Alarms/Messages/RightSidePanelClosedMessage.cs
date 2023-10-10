@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Messaging.Messages;
-using Synergy.StandardApps.EntityForms.Alarm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Synergy.StandardApps.Alarms.Messages
 {
-    internal class AlarmUpdatedMessage : ValueChangedMessage<AlarmForm>
+    internal class RightSidePanelClosedMessage : ValueChangedMessage<object?>
     {
-        public AlarmUpdatedMessage(AlarmForm value) : base(value)
+        public RightSidePanelClosedMessage(object? value) : base(value)
         {
         }
     }

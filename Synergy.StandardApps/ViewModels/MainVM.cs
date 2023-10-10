@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Synergy.StandardApps.Alarms;
+using Synergy.StandardApps.Alarms.ViewModels;
 using Synergy.StandardApps.Calendar;
 using Synergy.StandardApps.Calendar.ViewModels;
 using Synergy.StandardApps.Notes;
@@ -74,12 +75,6 @@ namespace Synergy.StandardApps.ViewModels
         public ICommand NavigateToNotes => navigateToNotes ??
             (navigateToNotes = new RelayCommand<Frame>(frame =>
             {
-                //var page = Program.AppHost.Services
-                //    .GetRequiredService<NotesPage>();             
-
-                //frame.NavigateNoJournal(Program.AppHost.Services
-                //    .GetRequiredService<NotesPage>);
-
                 Navigation.NavigateTo<NotesVM>();
             }));
 
@@ -87,23 +82,13 @@ namespace Synergy.StandardApps.ViewModels
         public ICommand NavigateToAlarms => navigateToAlarms ??
             (navigateToAlarms = new RelayCommand<Frame>(frame =>
             {
-                //var page = Program.AppHost.Services
-                //    .GetRequiredService<AlarmsPage>();
-
-                //frame.NavigateNoJournal(Program.AppHost.Services
-                //    .GetRequiredService<AlarmsPage>);
+                Navigation.NavigateTo<AlarmsVM>();
             }));
 
         private RelayCommand<Frame> navigateToCalendar;
         public ICommand NavigateToCalendar => navigateToCalendar ??
             (navigateToCalendar = new RelayCommand<Frame>(frame =>
             {
-                //var page = Program.AppHost.Services
-                //    .GetRequiredService<CalendarPage>();
-
-                //frame.NavigateNoJournal(Program.AppHost.Services
-                //    .GetRequiredService<CalendarPage>);
-
                 Navigation.NavigateTo<CalendarVM>();
             }));
 

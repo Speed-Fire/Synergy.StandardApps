@@ -13,17 +13,35 @@ using System.Windows.Input;
 
 namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
 {
-    public class CreateAlarmVM : ChangeAlarmVM
+    public class CreateAlarmVM :
+        ChangeAlarmVM
     {
+        private AlarmCreationForm form;
+        public override AlarmCreationForm Form
+        {
+            get => form;
+            protected set => SetProperty(ref form, value);
+        }
+
         public CreateAlarmVM(IAlarmService alarmService) :
             base(alarmService)
         {
-            IsCancelEnabled = true;
+            IsUpdatingMode = false;
+
+            form = new()
+            {
+                Name = "",
+                Time = TimeOnly.Parse("00:00:00")
+            };
         }
 
-        private AsyncRelayCommand? save;
-        public override ICommand Save => save ??
-            (save = new AsyncRelayCommand(CreateAlarm));
+        private AsyncRelayCommand? saveCommand;
+        public override ICommand SaveCommand => saveCommand ??
+            (saveCommand = new AsyncRelayCommand(CreateAlarm));
+
+        private RelayCommand? deleteCommand;
+        public override ICommand DeleteCommand => deleteCommand ??
+            (deleteCommand = new(() => { }));
 
         private async Task CreateAlarm()
         {
@@ -42,18 +60,8 @@ namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
 
             WeakReferenceMessenger.Default
                 .Send(new AlarmCreatedMessage(res.Data));
+            WeakReferenceMessenger.Default
+                .Send(new CloseAlarmChangingMessage(null));
         }
-
-        private RelayCommand? goBack;
-        public override ICommand GoBack => goBack ??
-            (goBack = new RelayCommand(() =>
-            {
-                WeakReferenceMessenger.Default
-                    .Send(new AlarmNavigateMessage(null));
-
-                WeakReferenceMessenger.Default
-                    .Send(new AlarmCreationCancelledMessage(null));
-            }));
-
     }
 }

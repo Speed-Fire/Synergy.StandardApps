@@ -2,11 +2,13 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Synergy.StandardApps.Alarms.Messages;
-using Synergy.StandardApps.Alarms.SubPages;
 using Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs;
 using Synergy.StandardApps.EntityForms.Alarm;
 using Synergy.StandardApps.EntityForms.Notes;
 using Synergy.StandardApps.Service.Alarm;
+using Synergy.WPF.Navigation.Services.Local;
+using Synergy.WPF.Navigation.Services;
+using Synergy.WPF.Navigation.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,160 +16,145 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Synergy.StandardApps.Alarms.Messages.AlarmChanged;
+using System.Security.Claims;
 
 namespace Synergy.StandardApps.Alarms.ViewModels
 {
     public class AlarmsVM :
-        ObservableRecipient,
+        ViewModel,
         IRecipient<AlarmCreatedMessage>,
-        IRecipient<AlarmUpdatedMessage>,
-        IRecipient<AlarmCreationCancelledMessage>
+        IRecipient<AlarmEnabilityChangedMessage>,
+        IRecipient<AlarmDeletedMessage>,
+        IRecipient<CloseAlarmChangingMessage>,
+        IRecipient<RightSidePanelClosedMessage>
     {
         private readonly IAlarmService _alarmService;
+        private readonly INavigationService _navigationService;
+        private ILocalNavigationService _localNavigationService;
 
-        private ObservableCollection<AlarmForm> alarms;
-        public ObservableCollection<AlarmForm> Alarms
+        #region Properties
+
+        public ILocalNavigationService LocalNavigationService
+        {
+            get => _localNavigationService;
+            set => SetProperty(ref _localNavigationService, value);
+        }
+
+        private ObservableCollection<AlarmVM> alarms;
+        public ObservableCollection<AlarmVM> Alarms
         {
             get => alarms;
             set => SetProperty(ref alarms, value);
         }
 
-        private AlarmForm? selectedItem;
-        public AlarmForm? SelectedItem
-        {
-            get => selectedItem;
-            set => SetProperty(ref selectedItem, value);
-        }
+        #endregion
 
-        private bool isListDisabled;
-        public bool IsListDisabled
-        {
-            get => isListDisabled;
-            set => SetProperty(ref isListDisabled, value);
-        }
-
-        public AlarmsVM(IAlarmService alarmService)
+        public AlarmsVM(IAlarmService alarmService,
+            INavigationService navigationService,
+            ILocalNavigationService localNavigationService)
         {
             _alarmService = alarmService;
+            _navigationService = navigationService;
+            LocalNavigationService = localNavigationService;
 
             alarms = new();
-            IsListDisabled = false;
 
             IsActive = true;
         }
 
         #region Messages
 
+        #region CRUD
+
         void IRecipient<AlarmCreatedMessage>.Receive(AlarmCreatedMessage message)
         {
-            Alarms.Add(message.Value);
-
-            IsListDisabled = false;
-
-            SelectedItem = message.Value;
-
-            //WeakReferenceMessenger.Default
-            //        .Send(new AlarmNavigateMessage(new ChangeAlarmPage(new UpdateAlarmVM(_alarmService,
-            //            SelectedItem))));
+            Alarms.Add(new AlarmVM(message.Value));
         }
 
-        void IRecipient<AlarmUpdatedMessage>.Receive(AlarmUpdatedMessage message)
+        async void IRecipient<AlarmEnabilityChangedMessage>.Receive(AlarmEnabilityChangedMessage message)
         {
-            var pos = alarms.IndexOf(alarms.First(a => a.Id == message.Value.Id));
+            var res = await _alarmService.SwitchAlarmEnability(message.Value.Item1, message.Value.Item2);
 
-            alarms.RemoveAt(pos);
-            alarms.Insert(pos, message.Value);
+            if (res.StatusCode == Domain.Enums.StatusCode.Error)
+                return;
+        }
 
-            SelectedItem = message.Value;
+        void IRecipient<AlarmDeletedMessage>.Receive(AlarmDeletedMessage message)
+        {
+            var alarm = alarms.FirstOrDefault(a => a.Id == message.Value);
+            if (alarm is null) return;
+            Alarms.Remove(alarm);
+        }
+
+        #endregion
+
+        void IRecipient<RightSidePanelClosedMessage>.Receive(RightSidePanelClosedMessage message)
+        {
+            if (_localNavigationService.CurrentView is null ||
+                _localNavigationService.CurrentView.GetType() != typeof(UpdateAlarmVM))
+            {
+                _localNavigationService.NavigateTo<UpdateAlarmVM>(_alarmService);
+            }
+
+            WeakReferenceMessenger.Default
+                .Send(new OpenAlarmEditMessage(null));
+        }
+
+        void IRecipient<CloseAlarmChangingMessage>.Receive(CloseAlarmChangingMessage message)
+        {
+            WeakReferenceMessenger.Default
+                .Send(new SetRightSidePanelVisibilityMessage(false));
         }
 
         #endregion
 
         #region Commands
 
-        private AsyncRelayCommand? loadAlarms;
-        public ICommand LoadAlarms => loadAlarms ??
-            (loadAlarms = new AsyncRelayCommand(LoadAlarmsAsync));
+        private AsyncRelayCommand? loadAlarmsCommand;
+        public ICommand LoadAlarmsCommand => loadAlarmsCommand ??
+            (loadAlarmsCommand = new AsyncRelayCommand(LoadAlarmsAsync));
 
-        private RelayCommand<AlarmForm>? openAlarmCreation;
-        public ICommand OpenAlarmCreation => openAlarmCreation ??
-            (openAlarmCreation = new RelayCommand<AlarmForm>(alarm =>
+        private RelayCommand<AlarmForm>? openAlarmCreationCommand;
+        public ICommand OpenAlarmCreationCommand => openAlarmCreationCommand ??
+            (openAlarmCreationCommand = new RelayCommand<AlarmForm>(alarm =>
             {
-                IsListDisabled = true;
-
+                _localNavigationService
+                    .NavigateTo<CreateAlarmVM>(_alarmService);
                 WeakReferenceMessenger.Default
-                    .Send(new AlarmNavigateMessage(new ChangeAlarmPage(new CreateAlarmVM(_alarmService))));
+                    .Send(new SetRightSidePanelVisibilityMessage(true));
             }));
 
-        void IRecipient<AlarmCreationCancelledMessage>.Receive(AlarmCreationCancelledMessage message)
-        {
-            IsListDisabled = false;
-        }
-
-        private RelayCommand<AlarmForm>? openAlarm;
-        public ICommand OpenAlarm => openAlarm ??
-            (openAlarm = new RelayCommand<AlarmForm>(alarm =>
+        private RelayCommand<long>? openAlarmEditCommand;
+        public ICommand OpenAlarmEditCommand => openAlarmEditCommand ??
+            (openAlarmEditCommand = new RelayCommand<long>(id =>
             {
+                var alarm = alarms.FirstOrDefault(x => x.Id == id);
                 if (alarm is null)
-                {
-                    WeakReferenceMessenger.Default
-                    .Send(new AlarmNavigateMessage(null));
-
                     return;
-                }
 
                 WeakReferenceMessenger.Default
-                    .Send(new AlarmNavigateMessage(new ChangeAlarmPage(new UpdateAlarmVM(_alarmService,
-                        alarm))));
+                    .Send(new OpenAlarmEditMessage(alarm.Form));
+                WeakReferenceMessenger.Default
+                    .Send(new SetRightSidePanelVisibilityMessage(true));
             }));
-
-        private AsyncRelayCommand<AlarmForm>? switchAlarmEnability;
-        public ICommand SwitchAlarmEnability => switchAlarmEnability ??
-            (switchAlarmEnability = new AsyncRelayCommand<AlarmForm>(SwitchAlarmEnabilityAsync));
-
-        private AsyncRelayCommand<AlarmForm>? deleteAlarm;
-        public ICommand DeleteAlarm => deleteAlarm ??
-            (deleteAlarm = new AsyncRelayCommand<AlarmForm>(DeleteAlarmAsync));
-
 
         public async Task LoadAlarmsAsync()
         {
-            WeakReferenceMessenger.Default
-                    .Send(new AlarmNavigateMessage(new BlankAlarmPage()));
+            Alarms.Clear();
 
             var _alarms = await _alarmService.GetAlarms();
 
             if (_alarms.StatusCode == Domain.Enums.StatusCode.Error)
                 return;
 
-            foreach (var note in _alarms.Data)
+            foreach (var alarm in _alarms.Data)
             {
-                alarms.Add(note);
-            }
-        }
-
-        private async Task DeleteAlarmAsync(AlarmForm? alarm)
-        {
-            if (alarm is null)
-                return;
-
-            var res = await _alarmService.DeleteAlarm(alarm.Id);
-
-            if (res.StatusCode == Domain.Enums.StatusCode.Error)
-            {
-
-                return;
+                Alarms.Add(new AlarmVM(alarm));
             }
 
-            Alarms.Remove(alarm);
-        }
-
-        private async Task SwitchAlarmEnabilityAsync(AlarmForm? alarm)
-        {
-            var res = await _alarmService.SwitchAlarmEnability(alarm.Id, alarm.IsEnabled);
-
-            if (res.StatusCode == Domain.Enums.StatusCode.Error)
-                return;
+            _localNavigationService
+                    .NavigateTo<UpdateAlarmVM>(_alarmService);
         }
 
         #endregion

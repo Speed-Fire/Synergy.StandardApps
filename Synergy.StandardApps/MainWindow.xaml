@@ -8,6 +8,9 @@
         xmlns:controls="clr-namespace:Synergy.WPF.Common.Controls;assembly=Synergy.WPF.Common"
         xmlns:tray="clr-namespace:Synergy.WPF.Common.Tray;assembly=Synergy.WPF.Common"
         
+        xmlns:alarmVMs="clr-namespace:Synergy.StandardApps.Alarms.ViewModels;assembly=Synergy.StandardApps.Alarms"
+        xmlns:alarmViews="clr-namespace:Synergy.StandardApps.Alarms;assembly=Synergy.StandardApps.Alarms"
+        
         xmlns:calendarVMs="clr-namespace:Synergy.StandardApps.Calendar.ViewModels;assembly=Synergy.StandardApps.Calendar"
         xmlns:calendarViews="clr-namespace:Synergy.StandardApps.Calendar;assembly=Synergy.StandardApps.Calendar"
         
@@ -30,6 +33,10 @@
 
     <Window.Resources>
 
+        <DataTemplate DataType="{x:Type alarmVMs:AlarmsVM}">
+            <alarmViews:AlarmsView/>
+        </DataTemplate>
+        
         <DataTemplate DataType="{x:Type TypeName=calendarVMs:CalendarVM}">
             <calendarViews:CalendarPage/>
         </DataTemplate>

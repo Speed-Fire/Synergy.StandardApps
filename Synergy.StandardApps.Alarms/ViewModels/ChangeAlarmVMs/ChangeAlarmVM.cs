@@ -10,77 +10,104 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Synergy.StandardApps.Domain.Enums;
+using Synergy.WPF.Navigation.ViewModels;
+using CommunityToolkit.Mvvm.Messaging;
+using Synergy.StandardApps.Alarms.Messages;
 
 namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
 {
-    public abstract class ChangeAlarmVM : ObservableObject
+    public abstract class ChangeAlarmVM : ViewModel
     {
         protected readonly IAlarmService _alarmService;
 
-        private AlarmCreationForm _form;
-        public AlarmCreationForm Form => _form;
+        public abstract AlarmCreationForm Form { get; protected set; }
 
         public IEnumerable<DayOfWeek> AlarmedDays => Form.GetAlarmedDays();
 
-        private bool isCancelEnabled;
-        public bool IsCancelEnabled
+        #region Properties
+
+        private bool isUpdatingMode = false;
+        public bool IsUpdatingMode
         {
-            get => isCancelEnabled;
-            set => SetProperty(ref isCancelEnabled, value);
+            get => isUpdatingMode;
+            set => SetProperty(ref isUpdatingMode, value);
         }
 
-        protected ChangeAlarmVM(IAlarmService alarmService, AlarmForm form)
-        {
-            _alarmService = alarmService;
-            _form = new AlarmCreationForm()
-            {
-                Name = form.Name,
-                Time = form.Time,
-                DayMask = form.DayMask,
-                IsSoundEnabled = form.IsSoundEnabled,
-                Sound = form.Sound
-            };
-            IsCancelEnabled = false;
-        }
+        #endregion
 
         protected ChangeAlarmVM(IAlarmService alarmService)
         {
             _alarmService = alarmService;
-
-            _form = new AlarmCreationForm()
-            {
-                Name = "",
-                Time = new TimeOnly(),
-            };
         }
 
-        public abstract ICommand Save { get; }
+        #region Commands
 
-        private RelayCommand<string>? setDay;
-        public ICommand SetDay => setDay ??
-            (setDay = new RelayCommand<string>(param =>
+        #region Changing
+
+        public abstract ICommand SaveCommand { get; }
+        public abstract ICommand DeleteCommand { get; }
+
+        #endregion
+
+        #region Navigation
+
+        private RelayCommand? goBackCommand;
+        public ICommand GoBackCommand => goBackCommand ??
+            (goBackCommand = new(() =>
             {
-                var day = (DayOfWeek)int.Parse(param);
-                
-                Form.SetDay(day);
+                WeakReferenceMessenger.Default.Send(new CloseAlarmChangingMessage(null));
             }));
 
-        private RelayCommand<string>? setAlarmSound;
-        public ICommand SetAlarmSound => setAlarmSound ??
-            (setAlarmSound = new RelayCommand<string>(str =>
+        #endregion
+
+        #region Settings
+
+        private RelayCommand? enableAllDaysCommand;
+        public ICommand EnableAllDaysCommand => enableAllDaysCommand ??
+            (enableAllDaysCommand = new(() =>
+            {
+                Form.Monday = Form.Tuesday =
+                Form.Wednesday = Form.Thursday =
+                Form.Friday = Form.Saturday =
+                Form.Sunday = true;
+            }));
+
+        private RelayCommand<string>? setAlarmSoundCommand;
+        public ICommand SetAlarmSoundCommand => setAlarmSoundCommand ??
+            (setAlarmSoundCommand = new RelayCommand<string>(str =>
             {
                 var sound = (AlarmSound)int.Parse(str);
 
                 Form.Sound = sound;
             }));
 
-        private RelayCommand? playAlarmSound;
-        public ICommand PlayAlarmSound => playAlarmSound ??
-            (playAlarmSound = new RelayCommand(() =>
+        private RelayCommand? playAlarmSoundCommand;
+        public ICommand PlayAlarmSoundCommand => playAlarmSoundCommand ??
+            (playAlarmSoundCommand = new RelayCommand(() =>
             {
                 AlarmSoundPlayer.PlaySound(Form.Sound);
             }));
 
-        public abstract ICommand GoBack { get; }
+        #endregion
+
+        #region Loading
+
+        private RelayCommand? viewLoadedCommand;
+        public ICommand ViewLoadedCommand => viewLoadedCommand ??
+            (viewLoadedCommand = new RelayCommand(() =>
+            {
+                IsActive = true;
+            }));
+
+        private RelayCommand? viewUnloadedCommand;
+        public ICommand ViewUnloadedCommand => viewUnloadedCommand ??
+            (viewUnloadedCommand = new RelayCommand(() =>
+            {
+                IsActive = false;
+            }));
+
+        #endregion
+
+        #endregion
     }
 }

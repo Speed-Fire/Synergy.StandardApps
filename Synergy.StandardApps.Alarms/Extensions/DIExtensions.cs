@@ -13,8 +13,7 @@ namespace Synergy.StandardApps.Alarms.Extensions
         public static IServiceCollection RegisterAlarmsUI(this IServiceCollection services)
         {
             services
-                .AddTransient<AlarmsVM>()
-                .AddTransient<AlarmsPage>();
+                .AddSingleton<AlarmsVM>();
 
             return services;
         }

@@ -1,0 +1,340 @@
+﻿<UserControl x:Class="Synergy.StandardApps.Alarms.Views.ChangeAlarmView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Synergy.StandardApps.Alarms.Views"
+      xmlns:controls="clr-namespace:Synergy.WPF.Common.Controls;assembly=Synergy.WPF.Common"
+      xmlns:convs="clr-namespace:Synergy.WPF.Common.Converters;assembly=Synergy.WPF.Common"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <convs:StringToTimeOnlyConverter
+                x:Key="str2timeConv"/>
+
+            <convs:Bool2VisibilityConverter
+                x:Key="b2vconv"/>
+
+            <Style TargetType="Separator">
+                <Setter Property="Height" Value="2"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="Background" Value="LightGray"/>
+                <Setter Property="Margin" Value="0 15 0 15"/>
+                <Setter Property="DockPanel.Dock" Value="Top"/>
+            </Style>
+
+            <Style TargetType="RadioButton">
+                <Style.Resources>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                </Style.Resources>
+
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+
+            <Style TargetType="TextBlock"
+               BasedOn="{StaticResource TextBlockStyle}">
+                <Setter Property="Margin" Value="15 0 0 3"/>
+                <Setter Property="DockPanel.Dock" Value="Top"/>
+            </Style>
+
+            <Style TargetType="ToggleButton"
+                   BasedOn="{StaticResource ToggleButtonStyle.Colored}">
+                <Setter Property="MinWidth" Value="35"/>
+                <Setter Property="MinHeight" Value="35"/>
+            </Style>
+                
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ViewLoadedCommand}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Unloaded">
+            <i:InvokeCommandAction Command="{Binding ViewUnloadedCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
+    <Grid Margin="5 0 0 5">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer
+                Style="{StaticResource ScrollViewerStyle}">
+            <DockPanel>
+
+                <TextBlock
+                    DockPanel.Dock="Top"
+                        Style="{StaticResource TextBlockStyle}"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Foreground="Black"
+                    Margin="0"
+                        HorizontalAlignment="Center"
+                        Text="Alarm"/>
+
+                <controls:TimePicker
+                        DockPanel.Dock="Top"
+                        Margin="0 10 0 0"
+                        Style="{StaticResource TimePickerStyle}"
+                        HorizontalAlignment="Center"
+                        Time="{Binding Form.Time,
+                            Converter={StaticResource str2timeConv},
+                            UpdateSourceTrigger=LostFocus,
+                            Mode=TwoWay}"/>
+
+                <Separator/>
+
+                <TextBlock Text="Name:"/>
+
+                <controls:AdvancedTextBox
+                    DockPanel.Dock="Top"
+                    Style="{StaticResource AdvancedTextBoxStyle}"
+                    Placeholder="Work"
+                    TextWrapping="Wrap"
+                    Text="{Binding Form.Name}"/>
+
+                <Separator/>
+
+                <!-- Toggle buttons -->
+
+                <TextBlock Text="Repeat:"/>
+
+                <Grid DockPanel.Dock="Top"
+                      Margin="0 5 0 0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ToggleButton
+                            x:Name="MondayBtn"
+                            Grid.Column="0"
+                            Margin="0 0 5 0"
+                            IsChecked="{Binding Form.Monday}"
+                            Content="Mn"/>
+
+                    <ToggleButton
+                            x:Name="TuesdayBtn"
+                            Grid.Column="1"
+                            Margin="5 0 5 0"
+                            IsChecked="{Binding Form.Tuesday}"
+                            Content="Tu"/>
+
+                    <ToggleButton
+                            x:Name="WednesdayBtn"
+                            Grid.Column="2"
+                            Margin="5 0 5 0"
+                            IsChecked="{Binding Form.Wednesday}"
+                            Content="Wd"/>
+
+                    <ToggleButton
+                            x:Name="ThursdayBtn"
+                            Grid.Column="3"
+                            Margin="5 0 5 0"
+                            IsChecked="{Binding Form.Thursday}"
+                            Content="Th"/>
+
+                    <ToggleButton
+                            x:Name="FridayBtn"
+                            Grid.Column="4"
+                            Margin="5 0 5 0"
+                            IsChecked="{Binding Form.Friday}"
+                            Content="Fr"/>
+
+                    <ToggleButton
+                            x:Name="SaturdayBtn"
+                            Grid.Column="5"
+                            Margin="5 0 5 0"
+                            IsChecked="{Binding Form.Saturday}"
+                            Content="St"/>
+
+                    <ToggleButton
+                            x:Name="SundayBtn"
+                            Grid.Column="6"
+                            Margin="5 0 0 0"
+                            IsChecked="{Binding Form.Sunday}"
+                            Content="Sn"/>
+                </Grid>
+
+                <controls:NormalButton
+                            DockPanel.Dock="Top"
+                            Margin="0 10 10 0"
+                            Style="{StaticResource NormalButtonStyle}"
+                            HorizontalAlignment="Right"
+                            Content="Everyday"
+                            Padding="8 3 8 3"
+                            Command="{Binding EnableAllDaysCommand}"/>
+                
+                <Separator/>
+
+                <GroupBox DockPanel.Dock="Top"
+                    Margin="15 0 15 0"
+                              BorderThickness="1"
+                              BorderBrush="{StaticResource Gray300Brush}">
+
+                    <GroupBox.Header>
+                        <CheckBox
+                                x:Name="AlarmSoundCb"
+                                IsChecked="{Binding Form.IsSoundEnabled}"
+                                HorizontalAlignment="Center"
+                                HorizontalContentAlignment="Center">
+
+                            <TextBlock
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource TextBlockStyle}"
+                                    Text="Alarm sound"/>
+
+                        </CheckBox>
+
+                    </GroupBox.Header>
+
+                    <Grid Margin="0 5 0 0">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Style.Triggers>
+
+                                    <DataTrigger Binding="{Binding ElementName=AlarmSoundCb, Path=IsChecked}"
+                                                     Value="False">
+
+                                        <Setter Property="IsEnabled" Value="False"/>
+
+                                    </DataTrigger>
+
+
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+
+                        <Grid Grid.Column="0"
+                                  HorizontalAlignment="Left">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <RadioButton Grid.Row="0"
+                                             x:Name="Alarm1RB"
+                                             GroupName="AlarmSounds"
+                                             Command="{Binding SetAlarmSoundCommand}"
+                                             CommandParameter="1">
+                                <TextBlock Text="Alarm1"/>
+                            </RadioButton>
+
+                            <RadioButton Grid.Row="1"
+                                             x:Name="Alarm2RB"
+                                             Margin="0 5 0 0"
+                                             GroupName="AlarmSounds"
+                                             Command="{Binding SetAlarmSoundCommand}"
+                                             CommandParameter="2">
+                                <TextBlock Text="Alarm2"/>
+                            </RadioButton>
+
+                            <RadioButton Grid.Row="2"
+                                             x:Name="Alarm3RB"
+                                             Margin="0 5 0 0"
+                                             GroupName="AlarmSounds"
+                                             Command="{Binding SetAlarmSoundCommand}"
+                                             CommandParameter="3">
+                                <TextBlock Text="Alarm3"/>
+                            </RadioButton>
+
+                            <RadioButton Grid.Row="3"
+                                             x:Name="Alarm4RB"
+                                             Margin="0 5 0 0"
+                                             GroupName="AlarmSounds"
+                                             Command="{Binding SetAlarmSoundCommand}"
+                                             CommandParameter="4">
+                                <TextBlock Text="Alarm4"/>
+                            </RadioButton>
+
+                            <RadioButton Grid.Row="4"
+                                             x:Name="Alarm5RB"
+                                             Margin="0 5 0 0"
+                                             GroupName="AlarmSounds"
+                                             Command="{Binding SetAlarmSoundCommand}"
+                                             CommandParameter="5">
+                                <TextBlock Text="Alarm5"/>
+                            </RadioButton>
+                        </Grid>
+
+
+                        <controls:NormalButton
+                                Grid.Column="2"
+                                Style="{StaticResource NormalButtonStyle}"
+                                VerticalAlignment="Top"
+                                Content="Play"
+                                Command="{Binding PlayAlarmSoundCommand}"/>
+                    </Grid>
+
+                </GroupBox>
+            </DockPanel>
+        </ScrollViewer>
+
+        <Grid Grid.Row="1"
+            Margin="10 10 10 0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <controls:NormalButton
+                Grid.Column="2"
+                Margin="5 0 5 0"
+                Style="{StaticResource NormalButtonStyle}"
+                Content="Save"
+                Command="{Binding SaveCommand}"/>
+
+            <controls:NormalButton
+                Grid.Column="1"
+                Margin="5 0 5 0"
+                Style="{StaticResource NormalButtonStyle}"
+                Visibility="{Binding IsUpdatingMode,
+                    Converter={StaticResource b2vconv}}"
+                Content="Delete"
+                Command="{Binding DeleteCommand}"/>
+            
+            <controls:NormalButton
+                Grid.Column="0"
+                Margin="5 0 5 0"
+                Style="{StaticResource NormalButtonStyle}"
+                Content="Cancel"
+                Command="{Binding GoBackCommand}"/>
+                
+        </Grid>
+
+    </Grid>
+</UserControl>
