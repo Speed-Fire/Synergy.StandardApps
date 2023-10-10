@@ -24,6 +24,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
 
+                <ResourceDictionary Source="Resources/Paintings.xaml"/>
+
                 <ResourceDictionary>
 
                     <DataTemplate DataType="{x:Type vms:CreateNoteVM}">
@@ -80,6 +82,7 @@
                 Padding="3"
                 CornerRadius="15"
                 BorderThickness="2"
+                Background="{StaticResource InkwellAndFeather}"
                 BorderBrush="{StaticResource PrimaryBrush}">
 
                 <Grid>
