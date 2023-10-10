@@ -8,40 +8,41 @@ using System.Threading.Tasks;
 
 namespace Synergy.StandardApps.DAL.Repositories
 {
-    public class AlarmRepository : IRepository<AlarmRecord>
+    public class AlarmRepository : BaseRepository<AlarmRecord>
     {
-        private readonly AppDbContext context;
-
-        public AlarmRepository(AppDbContext context)
+        public AlarmRepository(AppDbContext context) : base(context)
         {
-            this.context = context;
+
         }
 
-        public async Task Create(AlarmRecord entity)
+        public override async Task Create(AlarmRecord entity, bool save = true)
         {
             entity.Created = entity.Updated = DateTime.Now;
 
             await context.Alarms.AddAsync(entity);
-            await context.SaveChangesAsync();
+            if (save)
+                await context.SaveChangesAsync();
         }
 
-        public async Task Delete(AlarmRecord entity)
+        public override async Task Delete(AlarmRecord entity, bool save = true)
         {
             context.Alarms.Remove(entity);
-            await context.SaveChangesAsync();
+            if (save)
+                await context.SaveChangesAsync();
         }
 
-        public IQueryable<AlarmRecord> GetAll()
+        public override IQueryable<AlarmRecord> GetAll()
         {
             return context.Alarms.AsQueryable();
         }
 
-        public async Task<AlarmRecord> Update(AlarmRecord entity)
+        public override async Task<AlarmRecord> Update(AlarmRecord entity, bool save = true)
         {
             entity.Updated = DateTime.Now;
 
             context.Alarms.Update(entity);
-            await context.SaveChangesAsync();
+            if (save)
+                await context.SaveChangesAsync();
 
             return entity;
         }

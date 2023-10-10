@@ -8,40 +8,41 @@ using System.Threading.Tasks;
 
 namespace Synergy.StandardApps.DAL.Repositories
 {
-    public class NotesRepository : IRepository<Note>
+    public class NotesRepository : BaseRepository<Note>
     {
-        private readonly AppDbContext context;
-
-        public NotesRepository(AppDbContext context)
+        public NotesRepository(AppDbContext context) : base(context)
         {
-            this.context = context;
+
         }
 
-        public async Task Create(Note entity)
+        public override async Task Create(Note entity, bool save = true)
         {
             entity.Created = entity.Updated = DateTime.Now;
 
             await context.Notes.AddAsync(entity);
-            await context.SaveChangesAsync();
+            if (save)
+                await context.SaveChangesAsync();
         }
 
-        public async Task Delete(Note entity)
+        public override async Task Delete(Note entity, bool save = true)
         {
             context.Notes.Remove(entity);
-            await context.SaveChangesAsync();
+            if (save)
+                await context.SaveChangesAsync();
         }
 
-        public IQueryable<Note> GetAll()
+        public override IQueryable<Note> GetAll()
         {
             return context.Notes.AsQueryable();
         }
 
-        public async Task<Note> Update(Note entity)
+        public override async Task<Note> Update(Note entity, bool save = true)
         {
             entity.Updated = DateTime.Now;
 
             context.Notes.Update(entity);
-            await context.SaveChangesAsync();
+            if (save)
+                await context.SaveChangesAsync();
 
             return entity;
         }

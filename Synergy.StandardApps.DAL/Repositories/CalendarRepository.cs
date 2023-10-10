@@ -8,40 +8,41 @@ using System.Threading.Tasks;
 
 namespace Synergy.StandardApps.DAL.Repositories
 {
-    public class CalendarRepository : IRepository<CalendarEvent>
+    public class CalendarRepository : BaseRepository<CalendarEvent>
     {
-        private readonly AppDbContext context;
-
-        public CalendarRepository(AppDbContext context)
+        public CalendarRepository(AppDbContext context) : base(context)
         {
-            this.context = context;
+
         }
 
-        public async Task Create(CalendarEvent entity)
+        public override async Task Create(CalendarEvent entity, bool save = true)
         {
             entity.Created = entity.Updated = DateTime.Now;
 
             await context.CalendarEvents.AddAsync(entity);
-            await context.SaveChangesAsync();
+            if (save)
+                await context.SaveChangesAsync();
         }
 
-        public async Task Delete(CalendarEvent entity)
+        public override async Task Delete(CalendarEvent entity, bool save = true)
         {
             context.CalendarEvents.Remove(entity);
-            await context.SaveChangesAsync();
+            if (save)
+                await context.SaveChangesAsync();
         }
 
-        public IQueryable<CalendarEvent> GetAll()
+        public override IQueryable<CalendarEvent> GetAll()
         {
             return context.CalendarEvents.AsQueryable();
         }
 
-        public async Task<CalendarEvent> Update(CalendarEvent entity)
+        public override async Task<CalendarEvent> Update(CalendarEvent entity, bool save = true)
         {
             entity.Updated = DateTime.Now;
 
             context.CalendarEvents.Update(entity);
-            await context.SaveChangesAsync();
+            if (save)
+                await context.SaveChangesAsync();
 
             return entity;
         }
