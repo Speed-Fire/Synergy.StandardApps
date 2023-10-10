@@ -6,6 +6,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="clr-namespace:Synergy.WPF.Common.Controls;assembly=Synergy.WPF.Common"
              xmlns:local="clr-namespace:Synergy.StandardApps.Calendar"
+             xmlns:convs="clr-namespace:Synergy.WPF.Common.Converters;assembly=Synergy.WPF.Common"
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
              Loaded="CalendarDayCard_Loaded"
              Unloaded="CalendarDayCard_Unloaded"
              mc:Ignorable="d" 
@@ -50,6 +52,9 @@
 
         </Style>
 
+        <convs:LongStroryShortConverter x:Key="lssconv"/>
+        <sys:Int32 x:Key="MaxPreviewLength">12</sys:Int32>
+        
     </UserControl.Resources>
     
     <Border
@@ -166,7 +171,8 @@
                             Margin="0 8 0 8"
                             FontSize="12"
                             Text="{Binding ElementName=CalendarDayCard,
-                                           Path=EventName}"/>
+                                           Path=EventName, Converter={StaticResource lssconv},
+                                                                   ConverterParameter={StaticResource MaxPreviewLength}}"/>
 
                     <Border.RenderTransform>
                         <TranslateTransform x:Name="TT"/>
