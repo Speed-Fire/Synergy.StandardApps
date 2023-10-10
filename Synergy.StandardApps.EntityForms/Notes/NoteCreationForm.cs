@@ -23,7 +23,7 @@ namespace Synergy.StandardApps.EntityForms.Notes
         }
 
         [Required]
-        [MaxLength(200)]
+        [MaxLength(500)]
         public string Description
         {
             get => description;
