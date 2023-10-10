@@ -20,16 +20,13 @@ namespace Synergy.StandardApps.Background.Workers
 {
     public class BackgroundCalendarService
         :
-        BackgroundService,
+        BackgroundBaseService,
         IRecipient<AddCalendarEventMessage>,
         IRecipient<DeleteCalendarEventMessage>
     {
         #region Readonly
 
-        private readonly string SERVICE_NAME = nameof(BackgroundCalendarService);
-
         private readonly IServiceProvider _serviceProvider;
-        private readonly ILogger<BackgroundCalendarService> _logger;
         private readonly INotifier<CalendarEvent> _notifier;
 
         private readonly ConcurrentQueue<CalendarEvent> _calendarEventsToAdd;
@@ -45,10 +42,10 @@ namespace Synergy.StandardApps.Background.Workers
 
         public BackgroundCalendarService(IServiceProvider serviceProvider,
             ILogger<BackgroundCalendarService> logger,
-            INotifier<CalendarEvent> notifier)
+            INotifier<CalendarEvent> notifier) :
+            base(logger, nameof(BackgroundCalendarService))
         {
             _serviceProvider = serviceProvider;
-            _logger = logger;
             _notifier = notifier;
 
             _calendarEventsToAdd = new();
@@ -202,12 +199,6 @@ namespace Synergy.StandardApps.Background.Workers
         #endregion
 
         #endregion
-
-        private void LogInformation(string info)
-        {
-            _logger
-                .LogInformation("[{service_name}]: {info}", SERVICE_NAME, info);
-        }
 
         #endregion
 

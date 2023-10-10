@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 namespace Synergy.StandardApps.Background.Workers
 {
     public class BackgroundAlarmService :
-        BackgroundService,
+        BackgroundBaseService,
         IRecipient<AddAlarmMessage>,
         IRecipient<DeleteAlarmMessage>,
         IRecipient<EnableAlarmMessage>
@@ -25,7 +25,6 @@ namespace Synergy.StandardApps.Background.Workers
         #region Readonly
 
         private readonly IServiceProvider _serviceProvider;
-        private readonly ILogger<BackgroundAlarmService> _logger;
         private readonly INotifier<AlarmRecord> _notifier;
 
         private readonly ConcurrentQueue<AlarmRecord> _alarmsToAdd;
@@ -40,10 +39,10 @@ namespace Synergy.StandardApps.Background.Workers
 
         public BackgroundAlarmService(ILogger<BackgroundAlarmService> logger,
             INotifier<AlarmRecord> notifier,
-            IServiceProvider serviceProvider)
+            IServiceProvider serviceProvider) :
+            base(logger, nameof(BackgroundAlarmService))
         {
             _serviceProvider = serviceProvider;
-            _logger = logger;
             _notifier = notifier;
 
             _alarmsToAdd = new();
@@ -68,8 +67,7 @@ namespace Synergy.StandardApps.Background.Workers
 
                     _lastDay = date;
 
-                    _logger.LogInformation(
-                        $"[{nameof(BackgroundAlarmService)}]: new day alarms loaded.");
+                    LogInformation("new day alarms loaded.");
                 }
 
                 HandleAlarmsEnability();
@@ -89,8 +87,7 @@ namespace Synergy.StandardApps.Background.Workers
 
                     _notifier.Notify(alarm);
 
-                    _logger.LogInformation(
-                        $"[{nameof(BackgroundAlarmService)}]: alarm notified.");
+                    LogInformation("alarm notified.");
                 }
             }
         }
@@ -185,8 +182,7 @@ namespace Synergy.StandardApps.Background.Workers
                 _alarms.AddBefore(_alarms.Find(nextAlarm), alarm);
             }
 
-            _logger.LogInformation(
-                $"[{nameof(BackgroundAlarmService)}]: alarm added to queue.");
+            LogInformation("alarm added to queue.");
         }
 
         private void UpdateAlarm(AlarmRecord alarm, AlarmRecord existing, DateTime today)
@@ -195,8 +191,7 @@ namespace Synergy.StandardApps.Background.Workers
             {
                 _alarms.Remove(toRem);
 
-                _logger.LogInformation(
-                            $"[{nameof(BackgroundAlarmService)}]: alarm deleted from queue.");
+                LogInformation("alarm deleted from queue.");
             }
 
             if (!AlarmHandler.IsAlarmedDay(alarm, today))
@@ -240,8 +235,7 @@ namespace Synergy.StandardApps.Background.Workers
                 _alarms.AddBefore(_alarms.Find(nextAlarm), alarm);
             }
 
-            _logger.LogInformation(
-                $"[{nameof(BackgroundAlarmService)}]: alarm updated.");
+            LogInformation("alarm updated.");
         }
 
         #endregion
@@ -258,8 +252,7 @@ namespace Synergy.StandardApps.Background.Workers
                     {
                         _alarms.Remove(existed);
 
-                        _logger.LogInformation(
-                            $"[{nameof(BackgroundAlarmService)}]: alarm deleted from queue.");
+                        LogInformation("alarm deleted from queue.");
                     }
                 }
             }
