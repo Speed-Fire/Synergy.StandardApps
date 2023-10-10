@@ -40,7 +40,7 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
         public ICommand? GoBackCommand => goBackCommand ??
             (goBackCommand = new RelayCommand(() =>
             {
-                WeakReferenceMessenger.Default.Send(new NoteChangingCanceledMessage(null));
+                WeakReferenceMessenger.Default.Send(new CloseNoteChangingMessage(null));
             }));
 
         private RelayCommand? viewLoadedCommand;
