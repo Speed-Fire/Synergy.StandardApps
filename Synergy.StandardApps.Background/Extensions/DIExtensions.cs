@@ -17,7 +17,8 @@ namespace Synergy.StandardApps.Background.Extensions
         {
             services
                 .RegisterAlarmBackground()
-                .RegisterCalendarBackground();
+                .RegisterCalendarBackground()
+                .RegisterNoteCleanerBackground();
 
             return services;
         }
@@ -36,6 +37,14 @@ namespace Synergy.StandardApps.Background.Extensions
             services
                 .AddHostedService<BackgroundCalendarService>()
                 .AddTransient<INotifier<CalendarEvent>, CalendarEventToastNotifier>();
+
+            return services;
+        }
+
+        public static IServiceCollection RegisterNoteCleanerBackground(this  IServiceCollection services)
+        {
+            services
+                .AddHostedService<BackgroundNoteCleanerService>();
 
             return services;
         }
