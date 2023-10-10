@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Synergy.StandardApps.Domain.Notes;
 using Synergy.StandardApps.EntityForms.Notes;
 using Synergy.StandardApps.Notes.Messages;
 using Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs;
@@ -22,8 +23,9 @@ namespace Synergy.StandardApps.Notes.ViewModels
         ViewModel,
         IRecipient<NoteCreatedMessage>,
         IRecipient<NoteUpdatedMessage>,
-        IRecipient<OpenNoteEditMessage>,
-        IRecipient<NoteChangingCanceledMessage>
+        IRecipient<NoteDeletedMessage>,
+        IRecipient<CloseNoteChangingMessage>,
+        IRecipient<RightSidePanelClosedMessage>
     {
         private readonly INoteService _noteService;
         private readonly INavigationService _navigationService;
@@ -44,20 +46,6 @@ namespace Synergy.StandardApps.Notes.ViewModels
             set => SetProperty(ref notes, value);
         }
 
-        private NoteForm? selectedItem;
-        public NoteForm? SelectedItem
-        {
-            get => selectedItem;
-            set => SetProperty(ref selectedItem, value);
-        }
-
-        private bool isListDisabled;
-        public bool IsListDisabled
-        {
-            get => isListDisabled;
-            set => SetProperty(ref isListDisabled, value);
-        }
-
         #endregion
 
         public NotesVM(INoteService noteService,
@@ -69,56 +57,48 @@ namespace Synergy.StandardApps.Notes.ViewModels
             LocalNavigationService = localNavigationService;
 
             notes = new();
-            IsListDisabled = false;
 
             IsActive = true;
         }
 
         #region Messages
 
+        #region CRUD
+
         void IRecipient<NoteCreatedMessage>.Receive(NoteCreatedMessage message)
         {
-            IsListDisabled = false;
-
-            if (message.Value is null)
-                return;
-
             Notes.Add(message.Value);
-
-            OpenNote(selectedItem);
         }
 
         void IRecipient<NoteUpdatedMessage>.Receive(NoteUpdatedMessage message)
         {
-            IsListDisabled = false;
-
-            if (message.Value is null)
-                return;
-
-            var old = Notes.First(n => n.Id == message.Value.Id);
-            var oldPos = Notes.IndexOf(old);
-
-            Notes.RemoveAt(oldPos);
-            Notes.Insert(oldPos, message.Value);
-
-            SelectedItem = message.Value;
-
-            OpenNote(SelectedItem);
+            Notes.Remove(Notes.First(n => n.Id == message.Value.Id));
+            Notes.Add(message.Value);
         }
 
-        void IRecipient<OpenNoteEditMessage>.Receive(OpenNoteEditMessage message)
+        void IRecipient<NoteDeletedMessage>.Receive(NoteDeletedMessage message)
         {
-            IsListDisabled = true;
-
-            _localNavigationService
-                    .NavigateTo<UpdateNoteVM>(_noteService, SelectedItem);
+            Notes.Remove(Notes.First(n => n.Id == message.Value));
         }
 
-        void IRecipient<NoteChangingCanceledMessage>.Receive(NoteChangingCanceledMessage message)
-        {
-            IsListDisabled = false;
+        #endregion
 
-            OpenNote(SelectedItem);
+        void IRecipient<RightSidePanelClosedMessage>.Receive(RightSidePanelClosedMessage message)
+        {
+            if (_localNavigationService.CurrentView is null ||
+                _localNavigationService.CurrentView.GetType() != typeof(UpdateNoteVM))
+            {
+                _localNavigationService.NavigateTo<UpdateNoteVM>(_noteService);
+            }
+
+            WeakReferenceMessenger.Default
+                .Send(new OpenNoteEditMessage(null));
+        }
+
+        void IRecipient<CloseNoteChangingMessage>.Receive(CloseNoteChangingMessage message)
+        {
+            WeakReferenceMessenger.Default
+                .Send(new SetRightSidePanelVisibilityMessage(false));
         }
 
         #endregion
@@ -130,31 +110,33 @@ namespace Synergy.StandardApps.Notes.ViewModels
             (loadNotesCommand = new AsyncRelayCommand(LoadNotesAsync));
 
         private RelayCommand? openNoteCreationCommand;
-        public RelayCommand OpenNoteCreationCommand => openNoteCreationCommand ??
+        public ICommand OpenNoteCreationCommand => openNoteCreationCommand ??
             (openNoteCreationCommand = new RelayCommand(() =>
             {
-                IsListDisabled = true;
-
                 _localNavigationService
                     .NavigateTo<CreateNoteVM>(_noteService);
+                WeakReferenceMessenger.Default
+                    .Send(new SetRightSidePanelVisibilityMessage(true));
             }));
 
-        private RelayCommand<NoteForm>? openNoteCommand;
-        public RelayCommand<NoteForm> OpenNoteCommand => openNoteCommand ??
-            (openNoteCommand = new RelayCommand<NoteForm>(note =>
+        private RelayCommand<long>? openNoteEditCommand;
+        public ICommand OpenNoteEditCommand => openNoteEditCommand ??
+            (openNoteEditCommand = new RelayCommand<long>(id =>
             {
+                var note = notes.FirstOrDefault(x => x.Id == id);
                 if (note is null)
-                    note = SelectedItem;
+                    return;
 
-                OpenNote(note);
+                WeakReferenceMessenger.Default
+                    .Send(new OpenNoteEditMessage(note));
+                WeakReferenceMessenger.Default
+                    .Send(new SetRightSidePanelVisibilityMessage(true));
             }));
-
-        private AsyncRelayCommand<NoteForm>? deleteNoteCommand;
-        public ICommand DeleteNoteCommand => deleteNoteCommand ??
-            (deleteNoteCommand = new AsyncRelayCommand<NoteForm>(DeleteNoteAsync));
 
         public async Task LoadNotesAsync()
         {
+            notes.Clear();
+
             var _notes = await _noteService.GetNotes();
 
             if (_notes.StatusCode == Domain.Enums.StatusCode.Error)
@@ -165,38 +147,11 @@ namespace Synergy.StandardApps.Notes.ViewModels
                 notes.Add(note);
             }
 
-            OpenNote(null);
-        }
+            _localNavigationService
+                    .NavigateTo<UpdateNoteVM>(_noteService);
 
-        private async Task DeleteNoteAsync(NoteForm note)
-        {
-            if (note is null)
-                return;
-
-            var res = await _noteService.DeleteNote(note.Id);
-
-            if (res.StatusCode == Domain.Enums.StatusCode.Error)
-            {
-
-                return;
-            }
-
-            Notes.Remove(note);
-        }
-
-        #endregion
-
-        #region Methods
-
-        private void OpenNote(NoteForm? note)
-        {
-            if(LocalNavigationService.CurrentView is not NoteViewVM)
-            {
-                _localNavigationService
-                    .NavigateTo<NoteViewVM>();
-            }
-
-            WeakReferenceMessenger.Default.Send(new OpenNoteMessage(note));
+            WeakReferenceMessenger.Default
+                    .Send(new NotesLoadedMessage(notes));
         }
 
         #endregion

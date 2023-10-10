@@ -20,10 +20,8 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
         public override NoteCreationForm ProtoNote
         {
             get => protoNote;
-            //set => SetProperty(ref protoNote, value);
+            protected set => SetProperty(ref protoNote, value);
         }
-
-        public override string Created => string.Empty;
 
         public CreateNoteVM(INoteService noteService) : base(noteService)
         {
@@ -46,6 +44,12 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
                 }
 
                 WeakReferenceMessenger.Default.Send(new NoteCreatedMessage(res.Data));
+                WeakReferenceMessenger.Default
+                    .Send(new CloseNoteChangingMessage(null));
             }));
+
+        private RelayCommand? deleteCommand;
+        public override ICommand? DeleteCommand => deleteCommand ??
+            (deleteCommand = new(() => { }));
     }
 }

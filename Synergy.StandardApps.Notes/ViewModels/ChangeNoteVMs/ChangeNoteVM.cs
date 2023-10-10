@@ -19,8 +19,14 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
     {
         protected readonly INoteService _noteService;
 
-        public abstract NoteCreationForm ProtoNote { get; }
-        public abstract string Created { get; }
+        public abstract NoteCreationForm ProtoNote { get; protected set; }
+
+        private bool isUpdatingMode = false;
+        public bool IsUpdatingMode
+        {
+            get => isUpdatingMode;
+            set => SetProperty(ref isUpdatingMode, value);
+        }
 
         public ChangeNoteVM(INoteService noteService)
         {
@@ -28,12 +34,27 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
         }
 
         public abstract ICommand? SaveCommand { get; }
+        public abstract ICommand? DeleteCommand { get; }
 
         private RelayCommand? goBackCommand;
         public ICommand? GoBackCommand => goBackCommand ??
             (goBackCommand = new RelayCommand(() =>
             {
                 WeakReferenceMessenger.Default.Send(new NoteChangingCanceledMessage(null));
+            }));
+
+        private RelayCommand? viewLoadedCommand;
+        public ICommand ViewLoadedCommand => viewLoadedCommand ??
+            (viewLoadedCommand = new RelayCommand(() =>
+            {
+                IsActive = true;
+            }));
+
+        private RelayCommand? viewUnloadedCommand;
+        public ICommand ViewUnloadedCommand => viewUnloadedCommand ??
+            (viewUnloadedCommand = new RelayCommand(() =>
+            {
+                IsActive = false;
             }));
     }
 }

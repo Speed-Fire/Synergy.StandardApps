@@ -5,122 +5,96 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Synergy.StandardApps.Notes.Views"
       xmlns:controls="clr-namespace:Synergy.WPF.Common.Controls;assembly=Synergy.WPF.Common"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:convs="clr-namespace:Synergy.WPF.Common.Converters;assembly=Synergy.WPF.Common"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-             
-      Background="{DynamicResource FrameBackground}">
+      d:DesignHeight="450" d:DesignWidth="800">
 
-    <Grid>
+    <UserControl.Resources>
+        <convs:Bool2VisibilityConverter x:Key="b2vconv"/>
+
+        <Style TargetType="Separator">
+            <Setter Property="Height" Value="2"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="Margin" Value="0 15 0 15"/>
+            <Setter Property="DockPanel.Dock" Value="Top"/>
+        </Style>
+
+        <Style TargetType="TextBlock"
+               BasedOn="{StaticResource TextBlockStyle}">
+            <Setter Property="Margin" Value="15 0 0 3"/>
+            <Setter Property="DockPanel.Dock" Value="Top"/>
+        </Style>
+    </UserControl.Resources>
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ViewLoadedCommand}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Unloaded">
+            <i:InvokeCommandAction Command="{Binding ViewUnloadedCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
+    <Grid Margin="5 0 0 5">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Border
-            Margin="5"
-            Padding="3"
-            CornerRadius="15"
-            BorderThickness="2"
-            BorderBrush="{StaticResource PrimaryBrush}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+        <ScrollViewer
+            Style="{StaticResource ScrollViewerStyle}">
+            <DockPanel>
 
-                <Border
-                    Margin="-3 -3 -3 0"
-                    CornerRadius="15 15 0 0"
-                    BorderThickness="0"
-                    Background="{StaticResource Primary3Brush}">
-                    <TextBox
-                        Style="{StaticResource TextBoxStyle.Transparent}"
-                        Foreground="Black"
-                        FontSize="25"
-                        FontWeight="Bold"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Stretch"
-                        TextAlignment="Center"
-                        Text="{Binding ProtoNote.Name, Mode=TwoWay}">
+                <TextBlock Text="Title:"/>
 
-                        <Validation.ErrorTemplate>
-                            <ControlTemplate>
-                                <Border 
-                                    BorderThickness="1"
-                                    BorderBrush="Red"
-                                    CornerRadius="15 15 0 0">
-                                    <AdornedElementPlaceholder x:Name="ErrorAdorner"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Validation.ErrorTemplate>
-                    </TextBox>
-                </Border>
+                <controls:AdvancedTextBox
+                    DockPanel.Dock="Top"
+                    Style="{StaticResource AdvancedTextBoxStyle}"
+                    Placeholder="Food list"
+                    Text="{Binding ProtoNote.Name, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <Rectangle
-                    Grid.Row="1"
-                    MinHeight="3"
-                    Margin="-3 0 -3 0"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Stretch"
-                    Fill="{StaticResource PrimaryBrush}"/>
+                <Separator/>
 
-                <TextBox
-                    Style="{StaticResource TextBoxStyle.Transparent}"
-                    Grid.Row="2"
-                    Margin="10,10"
-                    Text="{Binding ProtoNote.Description, Mode=TwoWay}"/>
-            </Grid>
-        </Border>
+                <TextBlock Text="Description:"/>
 
-        <Border
-            Grid.Row="1"
-            Margin="10 2 10 0"
-            CornerRadius="15 15 0 0"
-            Background="{DynamicResource ListView.Background}">
-            <Grid
-                Margin="10 7.5 10 7.5">
+                <controls:AdvancedTextBox
+                    DockPanel.Dock="Top"
+                    Style="{StaticResource AdvancedTextBoxStyle}"
+                    Placeholder="Bread, milk, ..."
+                    TextWrapping="Wrap"
+                    MinLines="10"
+                    Text="{Binding ProtoNote.Description, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+            </DockPanel>
+        </ScrollViewer>
 
-                <TextBlock
-                    Style="{StaticResource TextBlockStyle}"
-                    VerticalAlignment="Center"
-                    xml:space="preserve"
-                    Text="Created:  "/>
+        <Grid Grid.Row="1"
+              Margin="10 10 10 0">
 
-                <TextBlock
-                    Grid.Column="1"
-                    Style="{StaticResource TextBlockStyle}"
-                    VerticalAlignment="Center"
-                    Text="{Binding Created}"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-                <controls:NormalButton
-                    Grid.Column="3"
-                    Margin="0 0 10 0"
-                    Style="{StaticResource NormalButtonStyle}"
-                    MinHeight="30"
-                    HorizontalAlignment="Center"
-                    Content="Cancel"
-                    Command="{Binding GoBackCommand}"/>
-                
-                <controls:NormalButton
-                    Grid.Column="4"
-                    Style="{StaticResource NormalButtonStyle}"
-                    MinHeight="30"
-                    HorizontalAlignment="Center"
-                    Content="Save"
-                    Command="{Binding SaveCommand}"/>
+            <controls:NormalButton
+                        Style="{StaticResource NormalButtonStyle}"
+                        Visibility="{Binding IsUpdatingMode,
+                            Converter={StaticResource b2vconv}}"
+                        Content="Delete"
+                        Command="{Binding DeleteCommand}"/>
 
-            </Grid>
-        </Border>
+            <controls:NormalButton
+                        Grid.Column="2"
+                        Style="{StaticResource NormalButtonStyle}"
+                        Content="Save"
+                        Command="{Binding SaveCommand}"/>
 
+        </Grid>
+        
     </Grid>
 </UserControl>

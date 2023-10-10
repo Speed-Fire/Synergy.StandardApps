@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Synergy.StandardApps.Notes.Messages
 {
-    internal class OpenNoteEditMessage : ValueChangedMessage<NoteForm?>
+    internal class NoteUpdatedMessage : ValueChangedMessage<NoteForm>
     {
-        public OpenNoteEditMessage(NoteForm? value) : base(value)
+        public NoteUpdatedMessage(NoteForm value) : base(value)
         {
         }
     }

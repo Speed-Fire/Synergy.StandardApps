@@ -3,53 +3,58 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Synergy.StandardApps.EntityForms.Notes;
 using Synergy.StandardApps.Notes.Messages;
+using Synergy.StandardApps.Service.Calendar;
 using Synergy.StandardApps.Service.Notes;
 using Synergy.WPF.Common.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
 {
-    public class UpdateNoteVM : ChangeNoteVM
+    public class UpdateNoteVM : 
+        ChangeNoteVM,
+        IRecipient<OpenNoteEditMessage>
     {
-        private readonly long id;
+        private long id;
 
         private NoteCreationForm protoNote;
         public override NoteCreationForm ProtoNote 
         {
             get => protoNote;
-            //set => SetProperty(ref protoNote, value);
+            protected set => SetProperty(ref protoNote, value);
         }
 
-        private string created;
-        public override string Created
-        {
-            get => created;
-            //set => SetProperty(ref created, value);
-        }
-
-        public UpdateNoteVM(INoteService noteService, NoteForm form) :
+        public UpdateNoteVM(INoteService noteService) :
             base(noteService)
         {
+            IsUpdatingMode = true;
+
             protoNote = new()
             {
-                Name = form.Name,
-                Description = form.Description,
+                Name = "",
+                Description = ""
             };
 
-            id = form.Id;
-            created = form.Created.ToString();
+            id = -1;
         }
+
+        #region Commands
 
         private AsyncRelayCommand? saveCommand;
         public override ICommand? SaveCommand => saveCommand ??
-            (saveCommand = new AsyncRelayCommand(UpdateNote));
+            (saveCommand = new AsyncRelayCommand(UpdateNoteAsync));
 
-        private async Task UpdateNote()
+        private AsyncRelayCommand? deleteCommand;
+        public override ICommand? DeleteCommand => deleteCommand ??
+            (deleteCommand = new AsyncRelayCommand(DeleteNoteAsync));
+
+        private async Task UpdateNoteAsync()
         {
             if (ProtoNote.HasErrors)
                 return;
@@ -64,7 +69,42 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
                 return;
             }
 
-            WeakReferenceMessenger.Default.Send(new NoteUpdatedMessage(res.Data));
+            if (res.Data != null)
+                WeakReferenceMessenger.Default.Send(new NoteUpdatedMessage(res.Data));
+            WeakReferenceMessenger.Default
+                .Send(new CloseNoteChangingMessage(null));
+        }
+
+        private async Task DeleteNoteAsync()
+        {
+            var res = await _noteService.DeleteNote(id);
+
+            if (res.StatusCode == Domain.Enums.StatusCode.Error)
+            {
+                await NotifyingGrid.ShowNotificationAsync("MainGrid",
+                        "Error", "Specified name is already taken!",
+                        System.Windows.MessageBoxButton.OK);
+
+                return;
+            }
+
+            WeakReferenceMessenger.Default
+                .Send(new NoteDeletedMessage(id));
+            WeakReferenceMessenger.Default
+                .Send(new CloseNoteChangingMessage(null));
+        }
+
+        #endregion
+
+        void IRecipient<OpenNoteEditMessage>.Receive(OpenNoteEditMessage message)
+        {
+            ProtoNote = new()
+            {
+                Name = message.Value?.Name ?? "",
+                Description = message.Value?.Description ?? "",
+            };
+
+            id = message.Value?.Id ?? 0;
         }
     }
 }
