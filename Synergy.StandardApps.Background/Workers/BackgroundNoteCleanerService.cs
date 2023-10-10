@@ -73,7 +73,7 @@ namespace Synergy.StandardApps.Background.Workers
 
             var notesToDel = await notesRepository
                 .GetAll()
-                .Where(n => n.Updated.Date.AddDays(30) < dt.Date)
+                .Where(n => n.Updated.Date.AddDays(_maxNoteAge) < dt.Date)
                 .ToListAsync();
 
             if(notesToDel.Count == 0)
@@ -89,7 +89,7 @@ namespace Synergy.StandardApps.Background.Workers
             var res = await notesRepository.Save();
 
             if (res)
-                LogInformation("notes older than 30 days have been deleted.");
+                LogInformation($"notes older than {_maxNoteAge} days have been deleted.");
             else
                 LogInformation("something went wrong during old note deletion.");
         }
