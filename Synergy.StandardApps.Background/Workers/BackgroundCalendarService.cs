@@ -66,6 +66,8 @@ namespace Synergy.StandardApps.Background.Workers
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            LogInformation("started.");
+
             while (!stoppingToken.IsCancellationRequested)
             {
                 var date = DateTime.Now;
@@ -96,6 +98,8 @@ namespace Synergy.StandardApps.Background.Workers
                 if (_calendarEvents.Count > 0 || !_calendarEventsToAdd.IsEmpty)
                     await Task.Delay(5000, stoppingToken);
             }
+
+            LogInformation("finished.");
         }
 
         #region Methods

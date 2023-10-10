@@ -10,6 +10,7 @@ using Synergy.StandardApps.Domain.Alarm;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -57,6 +58,8 @@ namespace Synergy.StandardApps.Background.Workers
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            LogInformation("started.");
+
             while (!stoppingToken.IsCancellationRequested)
             {
                 var date = DateTime.Now/*.Date*/;
@@ -90,6 +93,8 @@ namespace Synergy.StandardApps.Background.Workers
                     LogInformation("alarm notified.");
                 }
             }
+
+            LogInformation("finished.");
         }
 
         private async Task LoadAlarmsFromDb(DateTime today)
