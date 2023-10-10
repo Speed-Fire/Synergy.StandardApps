@@ -35,6 +35,12 @@ namespace Synergy.StandardApps.Notes
 
         #region Animations
 
+        #region Notes
+
+        private readonly DoubleAnimation _notesAppearing;
+
+        #endregion
+
         #region RightSideBar
 
         private readonly Storyboard _rightSidePanelAppearing;
@@ -109,6 +115,17 @@ namespace Synergy.StandardApps.Notes
             InitializeComponent();
 
             #region Animations
+
+            #region Notes
+
+            _notesAppearing = new DoubleAnimation()
+            {
+                From = 0,
+                To = 1,
+                Duration = TimeSpan.FromSeconds(0.7)
+            };
+
+            #endregion
 
             #region RightSidePanel
 
@@ -277,6 +294,8 @@ namespace Synergy.StandardApps.Notes
             IsRegistered = true;
 
             HideFrame();
+
+            ImageBrd.BeginAnimation(UIElement.OpacityProperty, _notesAppearing);
         }
 
         private void UserControl_Unloaded(object sender, System.Windows.RoutedEventArgs e)
