@@ -34,6 +34,14 @@ namespace Synergy.StandardApps.Service.Calendar
                 if (form.HasErrors)
                     throw new("Invalid form!");
 
+                var existing = await _calendarRepository
+                    .GetAll()
+                    .Where(e => e.Day == form.Day && e.Month == form.Month)
+                    .FirstOrDefaultAsync();
+
+                if (existing != null)
+                    throw new($"Calendar event for date {form.Day}.{form.Month}.yyyy already exist!");
+
                 var ev = new CalendarEvent()
                 {
                     Title = form.Title,
