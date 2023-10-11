@@ -126,6 +126,14 @@ namespace Synergy.StandardApps.EntityForms.Alarm
             set => SetProperty(ref isSoundEnabled, value);
         }
 
+        public AlarmCreationForm()
+        {
+            name = "";
+            Time = new TimeOnly(0, 0);
+            sound = AlarmSound.Alarm1;
+            isSoundEnabled = true;
+        }
+
         public IEnumerable<DayOfWeek> GetAlarmedDays()
         {
             var res = new List<DayOfWeek>();
