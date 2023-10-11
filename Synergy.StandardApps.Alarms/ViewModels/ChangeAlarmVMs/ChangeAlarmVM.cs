@@ -33,11 +33,20 @@ namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
             set => SetProperty(ref isUpdatingMode, value);
         }
 
+        private List<AlarmSound> sounds;
+        public List<AlarmSound> Sounds
+        {
+            get => sounds;
+            set => SetProperty(ref sounds, value);
+        }
+
         #endregion
 
         protected ChangeAlarmVM(IAlarmService alarmService)
         {
             _alarmService = alarmService;
+
+            Sounds = new(Enum.GetValues<AlarmSound>());
         }
 
         #region Commands
@@ -70,15 +79,6 @@ namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
                 Form.Wednesday = Form.Thursday =
                 Form.Friday = Form.Saturday =
                 Form.Sunday = true;
-            }));
-
-        private RelayCommand<string>? setAlarmSoundCommand;
-        public ICommand SetAlarmSoundCommand => setAlarmSoundCommand ??
-            (setAlarmSoundCommand = new RelayCommand<string>(str =>
-            {
-                var sound = (AlarmSound)int.Parse(str);
-
-                Form.Sound = sound;
             }));
 
         private RelayCommand? playAlarmSoundCommand;

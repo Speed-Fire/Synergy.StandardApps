@@ -28,11 +28,7 @@ namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
         {
             IsUpdatingMode = false;
 
-            form = new()
-            {
-                Name = "",
-                Time = TimeOnly.Parse("00:00:00")
-            };
+            form = new();
         }
 
         private AsyncRelayCommand? saveCommand;

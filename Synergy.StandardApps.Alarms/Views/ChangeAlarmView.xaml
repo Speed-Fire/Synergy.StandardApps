@@ -8,7 +8,8 @@
       xmlns:convs="clr-namespace:Synergy.WPF.Common.Converters;assembly=Synergy.WPF.Common"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800">
+      d:DesignHeight="450" d:DesignWidth="800"
+    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
 
     <UserControl.Resources>
 
@@ -52,7 +53,7 @@
                 <Setter Property="MinWidth" Value="35"/>
                 <Setter Property="MinHeight" Value="35"/>
             </Style>
-                
+
         </ResourceDictionary>
 
     </UserControl.Resources>
@@ -189,9 +190,12 @@
                 <Separator/>
 
                 <GroupBox DockPanel.Dock="Top"
-                    Margin="15 0 15 0"
-                              BorderThickness="1"
-                              BorderBrush="{StaticResource Gray300Brush}">
+                          VerticalAlignment="Top"
+                          Padding="3"
+                          Style="{StaticResource GroupBoxStyle.SingleBorder}"
+                          Margin="15 0 15 0"
+                          BorderThickness="2"
+                          BorderBrush="{StaticResource TertiaryBrush}">
 
                     <GroupBox.Header>
                         <CheckBox
@@ -209,94 +213,22 @@
 
                     </GroupBox.Header>
 
-                    <Grid Margin="0 5 0 0">
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="30"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.Style>
-                            <Style TargetType="Grid">
+                    <ComboBox
+                        ItemsSource="{Binding Sounds}"
+                        SelectedItem="{Binding Form.Sound}">
+                        <ComboBox.Style>
+                            <Style TargetType="ComboBox" BasedOn="{StaticResource ComboBoxStyle}">
                                 <Style.Triggers>
-
                                     <DataTrigger Binding="{Binding ElementName=AlarmSoundCb, Path=IsChecked}"
-                                                     Value="False">
+                                                         Value="False">
 
                                         <Setter Property="IsEnabled" Value="False"/>
 
                                     </DataTrigger>
-
-
                                 </Style.Triggers>
                             </Style>
-                        </Grid.Style>
-
-                        <Grid Grid.Column="0"
-                                  HorizontalAlignment="Left">
-
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-
-                            <RadioButton Grid.Row="0"
-                                             x:Name="Alarm1RB"
-                                             GroupName="AlarmSounds"
-                                             Command="{Binding SetAlarmSoundCommand}"
-                                             CommandParameter="1">
-                                <TextBlock Text="Alarm1"/>
-                            </RadioButton>
-
-                            <RadioButton Grid.Row="1"
-                                             x:Name="Alarm2RB"
-                                             Margin="0 5 0 0"
-                                             GroupName="AlarmSounds"
-                                             Command="{Binding SetAlarmSoundCommand}"
-                                             CommandParameter="2">
-                                <TextBlock Text="Alarm2"/>
-                            </RadioButton>
-
-                            <RadioButton Grid.Row="2"
-                                             x:Name="Alarm3RB"
-                                             Margin="0 5 0 0"
-                                             GroupName="AlarmSounds"
-                                             Command="{Binding SetAlarmSoundCommand}"
-                                             CommandParameter="3">
-                                <TextBlock Text="Alarm3"/>
-                            </RadioButton>
-
-                            <RadioButton Grid.Row="3"
-                                             x:Name="Alarm4RB"
-                                             Margin="0 5 0 0"
-                                             GroupName="AlarmSounds"
-                                             Command="{Binding SetAlarmSoundCommand}"
-                                             CommandParameter="4">
-                                <TextBlock Text="Alarm4"/>
-                            </RadioButton>
-
-                            <RadioButton Grid.Row="4"
-                                             x:Name="Alarm5RB"
-                                             Margin="0 5 0 0"
-                                             GroupName="AlarmSounds"
-                                             Command="{Binding SetAlarmSoundCommand}"
-                                             CommandParameter="5">
-                                <TextBlock Text="Alarm5"/>
-                            </RadioButton>
-                        </Grid>
-
-
-                        <controls:NormalButton
-                                Grid.Column="2"
-                                Style="{StaticResource NormalButtonStyle}"
-                                VerticalAlignment="Top"
-                                Content="Play"
-                                Command="{Binding PlayAlarmSoundCommand}"/>
-                    </Grid>
+                        </ComboBox.Style>
+                    </ComboBox>
 
                 </GroupBox>
             </DockPanel>

@@ -33,11 +33,7 @@ namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
         {
             IsUpdatingMode = true;
 
-            form = new()
-            {
-                Name = "",
-                Time = TimeOnly.Parse("00:00:00")
-            };
+            form = new();
 
             id = -1;
         }
@@ -66,7 +62,7 @@ namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
             }
 
             WeakReferenceMessenger.Default
-                .Send(new Messages.AlarmUpdatedMessage(res.Data));
+                .Send(new AlarmUpdatedMessage(res.Data));
             WeakReferenceMessenger.Default
                 .Send(new CloseAlarmChangingMessage(null));
         }
