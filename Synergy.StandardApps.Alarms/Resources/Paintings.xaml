@@ -1,0 +1,310 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="Alarm.Frame.Brush" Color="{DynamicResource Gray300}"/>
+    <SolidColorBrush x:Key="Alarm.Leg.Brush" Color="{DynamicResource Gray500}"/>
+
+    <SolidColorBrush x:Key="Alarm.Line.Brush" Color="Black"/>
+    <SolidColorBrush x:Key="Alarm.Bell.Brush.Light" Color="Goldenrod"/>
+    <SolidColorBrush x:Key="Alarm.Bell.Brush.Medium" Color="DarkGoldenrod"/>
+    <SolidColorBrush x:Key="Alarm.Bell.Brush.Dark" Color="#866109"/>
+
+    <Pen x:Key="Alarm.Line.Pen" Thickness="1" Brush="{StaticResource Alarm.Line.Brush}"/>
+    <Pen x:Key="Alarm.Leg.Pen" Thickness="1" Brush="{StaticResource Alarm.Leg.Brush}"/>
+    <Pen x:Key="Alarm.Bell.Pen.Light" Thickness="1" Brush="{StaticResource Alarm.Bell.Brush.Light}"/>
+    <Pen x:Key="Alarm.Bell.Pen.Medium" Thickness="1" Brush="{StaticResource Alarm.Bell.Brush.Medium}"/>
+    <Pen x:Key="Alarm.Bell.Pen.Dark" Thickness="1" Brush="{StaticResource Alarm.Bell.Brush.Dark}"/>
+
+    <EllipseGeometry x:Key="Alarm.Line.Hour.Large"
+                     Center="0,-80"
+                     RadiusX="2" RadiusY="10"/>
+
+    <EllipseGeometry x:Key="Alarm.Line.Hour.Small"
+                     Center="0,-82"
+                     RadiusX="1" RadiusY="7"/>
+
+    <PathGeometry x:Key="Alarm.Leg"
+                  Figures="M -5,-100 5,-100 5,-130 -5,-130"/>
+
+    <DrawingBrush x:Key="Alarm" Stretch="None">
+
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+
+                <!--#region Legs -->
+
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource Alarm.Leg.Brush}"
+                                     Pen="{StaticResource Alarm.Leg.Pen}"
+                                     Geometry="{StaticResource Alarm.Leg}"/>
+
+                    <DrawingGroup.Transform>
+                        <RotateTransform Angle="217.5"/>
+                    </DrawingGroup.Transform>
+
+                </DrawingGroup>
+
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource Alarm.Leg.Brush}"
+                                     Pen="{StaticResource Alarm.Leg.Pen}"
+                                     Geometry="{StaticResource Alarm.Leg}"/>
+
+                    <DrawingGroup.Transform>
+                        <RotateTransform Angle="142.5"/>
+                    </DrawingGroup.Transform>
+
+                </DrawingGroup>
+
+                <!--#endregion-->
+
+                <!--#region Bells -->
+
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource Alarm.Bell.Brush.Dark}"
+                                     Pen="{StaticResource Alarm.Bell.Pen.Dark}">
+                        <GeometryDrawing.Geometry>
+                            <PathGeometry
+                                Figures="M -40,-111 Q 0,-86 40,-111 Z"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource Alarm.Bell.Brush.Medium}"
+                                     Pen="{StaticResource Alarm.Bell.Pen.Medium}">
+                        <GeometryDrawing.Geometry>
+                            <PathGeometry
+                                Figures="M -5,-128 -5,-136 5,-136, 5,-128 Z"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource Alarm.Bell.Brush.Light}"
+                                     Pen="{StaticResource Alarm.Bell.Pen.Light}">
+                        <GeometryDrawing.Geometry>
+                            <PathGeometry 
+                                Figures="M -40,-111 A 10,5, 0, 0,1 40,-111 Z"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <DrawingGroup.Transform>
+                        <RotateTransform Angle="35"/>
+                    </DrawingGroup.Transform>
+
+                </DrawingGroup>
+
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource Alarm.Bell.Brush.Dark}"
+                                     Pen="{StaticResource Alarm.Bell.Pen.Dark}">
+                        <GeometryDrawing.Geometry>
+                            <PathGeometry
+                                Figures="M -40,-111 Q 0,-86 40,-111 Z"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource Alarm.Bell.Brush.Medium}"
+                                     Pen="{StaticResource Alarm.Bell.Pen.Medium}">
+                        <GeometryDrawing.Geometry>
+                            <PathGeometry
+                                Figures="M -5,-128 -5,-136 5,-136, 5,-128 Z"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing Brush="{StaticResource Alarm.Bell.Brush.Light}"
+                                     Pen="{StaticResource Alarm.Bell.Pen.Light}">
+                        <GeometryDrawing.Geometry>
+                            <PathGeometry 
+                                Figures="M -40,-111 A 10,5, 0, 0,1 40,-111 Z"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <DrawingGroup.Transform>
+                        <RotateTransform Angle="-35"/>
+                    </DrawingGroup.Transform>
+
+                </DrawingGroup>
+
+                <!--#endregion-->
+
+                <GeometryDrawing>
+
+                    <GeometryDrawing.Pen>
+                        <Pen Thickness="10" Brush="{StaticResource Alarm.Frame.Brush}"/>
+                    </GeometryDrawing.Pen>
+
+                    <GeometryDrawing.Brush>
+                        <SolidColorBrush Color="{DynamicResource Gray100}"/>
+                    </GeometryDrawing.Brush>
+                    
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry Center="0,0"
+                                         RadiusX="100"
+                                         RadiusY="100"/>
+                    </GeometryDrawing.Geometry>
+                    
+                </GeometryDrawing>
+                
+                <!--#region Large hour lines -->
+
+                <GeometryDrawing Brush="{StaticResource Alarm.Line.Brush}"
+                                 Pen="{StaticResource Alarm.Line.Pen}"
+                                 Geometry="{StaticResource Alarm.Line.Hour.Large}"/>
+                
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource Alarm.Line.Brush}"
+                                 Pen="{StaticResource Alarm.Line.Pen}"
+                                 Geometry="{StaticResource Alarm.Line.Hour.Large}"/>
+
+                    <DrawingGroup.Transform>
+                        <RotateTransform Angle="90"/>
+                    </DrawingGroup.Transform>
+                </DrawingGroup>
+
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource Alarm.Line.Brush}"
+                                 Pen="{StaticResource Alarm.Line.Pen}"
+                                 Geometry="{StaticResource Alarm.Line.Hour.Large}"/>
+
+                    <DrawingGroup.Transform>
+                        <RotateTransform Angle="180"/>
+                    </DrawingGroup.Transform>
+                </DrawingGroup>
+
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource Alarm.Line.Brush}"
+                                 Pen="{StaticResource Alarm.Line.Pen}"
+                                 Geometry="{StaticResource Alarm.Line.Hour.Large}"/>
+
+                    <DrawingGroup.Transform>
+                        <RotateTransform Angle="270"/>
+                    </DrawingGroup.Transform>
+                </DrawingGroup>
+
+                <!--#endregion-->
+                
+                <!--#region Small hour lines -->
+
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource Alarm.Line.Brush}"
+                                     Pen="{StaticResource Alarm.Line.Pen}"
+                                     Geometry="{StaticResource Alarm.Line.Hour.Small}"/>
+
+                    <DrawingGroup.Transform>
+                        <RotateTransform Angle="30"/>
+                    </DrawingGroup.Transform>
+                </DrawingGroup>
+
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource Alarm.Line.Brush}"
+                                     Pen="{StaticResource Alarm.Line.Pen}"
+                                     Geometry="{StaticResource Alarm.Line.Hour.Small}"/>
+
+                    <DrawingGroup.Transform>
+                        <RotateTransform Angle="60"/>
+                    </DrawingGroup.Transform>
+                </DrawingGroup>
+
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource Alarm.Line.Brush}"
+                                     Pen="{StaticResource Alarm.Line.Pen}"
+                                     Geometry="{StaticResource Alarm.Line.Hour.Small}"/>
+
+                    <DrawingGroup.Transform>
+                        <RotateTransform Angle="120"/>
+                    </DrawingGroup.Transform>
+                </DrawingGroup>
+
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource Alarm.Line.Brush}"
+                                     Pen="{StaticResource Alarm.Line.Pen}"
+                                     Geometry="{StaticResource Alarm.Line.Hour.Small}"/>
+
+                    <DrawingGroup.Transform>
+                        <RotateTransform Angle="150"/>
+                    </DrawingGroup.Transform>
+                </DrawingGroup>
+
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource Alarm.Line.Brush}"
+                                     Pen="{StaticResource Alarm.Line.Pen}"
+                                     Geometry="{StaticResource Alarm.Line.Hour.Small}"/>
+
+                    <DrawingGroup.Transform>
+                        <RotateTransform Angle="210"/>
+                    </DrawingGroup.Transform>
+                </DrawingGroup>
+
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource Alarm.Line.Brush}"
+                                     Pen="{StaticResource Alarm.Line.Pen}"
+                                     Geometry="{StaticResource Alarm.Line.Hour.Small}"/>
+
+                    <DrawingGroup.Transform>
+                        <RotateTransform Angle="240"/>
+                    </DrawingGroup.Transform>
+                </DrawingGroup>
+
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource Alarm.Line.Brush}"
+                                     Pen="{StaticResource Alarm.Line.Pen}"
+                                     Geometry="{StaticResource Alarm.Line.Hour.Small}"/>
+
+                    <DrawingGroup.Transform>
+                        <RotateTransform Angle="300"/>
+                    </DrawingGroup.Transform>
+                </DrawingGroup>
+
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource Alarm.Line.Brush}"
+                                     Pen="{StaticResource Alarm.Line.Pen}"
+                                     Geometry="{StaticResource Alarm.Line.Hour.Small}"/>
+
+                    <DrawingGroup.Transform>
+                        <RotateTransform Angle="330"/>
+                    </DrawingGroup.Transform>
+                </DrawingGroup>
+
+                <!--#endregion-->
+                
+                <!--#region Arrows -->
+
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource Alarm.Line.Brush}"
+                                     Pen="{StaticResource Alarm.Line.Pen}">
+                        <GeometryDrawing.Geometry>
+                            <PathGeometry
+                                Figures="M 4,-6.5 0,50 -4,-6.5 Z"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <DrawingGroup.Transform>
+                        <RotateTransform Angle="256"/>
+                    </DrawingGroup.Transform>
+                    
+                </DrawingGroup>
+
+                <DrawingGroup>
+                    <GeometryDrawing Brush="{StaticResource Alarm.Line.Brush}"
+                                     Pen="{StaticResource Alarm.Line.Pen}">
+                        <GeometryDrawing.Geometry>
+                            <PathGeometry
+                                Figures="M 2,-6.5 0,75 -2,-6.5 Z"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <DrawingGroup.Transform>
+                        <RotateTransform Angle="5"/>
+                    </DrawingGroup.Transform>
+
+                </DrawingGroup>
+
+                <!--#endregion-->
+                
+                
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+
+        <DrawingBrush.RelativeTransform>
+            <TranslateTransform X="-0.42" Y="0.325"/>
+        </DrawingBrush.RelativeTransform>
+        
+    </DrawingBrush>
+    
+</ResourceDictionary>
