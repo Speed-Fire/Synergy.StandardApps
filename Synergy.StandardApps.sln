@@ -37,6 +37,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Settings", "Settings", "{08
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synergy.StandardApps.Settings", "Synergy.StandardApps.Settings\Synergy.StandardApps.Settings.csproj", "{19557C99-9BE8-4DD3-9B41-872C175AEF41}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{22C35338-232F-40C1-8119-7FA914A27B6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synergy.StandardApps.Resources", "Synergy.StandardApps.Resources\Synergy.StandardApps.Resources.csproj", "{82E7C63E-1417-488B-B166-61E436F4874E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +103,10 @@ Global
 		{19557C99-9BE8-4DD3-9B41-872C175AEF41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19557C99-9BE8-4DD3-9B41-872C175AEF41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19557C99-9BE8-4DD3-9B41-872C175AEF41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82E7C63E-1417-488B-B166-61E436F4874E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82E7C63E-1417-488B-B166-61E436F4874E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82E7C63E-1417-488B-B166-61E436F4874E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82E7C63E-1417-488B-B166-61E436F4874E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +117,7 @@ Global
 		{13D777C0-CC55-4E4A-9010-D34A12C90D69} = {FD16641A-EA09-4A4F-8C9F-4BE19419895A}
 		{66AC0F15-9FD2-4F21-83D4-F62A0B386500} = {4E8887F6-5BFB-4CA3-A915-25081D403536}
 		{19557C99-9BE8-4DD3-9B41-872C175AEF41} = {086E4C0A-45A5-4535-8FC2-E68A131D7C24}
+		{82E7C63E-1417-488B-B166-61E436F4874E} = {22C35338-232F-40C1-8119-7FA914A27B6A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2414648B-6C37-4929-A6AE-54BB2C2027D0}
