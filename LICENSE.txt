@@ -2,7 +2,7 @@ All Rights Reserved
 
 Copyright (c) Synergy.StandardApps.2023 Speed-Fire
 
-Created by Techcable
+Created by Speed-Fire
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
