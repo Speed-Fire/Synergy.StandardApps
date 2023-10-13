@@ -5,15 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Synergy.StandardApps
 {
@@ -35,6 +27,7 @@ namespace Synergy.StandardApps
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             sidebar.SelectedIndex = 0;
+            this.WindowState = WindowState.Maximized;
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -55,9 +48,6 @@ namespace Synergy.StandardApps
 
         private void MaximizeCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
-            //System.Drawing.Rectangle r = Screen.GetWorkingArea(new System.Drawing.Point((int)this.Left, (int)this.Top));
-            //this.MaxWidth = r.Width;
-            //this.MaxHeight = r.Height;
             this.WindowState = WindowState.Maximized;
         }
 
