@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -28,10 +29,18 @@ namespace Synergy.StandardApps
         {
             base.OnStartup(e);
 
+            InitSettings();
+
             _themeController.SetTheme("Dark");
 
             MainWindow = Program.AppHost.Services.GetRequiredService<MainWindow>();
             MainWindow.Show();
+        }
+
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
+        private static void InitSettings()
+        {
+            var settingsInit = Settings.Properties.CurrentLanguage;
         }
     }
 }
