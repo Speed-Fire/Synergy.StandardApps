@@ -21,6 +21,7 @@
         AllowsTransparency="True"
         Background="Transparent"
         ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterOwner"
         
         Loaded="Window_Loaded"
         

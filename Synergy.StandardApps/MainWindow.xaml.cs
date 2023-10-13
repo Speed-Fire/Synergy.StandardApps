@@ -28,6 +28,8 @@ namespace Synergy.StandardApps
 
             DataContext = vm;
 
+            this.MaxWidth = SystemParameters.WorkArea.Width;
+            this.MaxHeight = SystemParameters.WorkArea.Height;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -53,9 +55,9 @@ namespace Synergy.StandardApps
 
         private void MaximizeCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
-            System.Drawing.Rectangle r = Screen.GetWorkingArea(new System.Drawing.Point((int)this.Left, (int)this.Top));
-            this.MaxWidth = r.Width;
-            this.MaxHeight = r.Height;
+            //System.Drawing.Rectangle r = Screen.GetWorkingArea(new System.Drawing.Point((int)this.Left, (int)this.Top));
+            //this.MaxWidth = r.Width;
+            //this.MaxHeight = r.Height;
             this.WindowState = WindowState.Maximized;
         }
 
