@@ -17,6 +17,8 @@
         xmlns:notesVMs="clr-namespace:Synergy.StandardApps.Notes.ViewModels;assembly=Synergy.StandardApps.Notes"
         xmlns:notesViews="clr-namespace:Synergy.StandardApps.Notes;assembly=Synergy.StandardApps.Notes"
         
+        Loaded="Window_Loaded"
+        
         mc:Ignorable="d"
         WindowState="{Binding WindowState}"
         ShowInTaskbar="{Binding ShowInTaskbar}"
@@ -29,6 +31,10 @@
                                     PassEventArgsToCommand="True"/>
         </bh:EventTrigger>
 
+        <bh:EventTrigger EventName="Loaded">
+            <bh:InvokeCommandAction Command="{Binding ViewLoadedCommand}"/>
+        </bh:EventTrigger>
+        
     </bh:Interaction.Triggers>
 
     <Window.Resources>
@@ -61,11 +67,11 @@
             <bh:Interaction.Triggers>
 
                 <bh:EventTrigger EventName="OpenSelected">
-                    <bh:InvokeCommandAction Command="{Binding NotifyIconOpen}"/>
+                    <bh:InvokeCommandAction Command="{Binding NotifyIconOpenCommand}"/>
                 </bh:EventTrigger>
 
                 <bh:EventTrigger EventName="ExitSelected">
-                    <bh:InvokeCommandAction Command="{Binding NotifyIconExit}"/>
+                    <bh:InvokeCommandAction Command="{Binding NotifyIconExitCommand}"/>
                 </bh:EventTrigger>
 
             </bh:Interaction.Triggers>
@@ -82,17 +88,17 @@
             Style="{StaticResource Sidebar}">
 
             <controls:NavItem
-                NavCommand="{Binding NavigateToNotes}"
+                NavCommand="{Binding NavigateToNotesCommand}"
                 Style="{StaticResource ThemedNavItemStyle}"
                 Icon="{StaticResource ListIcon}"/>
 
             <controls:NavItem
-                NavCommand="{Binding NavigateToAlarms}"
+                NavCommand="{Binding NavigateToAlarmsCommand}"
                 Style="{StaticResource ThemedNavItemStyle}"
                 Icon="{StaticResource SitemapIcon}"/>
 
             <controls:NavItem
-                NavCommand="{Binding NavigateToCalendar}"
+                NavCommand="{Binding NavigateToCalendarCommand}"
                 Style="{StaticResource ThemedNavItemStyle}"
                 Icon="{StaticResource CalendarIcon}"/>
 

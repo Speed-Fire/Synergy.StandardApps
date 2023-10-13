@@ -26,6 +26,12 @@ namespace Synergy.StandardApps
             InitializeComponent();
 
             DataContext = vm;
+
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            sidebar.SelectedIndex = 0;
         }
     }
 }

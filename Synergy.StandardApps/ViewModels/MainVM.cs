@@ -69,25 +69,36 @@ namespace Synergy.StandardApps.ViewModels
 
         #region Commands
 
+        #region Loading
+
+        private RelayCommand viewLoadedCommand;
+        public ICommand ViewLoadedCommand => viewLoadedCommand ??
+            (viewLoadedCommand = new(() =>
+            {
+                //NavigateToNotesCommand.Execute(null);
+            }));
+
+        #endregion
+
         #region Navigation
 
-        private RelayCommand<Frame> navigateToNotes;
-        public ICommand NavigateToNotes => navigateToNotes ??
-            (navigateToNotes = new RelayCommand<Frame>(frame =>
+        private RelayCommand navigateToNotesCommand;
+        public ICommand NavigateToNotesCommand => navigateToNotesCommand ??
+            (navigateToNotesCommand = new RelayCommand(() =>
             {
                 Navigation.NavigateTo<NotesVM>();
             }));
 
-        private RelayCommand<Frame> navigateToAlarms;
-        public ICommand NavigateToAlarms => navigateToAlarms ??
-            (navigateToAlarms = new RelayCommand<Frame>(frame =>
+        private RelayCommand navigateToAlarmsCommand;
+        public ICommand NavigateToAlarmsCommand => navigateToAlarmsCommand ??
+            (navigateToAlarmsCommand = new RelayCommand(() =>
             {
                 Navigation.NavigateTo<AlarmsVM>();
             }));
 
-        private RelayCommand<Frame> navigateToCalendar;
-        public ICommand NavigateToCalendar => navigateToCalendar ??
-            (navigateToCalendar = new RelayCommand<Frame>(frame =>
+        private RelayCommand navigateToCalendarCommand;
+        public ICommand NavigateToCalendarCommand => navigateToCalendarCommand ??
+            (navigateToCalendarCommand = new RelayCommand(() =>
             {
                 Navigation.NavigateTo<CalendarVM>();
             }));
@@ -107,23 +118,23 @@ namespace Synergy.StandardApps.ViewModels
                 WindowState = WindowState.Minimized;
             }));
 
-        private RelayCommand notifyIconOpen;
-        public ICommand NotifyIconOpen => notifyIconOpen ??
-            (notifyIconOpen = new RelayCommand(() =>
+        private RelayCommand notifyIconOpenCommand;
+        public ICommand NotifyIconOpenCommand => notifyIconOpenCommand ??
+            (notifyIconOpenCommand = new RelayCommand(() =>
             {
                 WindowState = WindowState.Normal;
             }));
 
-        private RelayCommand notifyIconExit;
-        public ICommand NotifyIconExit => notifyIconExit ??
-            (notifyIconExit = new RelayCommand(() =>
+        private RelayCommand notifyIconExitCommand;
+        public ICommand NotifyIconExitCommand => notifyIconExitCommand ??
+            (notifyIconExitCommand = new RelayCommand(() =>
             {
                 Application.Current.Shutdown();
             }));
 
-        private RelayCommand<string> trayNotify;
-        public ICommand TrayNotify => trayNotify ??
-            (trayNotify = new RelayCommand<string>(msg =>
+        private RelayCommand<string> trayNotifyCommand;
+        public ICommand TrayNotifyCommand => trayNotifyCommand ??
+            (trayNotifyCommand = new RelayCommand<string>(msg =>
             {
                 NotifyRequest = new()
                 {
