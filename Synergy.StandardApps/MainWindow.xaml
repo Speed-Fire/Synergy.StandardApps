@@ -17,6 +17,11 @@
         xmlns:notesVMs="clr-namespace:Synergy.StandardApps.Notes.ViewModels;assembly=Synergy.StandardApps.Notes"
         xmlns:notesViews="clr-namespace:Synergy.StandardApps.Notes;assembly=Synergy.StandardApps.Notes"
         
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="CanMinimize"
+        
         Loaded="Window_Loaded"
         
         mc:Ignorable="d"
@@ -24,6 +29,20 @@
         ShowInTaskbar="{Binding ShowInTaskbar}"
         Title="MainWindow" Height="450" Width="800">
 
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Close"
+                        Executed="CloseCommandHandler"/>
+
+        <CommandBinding Command="{x:Static SystemCommands.RestoreWindowCommand}"
+                        Executed="RestoreCommandHandler"/>
+
+        <CommandBinding Command="{x:Static SystemCommands.MaximizeWindowCommand}"                  
+                        Executed="MaximizeCommandHandler"/>
+
+        <CommandBinding Command="{x:Static SystemCommands.MinimizeWindowCommand}"                  
+                        Executed="MinimizeCommandHandler"/>
+    </Window.CommandBindings>
+    
     <bh:Interaction.Triggers>
 
         <bh:EventTrigger EventName="Closing">
@@ -39,20 +58,32 @@
 
     <Window.Resources>
 
-        <DataTemplate DataType="{x:Type alarmVMs:AlarmsVM}">
-            <alarmViews:AlarmsView/>
-        </DataTemplate>
-        
-        <DataTemplate DataType="{x:Type TypeName=calendarVMs:CalendarVM}">
-            <calendarViews:CalendarPage/>
-        </DataTemplate>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
 
-        <DataTemplate DataType="{x:Type TypeName=notesVMs:NotesVM}">
-            <notesViews:NotesView/>
-        </DataTemplate>
-        
+                <ResourceDictionary Source="Resources/WindowButtons.xaml"/>
+
+                <ResourceDictionary>
+
+                    <DataTemplate DataType="{x:Type alarmVMs:AlarmsVM}">
+                        <alarmViews:AlarmsView/>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type TypeName=calendarVMs:CalendarVM}">
+                        <calendarViews:CalendarPage/>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type TypeName=notesVMs:NotesVM}">
+                        <notesViews:NotesView/>
+                    </DataTemplate>
+
+                </ResourceDictionary>
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
     </Window.Resources>
-    
+
     <controls:NotifyingGrid
         NtfName="MainGrid"
         Style="{StaticResource NotifyingGridStyle}">
@@ -60,6 +91,11 @@
             <ColumnDefinition Width="40"/>
             <ColumnDefinition Width="*"/>
         </controls:NotifyingGrid.ColumnDefinitions>
+
+        <controls:NotifyingGrid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </controls:NotifyingGrid.RowDefinitions>
 
         <tray:NotifyIconWrapper
             Text="Standard apps"
@@ -77,14 +113,58 @@
             </bh:Interaction.Triggers>
         </tray:NotifyIconWrapper>
 
+        <Grid Grid.Column="1"
+              Background="{DynamicResource FrameBackground}">
+
+            <Border Margin="10 0 0 2"
+                CornerRadius="0 0 0 15"
+                Background="{DynamicResource ListView.Background}"
+                    MouseDown="Border_MouseDown">
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--
+                    
+                    <controls:NormalButton Command="{Binding Source={x:Static SystemCommands.MinimizeWindowCommand}}"
+                                           Style="{StaticResource ButtonStyle.Minimize}" Grid.Column="1"/>
+
+                    -->
+                    
+                    <Grid Grid.Column="2">
+                        <controls:NormalButton x:Name="Restore" Command="{Binding Source={x:Static SystemCommands.RestoreWindowCommand}}"
+                                Style="{StaticResource ButtonStyle.Restore}"/>
+                        <controls:NormalButton x:Name="Maximize" Command="{Binding Source={x:Static SystemCommands.MaximizeWindowCommand}}"
+                                Style="{StaticResource ButtonStyle.Maximize}"/>
+                    </Grid>
+
+                    <controls:NormalButton
+                        Command="ApplicationCommands.Close"
+                        Style="{StaticResource ButtonStyle.Close}"
+                        Grid.Column="3"/>
+
+                </Grid>
+
+            </Border>
+            
+        </Grid>
+    
         <ContentControl
             Grid.Column="1"
+            Grid.Row="1"
             Content="{Binding Navigation.CurrentView}"/>
 
         <controls:Sidebar
             x:Name="sidebar"
-            TitleIcon="M12,17C10.89,17 10,16.1 10,15C10,13.89 10.89,13 12,13A2,2 0 0,1 14,15A2,2 0 0,1 12,17M18,20V10H6V20H18M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V10C4,8.89 4.89,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z"
+            TitleIcon="{StaticResource SynergyIcon}"
             Grid.Column="0"
+            Grid.RowSpan="2"
             Style="{StaticResource Sidebar}">
 
             <controls:NavItem
