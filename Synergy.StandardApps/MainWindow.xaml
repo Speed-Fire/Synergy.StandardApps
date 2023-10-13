@@ -95,7 +95,7 @@
             <controls:NavItem
                 NavCommand="{Binding NavigateToAlarmsCommand}"
                 Style="{StaticResource ThemedNavItemStyle}"
-                Icon="{StaticResource SitemapIcon}"/>
+                Icon="{StaticResource AlarmIcon}"/>
 
             <controls:NavItem
                 NavCommand="{Binding NavigateToCalendarCommand}"
