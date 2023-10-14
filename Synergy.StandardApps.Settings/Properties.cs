@@ -16,11 +16,11 @@ namespace Synergy.StandardApps.Settings
         private static readonly string _path = Path.Combine
             (Directory.GetCurrentDirectory(), _FILE_NAME);
 
-        private static Hashtable _properties = new Hashtable();
+        private static Dictionary<string, string> _properties = new();
 
         #region Constants
 
-        private const string _FILE_NAME = "Properties";
+        private const string _FILE_NAME = "Properties.json";
 
         private const string NOTE_MAX_AGE = "NOTE_MAX_AGE"; // 60
         private const string CURRENT_LANGUAGE = "CURRENT_LANGUAGE"; // 
@@ -29,15 +29,15 @@ namespace Synergy.StandardApps.Settings
 
         #region Properties
 
-        public static int? NoteMaxAge
+        public static int NoteMaxAge
         {
-            get => (int?)_properties[NOTE_MAX_AGE];
-            set => _properties[NOTE_MAX_AGE] = value;
+            get => int.Parse(_properties[NOTE_MAX_AGE]);
+            set => _properties[NOTE_MAX_AGE] = value.ToString();
         }
 
-        public static string? CurrentLanguage
+        public static string CurrentLanguage
         {
-            get => (string?)_properties[CURRENT_LANGUAGE];
+            get => _properties[CURRENT_LANGUAGE];
             set => _properties[CURRENT_LANGUAGE] = value;
         }
 
@@ -60,12 +60,12 @@ namespace Synergy.StandardApps.Settings
             using var fs = new FileStream(_path, FileMode.Open, FileAccess.Read);
             using var sr = new StreamReader(fs);
 
-            _properties = JsonSerializer.Deserialize<Hashtable>(fs) ?? new Hashtable();
+            _properties = JsonSerializer.Deserialize<Dictionary<string, string>>(fs) ?? new();
         }
 
         public static void Save()
         {
-            using var fs = new FileStream(_path, FileMode.Truncate, FileAccess.Write);
+            using var fs = new FileStream(_path, FileMode.Create, FileAccess.Write);
             using var sw = new StreamWriter(fs);
 
             sw.Write(JsonSerializer.Serialize(_properties));
