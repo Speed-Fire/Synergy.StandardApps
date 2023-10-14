@@ -32,6 +32,11 @@ namespace Synergy.StandardApps.Resources
                 { "English", "pack://application:,,,/Synergy.StandardApps.Resources;component/Dictionaries/en.xaml" },
                 { "Русский", "pack://application:,,,/Synergy.StandardApps.Resources;component/Dictionaries/ru.xaml" }
             };
+
+            if(!string.IsNullOrEmpty(CurrentLanguage))
+            {
+                Set_impl(CurrentLanguage);
+            }
         }
 
         public void Set(string language)
