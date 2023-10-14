@@ -1,0 +1,159 @@
+﻿<UserControl x:Class="Synergy.StandardApps.Settings.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Synergy.StandardApps.Settings"
+             
+             xmlns:controls="clr-namespace:Synergy.WPF.Common.Controls;assembly=Synergy.WPF.Common"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:convs="clr-namespace:Synergy.WPF.Common.Converters;assembly=Synergy.WPF.Common"
+             
+             Background="{DynamicResource FrameBackground}"
+             
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary>
+
+                    <LinearGradientBrush x:Key="BackgroundBrush"
+                                         StartPoint="0,0.8"
+                                         EndPoint="1,0.2">
+                        <GradientStop Color="{DynamicResource Gray700}"
+                                      Offset="0"/>
+                        <GradientStop Color="{DynamicResource Gray900}"
+                                      Offset="0.6"/>
+                        <GradientStop Color="{DynamicResource Gray950}"
+                                      Offset="1"/>
+                    </LinearGradientBrush>
+
+                    <convs:Bool2VisibilityConverter x:Key="b2Visibility"/>
+
+                </ResourceDictionary>
+
+                <ResourceDictionary>
+
+                    <Style TargetType="Separator">
+                        <Setter Property="Height" Value="2"/>
+                        <Setter Property="VerticalAlignment" Value="Top"/>
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        <Setter Property="Background" Value="LightGray"/>
+                        <Setter Property="Margin" Value="0 15 0 15"/>
+                        <Setter Property="DockPanel.Dock" Value="Top"/>
+                    </Style>
+
+                    <Style x:Key="TBStyle"
+                           TargetType="TextBlock"
+                           BasedOn="{StaticResource TextBlockStyle}">
+                        <Setter Property="Margin" Value="0 0 0 3"/>
+                        <Setter Property="DockPanel.Dock" Value="Top"/>
+                    </Style>
+
+                    <Style TargetType="ComboBox"
+                           BasedOn="{StaticResource ComboBoxStyle}">
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                        <Setter Property="VerticalAlignment" Value="Top"/>
+                        <Setter Property="DockPanel.Dock" Value="Top"/>
+                        <Setter Property="Margin" Value="10 0 0 0"/>
+                    </Style>
+                    
+                </ResourceDictionary>
+                
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Margin="5"
+                BorderThickness="2"
+                CornerRadius="15"
+                BorderBrush="{DynamicResource ListView.Background}"
+                Background="{StaticResource BackgroundBrush}">
+            <Border
+                x:Name="ImageBrd"
+                Padding="3"
+                CornerRadius="15"
+                BorderThickness="2"
+                BorderBrush="{StaticResource PrimaryBrush}">
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="900"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ScrollViewer
+                        Margin="0 30 0 30"
+                        Grid.Column="1"
+                        Style="{StaticResource ScrollViewerStyle}">
+
+                        <DockPanel>
+
+                            <TextBlock Text="{DynamicResource Strings.Language}" 
+                                       Style="{StaticResource TBStyle}"/>
+
+                            <ComboBox
+                                ItemsSource="{Binding LanguageApplier.Values}"
+                                SelectedItem="{Binding LanguageApplier.Value, Mode=TwoWay}"/>
+
+                            <Separator/>
+
+                            <TextBlock Text="{DynamicResource Strings.NoteDeletion}"
+                                       Style="{StaticResource TBStyle}"/>
+
+                            <ComboBox
+                                ItemsSource="{Binding NotesCleaningApplier.Values}"
+                                SelectedItem="{Binding NotesCleaningApplier.Value}"/>
+
+                        </DockPanel>
+                        
+                    </ScrollViewer>
+                    
+                </Grid>
+            </Border>
+        </Border>
+
+        <Border
+            Grid.Row="1"
+            Margin="10 2 10 0"
+            CornerRadius="15 15 0 0"
+            Background="{DynamicResource ListView.Background}">
+            <Grid
+                Margin="10 7.5 10 7.5">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="10"/>
+                </Grid.ColumnDefinitions>
+
+                <controls:NormalButton
+                    Grid.Column="1"
+                    Padding="2 0 2 0"
+                    Style="{StaticResource NormalButtonStyle}"
+                    MinHeight="30"
+                    Visibility="Hidden"
+                    HorizontalAlignment="Center">
+                    <TextBlock
+                        Style="{StaticResource TextBlockStyle}"
+                        Text="{DynamicResource Strings.Create}"/>
+                </controls:NormalButton>
+
+            </Grid>
+        </Border>
+
+    </Grid>
+    
+</UserControl>

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Synergy.WPF.Common\Synergy.WPF.Common\Synergy.WPF.Common.csproj" />
+    <ProjectReference Include="..\..\Synergy.WPF.Navigation\Synergy.WPF.Navigation\Synergy.WPF.Navigation.csproj" />
+    <ProjectReference Include="..\Synergy.StandardApps.Properties\Synergy.StandardApps.Properties.csproj" />
+    <ProjectReference Include="..\Synergy.StandardApps.Resources\Synergy.StandardApps.Resources.csproj" />
+  </ItemGroup>
+
+</Project>
