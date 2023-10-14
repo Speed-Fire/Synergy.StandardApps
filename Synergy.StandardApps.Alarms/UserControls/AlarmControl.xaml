@@ -58,9 +58,9 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="125"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="125"/>
             </Grid.ColumnDefinitions>
 
             <Grid>
@@ -215,6 +215,8 @@
                 Grid.Column="2"
                 Panel.ZIndex="2"
                 Height="23"
+                MinWidth="60"
+                HorizontalAlignment="Right"
                 Style="{StaticResource SliderButtonStyle}"
                 IsChecked="{Binding IsAlarmEnabled}"
                 MouseDown="SliderButton_PreviewMouseDown"/>
