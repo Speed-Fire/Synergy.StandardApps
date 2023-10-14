@@ -12,10 +12,10 @@ namespace Synergy.StandardApps.Resources
         private ResourceDictionary _currentDictionary;
 
         public IEnumerable<string> Languages => _languagesDictionary.Keys;
-        public static string CurrentLanguage => Settings.Properties.CurrentLanguage ?? "";
+        public string CurrentLanguage => Settings.Properties.CurrentLanguage ?? "";
 
-        private AppLanguageController _instance = null;
-        public AppLanguageController Instance
+        private static AppLanguageController _instance = null;
+        public static AppLanguageController Instance
         {
             get
             {
@@ -41,6 +41,9 @@ namespace Synergy.StandardApps.Resources
 
         public void Set(string language)
         {
+            if (CurrentLanguage == language)
+                return;
+
             Set_impl(language);
 
             Settings.Properties.CurrentLanguage = language;
@@ -51,9 +54,6 @@ namespace Synergy.StandardApps.Resources
         {
             if (!_languagesDictionary.ContainsKey(language))
                 throw new KeyNotFoundException(language);
-
-            if (CurrentLanguage == language)
-                return;
 
             if (_currentDictionary != null)
                 Application.Current.Resources.MergedDictionaries.Remove(_currentDictionary);
