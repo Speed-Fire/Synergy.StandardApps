@@ -23,6 +23,8 @@
     <sys:String x:Key="Strings.Calendar.Placeholder.Title">Birthday</sys:String>
     <sys:String x:Key="Strings.Calendar.Placeholder.Description">Today is my birthday.</sys:String>
 
+    <sys:String x:Key="Strings.Alarm.Placeholder.Title">Work</sys:String>
+    
     <sys:String x:Key="Strings.Today">Today</sys:String>
     <sys:String x:Key="Strings.This_month">This month</sys:String>
     <sys:String x:Key="Strings.Earlier">Earlier</sys:String>

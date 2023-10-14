@@ -23,6 +23,8 @@
     <sys:String x:Key="Strings.Calendar.Placeholder.Title">День рождения</sys:String>
     <sys:String x:Key="Strings.Calendar.Placeholder.Description">Сегодня чей-то день рождения.</sys:String>
 
+    <sys:String x:Key="Strings.Alarm.Placeholder.Title">Работа</sys:String>
+    
     <sys:String x:Key="Strings.Today">Сегодня</sys:String>
     <sys:String x:Key="Strings.This_month">В этом месяце</sys:String>
     <sys:String x:Key="Strings.Earlier">Ранее</sys:String>

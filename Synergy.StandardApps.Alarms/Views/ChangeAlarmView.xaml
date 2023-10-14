@@ -100,12 +100,12 @@
 
                 <Separator/>
 
-                <TextBlock Text="{DynamicResource String.Title}"/>
+                <TextBlock Text="{DynamicResource Strings.Title}"/>
 
                 <controls:AdvancedTextBox
                     DockPanel.Dock="Top"
                     Style="{StaticResource AdvancedTextBoxStyle}"
-                    Placeholder="Work"
+                    Placeholder="{DynamicResource Strings.Alarm.Placeholder.Title}"
                     TextWrapping="Wrap"
                     Text="{Binding Form.Name}"/>
 
@@ -133,49 +133,49 @@
                             Grid.Column="0"
                             Margin="0 0 5 0"
                             IsChecked="{Binding Form.Monday}"
-                            Content="{DynamicResource String.Monday.Short}"/>
+                            Content="{DynamicResource Strings.Monday.Short}"/>
 
                     <ToggleButton
                             x:Name="TuesdayBtn"
                             Grid.Column="1"
                             Margin="5 0 5 0"
                             IsChecked="{Binding Form.Tuesday}"
-                            Content="{DynamicResource String.Tuesday.Short}"/>
+                            Content="{DynamicResource Strings.Tuesday.Short}"/>
 
                     <ToggleButton
                             x:Name="WednesdayBtn"
                             Grid.Column="2"
                             Margin="5 0 5 0"
                             IsChecked="{Binding Form.Wednesday}"
-                            Content="{DynamicResource String.Wednesday.Short}"/>
+                            Content="{DynamicResource Strings.Wednesday.Short}"/>
 
                     <ToggleButton
                             x:Name="ThursdayBtn"
                             Grid.Column="3"
                             Margin="5 0 5 0"
                             IsChecked="{Binding Form.Thursday}"
-                            Content="{DynamicResource String.Thursday.Short}"/>
+                            Content="{DynamicResource Strings.Thursday.Short}"/>
 
                     <ToggleButton
                             x:Name="FridayBtn"
                             Grid.Column="4"
                             Margin="5 0 5 0"
                             IsChecked="{Binding Form.Friday}"
-                            Content="{DynamicResource String.Friday.Short}"/>
+                            Content="{DynamicResource Strings.Friday.Short}"/>
 
                     <ToggleButton
                             x:Name="SaturdayBtn"
                             Grid.Column="5"
                             Margin="5 0 5 0"
                             IsChecked="{Binding Form.Saturday}"
-                            Content="{DynamicResource String.Saturday.Short}"/>
+                            Content="{DynamicResource Strings.Saturday.Short}"/>
 
                     <ToggleButton
                             x:Name="SundayBtn"
                             Grid.Column="6"
                             Margin="5 0 0 0"
                             IsChecked="{Binding Form.Sunday}"
-                            Content="{DynamicResource String.Sunday.Short}"/>
+                            Content="{DynamicResource Strings.Sunday.Short}"/>
                 </Grid>
 
                 <controls:NormalButton
