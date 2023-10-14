@@ -52,7 +52,7 @@
     <ProjectReference Include="..\Synergy.StandardApps.Notes\Synergy.StandardApps.Notes.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.Resources\Synergy.StandardApps.Resources.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.Service\Synergy.StandardApps.Service.csproj" />
-    <ProjectReference Include="..\Synergy.StandardApps.Settings\Synergy.StandardApps.Settings.csproj" />
+    <ProjectReference Include="..\Synergy.StandardApps.Settings\Synergy.StandardApps.Properties.csproj" />
   </ItemGroup>
 
 </Project>

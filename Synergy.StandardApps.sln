@@ -35,11 +35,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synergy.WPF.Navigation", ".
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Settings", "Settings", "{086E4C0A-45A5-4535-8FC2-E68A131D7C24}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synergy.StandardApps.Settings", "Synergy.StandardApps.Settings\Synergy.StandardApps.Settings.csproj", "{19557C99-9BE8-4DD3-9B41-872C175AEF41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synergy.StandardApps.Properties", "Synergy.StandardApps.Properties\Synergy.StandardApps.Properties.csproj", "{19557C99-9BE8-4DD3-9B41-872C175AEF41}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{22C35338-232F-40C1-8119-7FA914A27B6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synergy.StandardApps.Resources", "Synergy.StandardApps.Resources\Synergy.StandardApps.Resources.csproj", "{82E7C63E-1417-488B-B166-61E436F4874E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synergy.StandardApps.Resources", "Synergy.StandardApps.Resources\Synergy.StandardApps.Resources.csproj", "{82E7C63E-1417-488B-B166-61E436F4874E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

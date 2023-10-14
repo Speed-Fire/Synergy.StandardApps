@@ -17,7 +17,7 @@
     <ProjectReference Include="..\Synergy.StandardApps.DAL\Synergy.StandardApps.DAL.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.Domain\Synergy.StandardApps.Domain.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.Misc\Synergy.StandardApps.Misc.csproj" />
-    <ProjectReference Include="..\Synergy.StandardApps.Settings\Synergy.StandardApps.Settings.csproj" />
+    <ProjectReference Include="..\Synergy.StandardApps.Settings\Synergy.StandardApps.Properties.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.Utility\Synergy.StandardApps.Utility.csproj" />
   </ItemGroup>
 

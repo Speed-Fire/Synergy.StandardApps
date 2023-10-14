@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Synergy.StandardApps.Settings\Synergy.StandardApps.Settings.csproj" />
+    <ProjectReference Include="..\Synergy.StandardApps.Settings\Synergy.StandardApps.Properties.csproj" />
   </ItemGroup>
 
 </Project>
