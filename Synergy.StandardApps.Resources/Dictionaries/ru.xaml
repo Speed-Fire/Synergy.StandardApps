@@ -1,4 +1,40 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="Strings.Create">Создать</sys:String>
+    <sys:String x:Key="Strings.Delete">Удалить</sys:String>
+    <sys:String x:Key="Strings.Update">Обновить</sys:String>
+    <sys:String x:Key="Strings.Change">Изменить</sys:String>
+
+    <sys:String x:Key="Strings.Cancel">Отмена</sys:String>
+    <sys:String x:Key="Strings.Save">Сохранить</sys:String>
+
+    <sys:String x:Key="Strings.Title">Название:</sys:String>
+    <sys:String x:Key="Strings.Description">Описание:</sys:String>
+    <sys:String x:Key="Strings.Color">Цвет:</sys:String>
+    <sys:String x:Key="Strings.Repeat">Повторить:</sys:String>
+
+    <sys:String x:Key="Strings.Notes.Placeholder.Title">Список еды</sys:String>
+    <sys:String x:Key="Strings.Notes.Placeholder.Description">Хлеб, молоко, ...</sys:String>
+
+    <sys:String x:Key="Strings.Calendar.Placeholder.Title">День рождения</sys:String>
+    <sys:String x:Key="Strings.Calendar.Placeholder.Description">Сегодня чей-то день рождения.</sys:String>
+
+    <sys:String x:Key="Strings.Today">Сегодня</sys:String>
+    <sys:String x:Key="Strings.This_month">В этом месяце</sys:String>
+    <sys:String x:Key="Strings.Earlier">Ранее</sys:String>
+
+    <sys:String x:Key="Strings.Monday.Short">Пн</sys:String>
+    <sys:String x:Key="Strings.Tuesday.Short">Вт</sys:String>
+    <sys:String x:Key="Strings.Wednesday.Short">Ср</sys:String>
+    <sys:String x:Key="Strings.Thursday.Short">Чт</sys:String>
+    <sys:String x:Key="Strings.Friday.Short">Пт</sys:String>
+    <sys:String x:Key="Strings.Saturday.Short">Сб</sys:String>
+    <sys:String x:Key="Strings.Sunday.Short">Вс</sys:String>
+
+    <sys:String x:Key="Strings.Alarm">Будильник</sys:String>
+    <sys:String x:Key="Strings.Everyday">Каждый день</sys:String>
+    <sys:String x:Key="Strings.Sound">Звук</sys:String>
+
 </ResourceDictionary>
