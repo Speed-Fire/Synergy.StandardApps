@@ -42,7 +42,7 @@ namespace Synergy.StandardApps
         private static void InitSettings()
         {
             var settingsInit = Settings.Properties.CurrentLanguage;
-            var langController = AppLanguageController.CurrentLanguage;
+            var langController = AppLanguageController.Instance;
         }
     }
 }

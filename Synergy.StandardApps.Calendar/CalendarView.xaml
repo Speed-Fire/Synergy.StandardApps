@@ -147,25 +147,25 @@
                         
                         <TextBlock Grid.Column="0"
                                            Style="{StaticResource WeekDayTbStyle}"
-                                           Text="Mn"/>
+                                           Text="{DynamicResource Strings.Monday.Short}"/>
                         <TextBlock Grid.Column="1"
                                            Style="{StaticResource WeekDayTbStyle}"
-                                           Text="Tu"/>
+                                           Text="{DynamicResource Strings.Tuesday.Short}"/>
                         <TextBlock Grid.Column="2"
                                            Style="{StaticResource WeekDayTbStyle}"
-                                           Text="Wd"/>
+                                           Text="{DynamicResource Strings.Wednesday.Short}"/>
                         <TextBlock Grid.Column="3"
                                            Style="{StaticResource WeekDayTbStyle}"
-                                           Text="Th"/>
+                                           Text="{DynamicResource Strings.Thursday.Short}"/>
                         <TextBlock Grid.Column="4"
                                            Style="{StaticResource WeekDayTbStyle}"
-                                           Text="Fr"/>
+                                           Text="{DynamicResource Strings.Friday.Short}"/>
                         <TextBlock Grid.Column="5"
                                            Style="{StaticResource WeekDayTbStyle}"
-                                           Text="St"/>
+                                           Text="{DynamicResource Strings.Saturday.Short}"/>
                         <TextBlock Grid.Column="6"
                                            Style="{StaticResource WeekDayTbStyle}"
-                                           Text="Sn"/>
+                                           Text="{DynamicResource Strings.Sunday.Short}"/>
 
                         <!--#endregion-->
                         

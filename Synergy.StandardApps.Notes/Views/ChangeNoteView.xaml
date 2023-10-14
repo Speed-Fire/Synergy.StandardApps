@@ -49,22 +49,22 @@
             Style="{StaticResource ScrollViewerStyle}">
             <DockPanel>
 
-                <TextBlock Text="Title:"/>
+                <TextBlock Text="{DynamicResource Strings.Title}"/>
 
                 <controls:AdvancedTextBox
                     DockPanel.Dock="Top"
                     Style="{StaticResource AdvancedTextBoxStyle}"
-                    Placeholder="Food list"
+                    Placeholder="{DynamicResource Strings.Notes.Placeholder.Title}"
                     Text="{Binding ProtoNote.Name, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Separator/>
 
-                <TextBlock Text="Description:"/>
+                <TextBlock Text="{DynamicResource Strings.Description}"/>
 
                 <controls:AdvancedTextBox
                     DockPanel.Dock="Top"
                     Style="{StaticResource AdvancedTextBoxStyle}"
-                    Placeholder="Bread, milk, ..."
+                    Placeholder="{DynamicResource Strings.Notes.Placeholder.Description}"
                     TextWrapping="Wrap"
                     MinLines="10"
                     Text="{Binding ProtoNote.Description, UpdateSourceTrigger=PropertyChanged}"/>
@@ -84,7 +84,7 @@
             <controls:NormalButton
                 Margin="5 0 5 0"
                         Style="{StaticResource NormalButtonStyle}"
-                        Content="Cancel"
+                        Content="{DynamicResource Strings.Cancel}"
                         Command="{Binding GoBackCommand}"/>
             
             <controls:NormalButton
@@ -93,14 +93,14 @@
                         Style="{StaticResource NormalButtonStyle}"
                         Visibility="{Binding IsUpdatingMode,
                             Converter={StaticResource b2vconv}}"
-                        Content="Delete"
+                        Content="{DynamicResource Strings.Delete}"
                         Command="{Binding DeleteCommand}"/>
 
             <controls:NormalButton
                         Grid.Column="2"
                 Margin="5 0 5 0"
                         Style="{StaticResource NormalButtonStyle}"
-                        Content="Save"
+                        Content="{DynamicResource Strings.Save}"
                         Command="{Binding SaveCommand}"/>
 
         </Grid>

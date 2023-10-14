@@ -221,31 +221,31 @@
                 <Separator/>
 
                 <TextBlock
-                    Text="Event name:"/>
+                    Text="{DynamicResource Strings.Title}"/>
 
                 <controls:AdvancedTextBox
                     DockPanel.Dock="Top"
                     Style="{StaticResource AdvancedTextBoxStyle}"
-                    Placeholder="Birthday"
+                    Placeholder="{DynamicResource Strings.Calendar.Placeholder.Title}"
                     Text="{Binding Form.Title, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Separator/>
 
                 <TextBlock
-                    Text="Description:"/>
+                    Text="{DynamicResource Strings.Description}"/>
 
                 <controls:AdvancedTextBox x:Name="DescriptionBox"
                     DockPanel.Dock="Top"
                     Style="{StaticResource AdvancedTextBoxStyle}"
                     TextWrapping="Wrap"
-                    Placeholder="The happiest day for me. Used to be..."
+                    Placeholder="{DynamicResource Strings.Calendar.Placeholder.Description}"
                     MinLines="5"
                     Text="{Binding Form.Description}"/>
 
                 <Separator/>
 
                 <TextBlock
-                    Text="Select color:"/>
+                    Text="{DynamicResource Strings.Color}"/>
 
                 <Grid DockPanel.Dock="Top">
 
@@ -314,13 +314,13 @@
                         Style="{StaticResource NormalButtonStyle}"
                         Visibility="{Binding IsUpdatingMode,
                             Converter={StaticResource b2vconv}}"
-                        Content="Delete"
+                        Content="{DynamicResource Strings.Delete}"
                         Command="{Binding Delete}"/>
 
             <controls:NormalButton
                         Grid.Column="2"
                         Style="{StaticResource NormalButtonStyle}"
-                        Content="Save"
+                        Content="{DynamicResource Strings.Save}"
                         Command="{Binding Save}"/>
 
         </Grid>

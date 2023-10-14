@@ -188,7 +188,7 @@
                     <controls:NormalButton
                         Style="{StaticResource NormalButtonStyle.CalendarCard.Bottom}"
                         x:Name="ChangeBtn"
-                        Content="Change"
+                        Content="{DynamicResource Strings.Change}"
                         Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:CalendarPage}},
                                           Path=DataContext.ChangeCalendarEvent}"
                         CommandParameter="{Binding ElementName=CalendarDayCard, Path=Day}"/>

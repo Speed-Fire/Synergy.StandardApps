@@ -86,7 +86,7 @@
                         Foreground="Black"
                     Margin="0"
                         HorizontalAlignment="Center"
-                        Text="Alarm"/>
+                        Text="{DynamicResource Strings.Alarm}"/>
 
                 <controls:TimePicker
                         DockPanel.Dock="Top"
@@ -100,7 +100,7 @@
 
                 <Separator/>
 
-                <TextBlock Text="Name:"/>
+                <TextBlock Text="{DynamicResource String.Title}"/>
 
                 <controls:AdvancedTextBox
                     DockPanel.Dock="Top"
@@ -113,7 +113,7 @@
 
                 <!-- Toggle buttons -->
 
-                <TextBlock Text="Repeat:"/>
+                <TextBlock Text="{DynamicResource Strings.Repeat}"/>
 
                 <Grid DockPanel.Dock="Top"
                       Margin="0 5 0 0">
@@ -133,49 +133,49 @@
                             Grid.Column="0"
                             Margin="0 0 5 0"
                             IsChecked="{Binding Form.Monday}"
-                            Content="Mn"/>
+                            Content="{DynamicResource String.Monday.Short}"/>
 
                     <ToggleButton
                             x:Name="TuesdayBtn"
                             Grid.Column="1"
                             Margin="5 0 5 0"
                             IsChecked="{Binding Form.Tuesday}"
-                            Content="Tu"/>
+                            Content="{DynamicResource String.Tuesday.Short}"/>
 
                     <ToggleButton
                             x:Name="WednesdayBtn"
                             Grid.Column="2"
                             Margin="5 0 5 0"
                             IsChecked="{Binding Form.Wednesday}"
-                            Content="Wd"/>
+                            Content="{DynamicResource String.Wednesday.Short}"/>
 
                     <ToggleButton
                             x:Name="ThursdayBtn"
                             Grid.Column="3"
                             Margin="5 0 5 0"
                             IsChecked="{Binding Form.Thursday}"
-                            Content="Th"/>
+                            Content="{DynamicResource String.Thursday.Short}"/>
 
                     <ToggleButton
                             x:Name="FridayBtn"
                             Grid.Column="4"
                             Margin="5 0 5 0"
                             IsChecked="{Binding Form.Friday}"
-                            Content="Fr"/>
+                            Content="{DynamicResource String.Friday.Short}"/>
 
                     <ToggleButton
                             x:Name="SaturdayBtn"
                             Grid.Column="5"
                             Margin="5 0 5 0"
                             IsChecked="{Binding Form.Saturday}"
-                            Content="St"/>
+                            Content="{DynamicResource String.Saturday.Short}"/>
 
                     <ToggleButton
                             x:Name="SundayBtn"
                             Grid.Column="6"
                             Margin="5 0 0 0"
                             IsChecked="{Binding Form.Sunday}"
-                            Content="Sn"/>
+                            Content="{DynamicResource String.Sunday.Short}"/>
                 </Grid>
 
                 <controls:NormalButton
@@ -183,7 +183,7 @@
                             Margin="0 10 10 0"
                             Style="{StaticResource NormalButtonStyle}"
                             HorizontalAlignment="Right"
-                            Content="Everyday"
+                            Content="{DynamicResource Strings.Everyday}"
                             Padding="8 3 8 3"
                             Command="{Binding EnableAllDaysCommand}"/>
                 
@@ -207,7 +207,7 @@
                             <TextBlock
                                     HorizontalAlignment="Left"
                                     Style="{StaticResource TextBlockStyle}"
-                                    Text="Alarm sound"/>
+                                    Text="{DynamicResource Strings.Sound}"/>
 
                         </CheckBox>
 
@@ -247,7 +247,7 @@
                 Grid.Column="2"
                 Margin="5 0 5 0"
                 Style="{StaticResource NormalButtonStyle}"
-                Content="Save"
+                Content="{DynamicResource Strings.Save}"
                 Command="{Binding SaveCommand}"/>
 
             <controls:NormalButton
@@ -256,14 +256,14 @@
                 Style="{StaticResource NormalButtonStyle}"
                 Visibility="{Binding IsUpdatingMode,
                     Converter={StaticResource b2vconv}}"
-                Content="Delete"
+                Content="{DynamicResource Strings.Delete}"
                 Command="{Binding DeleteCommand}"/>
             
             <controls:NormalButton
                 Grid.Column="0"
                 Margin="5 0 5 0"
                 Style="{StaticResource NormalButtonStyle}"
-                Content="Cancel"
+                Content="{DynamicResource Strings.Cancel}"
                 Command="{Binding GoBackCommand}"/>
                 
         </Grid>

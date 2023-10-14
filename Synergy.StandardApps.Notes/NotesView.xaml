@@ -112,19 +112,19 @@
 
                             <ucs:NotesExpander
                                 x:Name="TodayNotes"
-                                Title="Today"
+                                Title="{DynamicResource Strings.Today}"
                                 IsExpanded="True"
                                 RowLength="5"/>
 
                             <ucs:NotesExpander
                                 x:Name="ThisMonthNotes"
-                                Title="This month"
+                                Title="{DynamicResource Strings.This_month}"
                                 IsExpanded="True"
                                 RowLength="5"/>
 
                             <ucs:NotesExpander
                                 x:Name="EarlierNotes"
-                                Title="Earlier"
+                                Title="{DynamicResource Strings.Earlier}"
                                 IsExpanded="True"
                                 RowLength="5"/>
 
@@ -191,7 +191,7 @@
                     Command="{Binding OpenNoteCreationCommand}">
                     <TextBlock
                         Style="{StaticResource TextBlockStyle}"
-                        Text="Create"/>
+                        Text="{DynamicResource Strings.Create}"/>
                 </controls:NormalButton>
 
             </Grid>

@@ -152,7 +152,7 @@
             <Separator/>
 
             <TextBlock
-                    Text="Event name:"/>
+                    Text="{DynamicResource Strings.Title}"/>
 
             <Border
                 DockPanel.Dock="Top"
@@ -165,7 +165,7 @@
             <Separator/>
 
             <TextBlock
-                    Text="Description:"/>
+                    Text="{DynamicResource Strings.Description}"/>
 
             <Border
                 DockPanel.Dock="Top"

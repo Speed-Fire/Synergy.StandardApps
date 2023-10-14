@@ -229,7 +229,7 @@
                     Command="{Binding OpenAlarmCreationCommand}">
                     <TextBlock
                         Style="{StaticResource TextBlockStyle}"
-                        Text="Create"/>
+                        Text="{DynamicResource Strings.Create}"/>
                 </controls:NormalButton>
 
             </Grid>

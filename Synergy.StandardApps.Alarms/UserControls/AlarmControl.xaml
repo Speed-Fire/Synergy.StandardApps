@@ -113,7 +113,7 @@
                               IsEnabled="False"
                               Margin="5 0 10 0"
                               Style="{StaticResource ToggleButtonStyle.Colored}"
-                              Content="Mn"
+                              Content="{DynamicResource Strings.Monday.Short}"
                               IsChecked="{Binding Days[1].Value}"/>
 
                 <ToggleButton Grid.Column="1"
@@ -121,7 +121,7 @@
                               IsEnabled="False"
                               Margin="10 0 10 0"
                               Style="{StaticResource ToggleButtonStyle.Colored}"
-                              Content="Tu"
+                              Content="{DynamicResource Strings.Tuesday.Short}"
                               IsChecked="{Binding Days[2].Value}"/>
 
                 <ToggleButton Grid.Column="2"
@@ -129,7 +129,7 @@
                               IsEnabled="False"
                               Margin="10 0 10 0"
                               Style="{StaticResource ToggleButtonStyle.Colored}"
-                              Content="Wd"
+                              Content="{DynamicResource Strings.Wednesday.Short}"
                               IsChecked="{Binding Days[3].Value}"/>
 
                 <ToggleButton Grid.Column="3"
@@ -137,7 +137,7 @@
                               IsEnabled="False"
                               Margin="10 0 10 0"
                               Style="{StaticResource ToggleButtonStyle.Colored}"
-                              Content="Th"
+                              Content="{DynamicResource Strings.Thursday.Short}"
                               IsChecked="{Binding Days[4].Value}"/>
 
                 <ToggleButton Grid.Column="4"
@@ -145,7 +145,7 @@
                               IsEnabled="False"
                               Margin="10 0 10 0"
                               Style="{StaticResource ToggleButtonStyle.Colored}"
-                              Content="Fr"
+                              Content="{DynamicResource Strings.Friday.Short}"
                               IsChecked="{Binding Days[5].Value}"/>
 
                 <ToggleButton Grid.Column="5"
@@ -153,7 +153,7 @@
                               IsEnabled="False"
                               Margin="10 0 10 0"
                               Style="{StaticResource ToggleButtonStyle.Colored}"
-                              Content="St"
+                              Content="{DynamicResource Strings.Saturday.Short}"
                               IsChecked="{Binding Days[6].Value}"/>
 
                 <ToggleButton Grid.Column="6"
@@ -161,7 +161,7 @@
                               IsEnabled="False"
                               Margin="10 0 5 0"
                               Style="{StaticResource ToggleButtonStyle.Colored}"
-                              Content="Sn"
+                              Content="{DynamicResource Strings.Sunday.Short}"
                               IsChecked="{Binding Days[0].Value}"/>
 
             </Grid>
