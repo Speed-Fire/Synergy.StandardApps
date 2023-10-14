@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Synergy.StandardApps.Resources;
 using Synergy.WPF.Common.Utility;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,7 @@ namespace Synergy.StandardApps
         private static void InitSettings()
         {
             var settingsInit = Settings.Properties.CurrentLanguage;
+            var langController = AppLanguageController.CurrentLanguage;
         }
     }
 }
