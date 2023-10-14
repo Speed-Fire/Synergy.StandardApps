@@ -7,6 +7,7 @@ using Synergy.StandardApps.Calendar;
 using Synergy.StandardApps.Calendar.ViewModels;
 using Synergy.StandardApps.Notes;
 using Synergy.StandardApps.Notes.ViewModels;
+using Synergy.StandardApps.Settings.ViewModels;
 using Synergy.WPF.Common.Extensions;
 using Synergy.WPF.Common.Tray;
 using Synergy.WPF.Navigation.Services;
@@ -101,6 +102,13 @@ namespace Synergy.StandardApps.ViewModels
             (navigateToCalendarCommand = new RelayCommand(() =>
             {
                 Navigation.NavigateTo<CalendarVM>();
+            }));
+
+        private RelayCommand navigateToSettingsCommand;
+        public ICommand NavigateToSettingsCommand => navigateToSettingsCommand ??
+            (navigateToSettingsCommand = new(() =>
+            {
+                Navigation.NavigateTo<SettingsVM>();
             }));
 
         #endregion

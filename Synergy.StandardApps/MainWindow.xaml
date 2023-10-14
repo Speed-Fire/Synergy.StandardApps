@@ -17,6 +17,9 @@
         xmlns:notesVMs="clr-namespace:Synergy.StandardApps.Notes.ViewModels;assembly=Synergy.StandardApps.Notes"
         xmlns:notesViews="clr-namespace:Synergy.StandardApps.Notes;assembly=Synergy.StandardApps.Notes"
         
+        xmlns:settingsVMs="clr-namespace:Synergy.StandardApps.Settings.ViewModels;assembly=Synergy.StandardApps.Settings"
+        xmlns:settingsViews="clr-namespace:Synergy.StandardApps.Settings;assembly=Synergy.StandardApps.Settings"
+        
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
@@ -78,6 +81,10 @@
                         <notesViews:NotesView/>
                     </DataTemplate>
 
+                    <DataTemplate DataType="{x:Type TypeName=settingsVMs:SettingsVM}">
+                        <settingsViews:SettingsView/>
+                    </DataTemplate>
+                    
                 </ResourceDictionary>
 
             </ResourceDictionary.MergedDictionaries>
@@ -182,6 +189,11 @@
                 NavCommand="{Binding NavigateToCalendarCommand}"
                 Style="{StaticResource ThemedNavItemStyle}"
                 Icon="{StaticResource CalendarIcon}"/>
+
+            <controls:NavItem
+                NavCommand="{Binding NavigateToSettingsCommand}"
+                Style="{StaticResource ThemedNavItemStyle}"
+                Icon="{StaticResource SettingsIcon}"/>
 
         </controls:Sidebar>
 

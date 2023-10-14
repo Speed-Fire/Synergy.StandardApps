@@ -2,6 +2,7 @@
 using Synergy.StandardApps.Alarms.Extensions;
 using Synergy.StandardApps.Calendar.Extensions;
 using Synergy.StandardApps.Notes.Extensions;
+using Synergy.StandardApps.Settings.Extensions;
 using Synergy.StandardApps.ViewModels;
 using Synergy.WPF.Common.Extensions;
 using Synergy.WPF.Navigation.Extensions;
@@ -21,7 +22,8 @@ namespace Synergy.StandardApps.Extensions
                 .RegisterCommonUILibraries()
                 .RegisterAlarmsUI()
                 .RegisterCalendarUI()
-                .RegisterNotesUI();
+                .RegisterNotesUI()
+                .RegisterSettingsUI();
 
             services.AddSingleton<App>();
             services.AddSingleton<MainWindow>();
