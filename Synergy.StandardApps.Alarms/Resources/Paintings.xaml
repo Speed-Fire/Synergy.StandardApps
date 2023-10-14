@@ -26,7 +26,7 @@
     <PathGeometry x:Key="Alarm.Leg"
                   Figures="M -5,-100 5,-100 5,-130 -5,-130"/>
 
-    <DrawingBrush x:Key="Alarm" Stretch="None">
+    <DrawingBrush x:Key="Alarm" Stretch="Uniform">
 
         <DrawingBrush.Drawing>
             <DrawingGroup>
@@ -302,7 +302,10 @@
         </DrawingBrush.Drawing>
 
         <DrawingBrush.RelativeTransform>
-            <TranslateTransform X="-0.42" Y="0.325"/>
+            <TransformGroup>
+                <ScaleTransform ScaleX="0.35" ScaleY="0.35"/>
+                <TranslateTransform X="-0.085" Y="0.62"/>
+            </TransformGroup>
         </DrawingBrush.RelativeTransform>
         
     </DrawingBrush>

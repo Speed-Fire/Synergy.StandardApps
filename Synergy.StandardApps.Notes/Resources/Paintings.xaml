@@ -5,7 +5,7 @@
 
     <Pen x:Key="GlassPen" Thickness="4" Brush="{StaticResource GlassBrush}"/>
 
-    <DrawingBrush x:Key="InkwellAndFeather" Stretch="None">
+    <DrawingBrush x:Key="InkwellAndFeather" Stretch="Uniform">
 
         <DrawingBrush.Drawing>
             <DrawingGroup>
@@ -109,7 +109,10 @@
         </DrawingBrush.Drawing>
 
         <DrawingBrush.RelativeTransform>
-            <TranslateTransform X="-0.42" Y="0.15"/>
+            <TransformGroup>
+                <ScaleTransform ScaleX="0.65" ScaleY="0.65"/>
+                <TranslateTransform X="-0.25" Y="0.325"/>
+            </TransformGroup>
         </DrawingBrush.RelativeTransform>
         
     </DrawingBrush>

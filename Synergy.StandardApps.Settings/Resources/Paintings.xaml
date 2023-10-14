@@ -29,6 +29,10 @@
                     </GeometryDrawing.Geometry>
                     
                 </GeometryDrawing>
+
+                <DrawingGroup.Transform>
+                    <RotateTransform Angle="15"/>
+                </DrawingGroup.Transform>
                 
             </DrawingGroup>
         </DrawingBrush.Drawing>
@@ -36,8 +40,7 @@
         <DrawingBrush.RelativeTransform>
             <TransformGroup>
                 <ScaleTransform ScaleX="0.4" ScaleY="0.4"/>
-                <TranslateTransform X="0.03" Y="0.55"/>
-                <RotateTransform Angle="8"/>
+                <TranslateTransform X="-0.09" Y="0.57"/>
             </TransformGroup>
         </DrawingBrush.RelativeTransform>
             
