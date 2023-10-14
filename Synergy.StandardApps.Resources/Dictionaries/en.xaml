@@ -14,6 +14,8 @@
     <sys:String x:Key="Strings.Description">Description:</sys:String>
     <sys:String x:Key="Strings.Color">Color:</sys:String>
     <sys:String x:Key="Strings.Repeat">Repeat:</sys:String>
+    <sys:String x:Key="Strings.Language">Language:</sys:String>
+    <sys:String x:Key="Strings.NoteDeletion">Delete notes older than:</sys:String>
     
     <sys:String x:Key="Strings.Notes.Placeholder.Title">Food list</sys:String>
     <sys:String x:Key="Strings.Notes.Placeholder.Description">Bread, milk, ...</sys:String>
@@ -36,6 +38,11 @@
     <sys:String x:Key="Strings.Alarm">Alarm</sys:String>
     <sys:String x:Key="Strings.Everyday">Everyday</sys:String>
     <sys:String x:Key="Strings.Sound">Sound</sys:String>
-    
-    
+
+
+    <sys:String x:Key="Strings.30Days">30 days</sys:String>
+    <sys:String x:Key="Strings.60Days">60 days</sys:String>
+    <sys:String x:Key="Strings.Never">Never</sys:String>
+
+
 </ResourceDictionary>

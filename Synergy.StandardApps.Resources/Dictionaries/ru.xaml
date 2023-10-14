@@ -14,6 +14,8 @@
     <sys:String x:Key="Strings.Description">Описание:</sys:String>
     <sys:String x:Key="Strings.Color">Цвет:</sys:String>
     <sys:String x:Key="Strings.Repeat">Повторить:</sys:String>
+    <sys:String x:Key="Strings.Language">Язык:</sys:String>
+    <sys:String x:Key="Strings.NoteDeletion">Удалять записки старше:</sys:String>
 
     <sys:String x:Key="Strings.Notes.Placeholder.Title">Список еды</sys:String>
     <sys:String x:Key="Strings.Notes.Placeholder.Description">Хлеб, молоко, ...</sys:String>
@@ -36,5 +38,10 @@
     <sys:String x:Key="Strings.Alarm">Будильник</sys:String>
     <sys:String x:Key="Strings.Everyday">Каждый день</sys:String>
     <sys:String x:Key="Strings.Sound">Звук</sys:String>
+
+
+    <sys:String x:Key="Strings.30Days">30 дней</sys:String>
+    <sys:String x:Key="Strings.60Days">60 дней</sys:String>
+    <sys:String x:Key="Strings.Never">Никогда</sys:String>
 
 </ResourceDictionary>
