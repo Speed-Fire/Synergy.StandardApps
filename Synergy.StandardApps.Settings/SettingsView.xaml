@@ -18,6 +18,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
 
+                <ResourceDictionary Source="Resources/Paintings.xaml"/>
+
                 <ResourceDictionary>
 
                     <LinearGradientBrush x:Key="BackgroundBrush"
@@ -67,6 +69,20 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="ImageBrd"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0"
+                                     To="1"
+                                     Duration="0:0:0.7"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </UserControl.Triggers>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -83,6 +99,7 @@
                 Padding="3"
                 CornerRadius="15"
                 BorderThickness="2"
+                Background="{StaticResource Gears}"
                 BorderBrush="{StaticResource PrimaryBrush}">
 
                 <Grid>
