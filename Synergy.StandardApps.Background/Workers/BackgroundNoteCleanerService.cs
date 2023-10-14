@@ -63,7 +63,7 @@ namespace Synergy.StandardApps.Background.Workers
 
         private void LoadSettings()
         {
-            _maxNoteAge = Settings.Properties.NoteMaxAge ?? int.MaxValue;
+            _maxNoteAge = Settings.Properties.NoteMaxAge;
         }
 
         private async Task ClearOldNotes(DateTime dt)
