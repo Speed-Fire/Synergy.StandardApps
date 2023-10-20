@@ -43,6 +43,20 @@ namespace Synergy.StandardApps
         {
             var settingsInit = Settings.Properties.CurrentLanguage;
             var langController = AppLanguageController.Instance;
+
+            RegisterExceptions();
+        }
+
+        private static void RegisterExceptions()
+        {
+            var exceptionTranslator = ExceptionTranslator.Instance;
+
+            exceptionTranslator
+                .Register<Service.Exceptions.InvalidFormException>("Exceptions.Common.InvalidForm")
+                .Register<Service.Exceptions.InvalidIdException>("Exceptions.Common.InvalidId")
+                .Register<Service.Exceptions.NameIsAlreadyTakenExceptionException>("Exceptions.Common.NameIsAlreadyTaken")
+                .Register<Service.Exceptions.CalendarDateIsAlreadyTakenException>("Exceptions.Common.CalendarDateIsAlreadyTaken")
+                .Register<Service.Exceptions.AlarmTimeIsAlreadyTakenException>("Exceptions.Common.AlarmTimeIsAlreadyTaken");
         }
     }
 }
