@@ -10,7 +10,7 @@ namespace Synergy.StandardApps.Domain.Responses
     public interface IResponse<T>
     {
         StatusCode StatusCode { get; }
-        ErrorCode ErrorCode { get; }
+        Exception? Error { get; }
         T? Data { get; }
     }
 }
