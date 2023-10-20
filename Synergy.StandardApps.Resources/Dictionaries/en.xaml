@@ -47,4 +47,14 @@
     <sys:String x:Key="Strings.Never">Never</sys:String>
 
 
+    <!--<!--#region Exception -->
+
+    <sys:String x:Key="Exceptions.Common.InvalidForm">Invalid form.</sys:String>
+    <sys:String x:Key="Exceptions.Common.InvalidId">Invalid Id.</sys:String>
+    <sys:String x:Key="Exceptions.Common.NameIsAlreadyTaken">Specified name is already taken.</sys:String>
+    <sys:String x:Key="Exceptions.Common.CalendarDateIsAlreadyTaken">Specified date is already taken.</sys:String>
+    <sys:String x:Key="Exceptions.Common.AlarmTimeIsAlreadyTaken">Specified time is already taken.</sys:String>
+    
+    <!--#endregion-->
+    
 </ResourceDictionary>
