@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace Synergy.StandardApps.Resources
 {
@@ -63,6 +64,19 @@ namespace Synergy.StandardApps.Resources
 				throw new KeyNotFoundException(typeof(TKey).Name);
 		}
 
+		public TValue GetValue<TValue>(Exception key)
+		{
+			if (_map.TryGetValue(key.GetType(), out var value))
+			{
+				var resource = Application.Current.TryFindResource(value)
+					?? throw new ResourceNotFoundException();
+
+				return (TValue)resource;
+			}
+			else
+				throw new KeyNotFoundException(typeof(TValue).Name);
+		}
+
 		public bool TryGetValue<T>(out object value) where T : Exception
 		{
 			value = null;
@@ -85,6 +99,23 @@ namespace Synergy.StandardApps.Resources
 			value = default;
 
 			if (_map.TryGetValue(typeof(TKey), out var val))
+			{
+				value = (TValue)Application.Current.TryFindResource(val)
+					?? throw new ResourceNotFoundException();
+
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		public bool TryGetValue<TValue>(Exception key, out TValue value)
+		{
+			value = default;
+
+			if (_map.TryGetValue(key.GetType(), out var val))
 			{
 				value = (TValue)Application.Current.TryFindResource(val)
 					?? throw new ResourceNotFoundException();
