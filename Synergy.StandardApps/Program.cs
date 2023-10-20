@@ -18,8 +18,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Synergy.StandardApps
 {
@@ -29,38 +33,53 @@ namespace Synergy.StandardApps
 
         [STAThread]
         public static void Main(params string[] args)
-        {
-            // App building
-            var builder = Host.CreateDefaultBuilder(args);
+		{
+			string appGuid = "6E0C4219-4E85-433E-AA53-2616D3601EAD";
 
-            builder.ConfigureServices(services =>
-            {
-                var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Synergy");
-                Directory.CreateDirectory(dir);
-                dir = Path.Combine(dir, "StandardApps");
-                Directory.CreateDirectory(dir);
-                dir = Path.Combine(dir, "standardapps.sqlite");
+			using var mutex = new Mutex(false, @"Global\" + appGuid);
 
-                var connStr = $"Data Source={dir};";
-                services.AddDbContext<AppDbContext>(options =>
-                {
-                    options.UseSqlite(connStr);
-                });
+			if (!mutex.WaitOne(0, false))
+			{
+				MessageBox.Show("Instance is already running!");
+				return;
+			}
 
-                services
-                    .RegisterStandardAppsServices()
-                    .RegisterStandardAppsUI();
+			StartApp(args);
+		}
 
-            });
+		private static void StartApp(string[] args)
+		{
+			// App building
+			var builder = Host.CreateDefaultBuilder(args);
 
-            AppHost = builder.Build();
+			builder.ConfigureServices(services =>
+			{
+				var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Synergy");
+				Directory.CreateDirectory(dir);
+				dir = Path.Combine(dir, "StandardApps");
+				Directory.CreateDirectory(dir);
+				dir = Path.Combine(dir, "standardapps.sqlite");
 
-            AppHost.RunAsync();
-            var app = AppHost.Services.GetRequiredService<App>();
-            app.Run();
+				var connStr = $"Data Source={dir};";
+				services.AddDbContext<AppDbContext>(options =>
+				{
+					options.UseSqlite(connStr);
+				});
 
-            var cleaner = new Cleaner();
-            cleaner.CleanNotifications();
-        }
-    }
+				services
+					.RegisterStandardAppsServices()
+					.RegisterStandardAppsUI();
+
+			});
+
+			AppHost = builder.Build();
+
+			AppHost.RunAsync();
+			var app = AppHost.Services.GetRequiredService<App>();
+			app.Run();
+
+			var cleaner = new Cleaner();
+			cleaner.CleanNotifications();
+		}
+	}
 }
