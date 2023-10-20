@@ -22,7 +22,7 @@ namespace Synergy.StandardApps.Background.Notifications
                 .AddArgument("alarmId", notificationId)
                 .AddText(entity.Name)
                 .AddText("Your alarm is ringing.")
-                .AddInlineImage(new Uri(GetAppAbsolutePath("Resources/alarm.png")))
+                //.AddInlineImage(new Uri(GetAppAbsolutePath("Resources/alarm.png")))
                 .AddButton(new ToastButton()
                 {
                     ActivationOptions = new()
