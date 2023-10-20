@@ -6,6 +6,10 @@
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>hurricane-blue.ico</ApplicationIcon>
+    <Title>Standard Apps</Title>
+    <Company>Synergy</Company>
+    <Description>Alarm, calendar and notes in one application with modern design.</Description>
+    <Copyright>All rights reserved. © Synergy, 2023</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
