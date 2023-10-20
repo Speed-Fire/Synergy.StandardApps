@@ -19,17 +19,21 @@ namespace Synergy.StandardApps.Resources
 			_map = new();
 		}
 
-		public void Register<T>(string resourceKey) where T : Exception
+		public ExceptionTranslator Register<T>(string resourceKey) where T : Exception
 		{
 			if(_map.ContainsKey(typeof(T)))
 				throw new KeyIsTakenException();
 
 			_map.Add(typeof(T), resourceKey);
+
+			return this;
 		}
 
-		public void Unregister<T>() where T : Exception
+		public ExceptionTranslator Unregister<T>() where T : Exception
 		{
 			_map.Remove(typeof(T));
+
+			return this;
 		}
 
 		public object GetValue<T>() where T : Exception
@@ -43,6 +47,22 @@ namespace Synergy.StandardApps.Resources
 			}
 			else
 				throw new KeyNotFoundException(typeof(T).Name);
+		}
+
+		public bool TryGetValue<T>(out object value) where T : Exception
+		{
+			if (_map.TryGetValue(typeof(T), out var val))
+			{
+				value = Application.Current.TryFindResource(val)
+					?? throw new ResourceNotFoundException();
+
+				return true;
+			}
+			else
+			{
+				value = null;
+				return false;
+			}
 		}
 	}
 
