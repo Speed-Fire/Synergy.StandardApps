@@ -3,6 +3,7 @@ using Synergy.StandardApps.DAL.Repositories;
 using Synergy.StandardApps.Domain.Notes;
 using Synergy.StandardApps.Domain.Responses;
 using Synergy.StandardApps.EntityForms.Notes;
+using Synergy.StandardApps.Service.Exceptions;
 using Synergy.StandardApps.Utility.Converters;
 using System;
 using System.Collections.Generic;
@@ -28,9 +29,16 @@ namespace Synergy.StandardApps.Service.Notes
             try
             {
                 if (form.HasErrors)
-                    throw new("Invalid form.");
+                    throw new InvalidFormException();
 
-                var note = new Note()
+                var note = await _noteRepository
+                    .GetAll()
+                    .FirstOrDefaultAsync(n => n.Name == form.Name);
+
+                if (note is not null)
+                    throw new NameIsAlreadyTakenExceptionException();
+
+                note = new Note()
                 {
                     Name = form.Name,
                     Description = form.Description
@@ -52,16 +60,14 @@ namespace Synergy.StandardApps.Service.Notes
             try
             {
                 if (form.HasErrors)
-                    throw new("Invalid form.");
+                    throw new InvalidFormException();
 
-                var note = await _noteRepository
+				var note = await _noteRepository
                     .GetAll()
-                    .FirstOrDefaultAsync(n => n.Id == id);
+                    .FirstOrDefaultAsync(n => n.Id == id)
+                    ?? throw new InvalidIdException();
 
-                if (note is null)
-                    throw new("Invalid id.");
-
-                note.Name = form.Name;
+				note.Name = form.Name;
                 note.Description = form.Description;
 
                 note = await _noteRepository
@@ -81,14 +87,10 @@ namespace Synergy.StandardApps.Service.Notes
             {
                 var note = await _noteRepository
                     .GetAll()
-                    .FirstOrDefaultAsync(n => n.Id == id);
+                    .FirstOrDefaultAsync(n => n.Id == id)
+                    ?? throw new InvalidIdException();
 
-                if(note is null)
-                {
-                    return ResponseFactory.BadResponse<bool>(Domain.Enums.ErrorCode.NotFound);
-                }
-
-                await _noteRepository
+				await _noteRepository
                     .Delete(note);
 
                 return ResponseFactory.OK(true);

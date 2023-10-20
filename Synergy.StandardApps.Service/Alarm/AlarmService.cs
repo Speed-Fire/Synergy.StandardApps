@@ -6,6 +6,7 @@ using Synergy.StandardApps.Domain.Alarm;
 using Synergy.StandardApps.Domain.Responses;
 using Synergy.StandardApps.EntityForms.Alarm;
 using Synergy.StandardApps.EntityForms.Notes;
+using Synergy.StandardApps.Service.Exceptions;
 using Synergy.StandardApps.Utility.Converters;
 using System;
 using System.Collections.Generic;
@@ -32,9 +33,16 @@ namespace Synergy.StandardApps.Service.Alarm
             try
             {
                 if (form.HasErrors)
-                    throw new("Invalid form.");
+                    throw new InvalidFormException();
 
-                var alarm = new AlarmRecord()
+                var alarm = await _alarmRepository
+                    .GetAll()
+                    .FirstOrDefaultAsync(a => a.Time == form.Time);
+
+                if (alarm is not null)
+                    throw new AlarmTimeIsAlreadyTakenException();
+
+				alarm = new AlarmRecord()
                 {
                     Name = form.Name,
                     Time = form.Time,
@@ -63,11 +71,12 @@ namespace Synergy.StandardApps.Service.Alarm
             try
             {
                 if (form.HasErrors)
-                    throw new("Invalid form.");
+                    throw new InvalidFormException();
 
                 var alarm = await _alarmRepository
                     .GetAll()
-                    .FirstOrDefaultAsync(a => a.Id == id) ?? throw new("Invalid id.");
+                    .FirstOrDefaultAsync(a => a.Id == id)
+                    ?? throw new InvalidIdException();
 
                 alarm.Name = form.Name;
                 alarm.Time = form.Time;
@@ -115,10 +124,8 @@ namespace Synergy.StandardApps.Service.Alarm
                     .GetAll()
                     .FirstOrDefaultAsync(a => a.Id == id);
 
-                if(alarm is null)
-                {
-                    return ResponseFactory.BadResponse<bool>(Domain.Enums.ErrorCode.NotFound);
-                }
+                if (alarm is null)
+                    throw new InvalidIdException();
 
                 await _alarmRepository
                     .Delete(alarm);
@@ -143,9 +150,7 @@ namespace Synergy.StandardApps.Service.Alarm
                     .FirstOrDefaultAsync(a => a.Id == id);
 
                 if (alarm is null)
-                {
-                    return ResponseFactory.BadResponse<bool>(Domain.Enums.ErrorCode.NotFound);
-                }
+                    throw new InvalidIdException();
 
                 alarm.IsEnabled = isEnabled;
 

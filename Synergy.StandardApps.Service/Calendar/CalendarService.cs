@@ -6,6 +6,7 @@ using Synergy.StandardApps.Domain.Calendar;
 using Synergy.StandardApps.Domain.Notes;
 using Synergy.StandardApps.Domain.Responses;
 using Synergy.StandardApps.EntityForms.Calendar;
+using Synergy.StandardApps.Service.Exceptions;
 using Synergy.StandardApps.Utility.Converters;
 using System;
 using System.Collections.Generic;
@@ -32,15 +33,15 @@ namespace Synergy.StandardApps.Service.Calendar
             try
             {
                 if (form.HasErrors)
-                    throw new("Invalid form!");
+					throw new InvalidFormException();
 
-                var existing = await _calendarRepository
+				var existing = await _calendarRepository
                     .GetAll()
                     .Where(e => e.Day == form.Day && e.Month == form.Month)
                     .FirstOrDefaultAsync();
 
                 if (existing != null)
-                    throw new($"Calendar event for date {form.Day}.{form.Month}.yyyy already exist!");
+                    throw new CalendarDateIsAlreadyTakenException();
 
                 var ev = new CalendarEvent()
                 {
@@ -69,16 +70,14 @@ namespace Synergy.StandardApps.Service.Calendar
             try
             {
                 if (form.HasErrors)
-                    throw new("Invalid form!");
+                    throw new InvalidFormException();
 
                 var ev = await _calendarRepository
                     .GetAll()
-                    .FirstOrDefaultAsync(e => e.Id == id);
+                    .FirstOrDefaultAsync(e => e.Id == id)
+                    ?? throw new InvalidIdException();
 
-                if (ev is null)
-                    throw new("Invalid id!");
-
-                ev.Title = form.Title;
+				ev.Title = form.Title;
                 ev.Description = form.Description;
                 ev.Day = form.Day;
                 ev.Month = form.Month;
@@ -121,14 +120,10 @@ namespace Synergy.StandardApps.Service.Calendar
             {
                 var ev = await _calendarRepository
                     .GetAll()
-                    .FirstOrDefaultAsync(e => e.Id == id);
+                    .FirstOrDefaultAsync(e => e.Id == id)
+                    ?? throw new InvalidIdException();
 
-                if (ev is null)
-                {
-                    return ResponseFactory.BadResponse<bool>(Domain.Enums.ErrorCode.NotFound);
-                }
-
-                await _calendarRepository.Delete(ev);
+				await _calendarRepository.Delete(ev);
 
                 WeakReferenceMessenger.Default
                     .Send(new DeleteCalendarEventMessage(ev.Id));
