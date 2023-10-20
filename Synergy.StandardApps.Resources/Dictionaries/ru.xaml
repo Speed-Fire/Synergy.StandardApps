@@ -10,6 +10,8 @@
     <sys:String x:Key="Strings.Cancel">Отмена</sys:String>
     <sys:String x:Key="Strings.Save">Сохранить</sys:String>
 
+    <sys:String x:Key="Strings.Error">Ошибка</sys:String>
+    
     <sys:String x:Key="Strings.Title">Название:</sys:String>
     <sys:String x:Key="Strings.Description">Описание:</sys:String>
     <sys:String x:Key="Strings.Color">Цвет:</sys:String>

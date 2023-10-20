@@ -3,13 +3,16 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Synergy.StandardApps.EntityForms.Notes;
 using Synergy.StandardApps.Notes.Messages;
+using Synergy.StandardApps.Resources;
 using Synergy.StandardApps.Service.Notes;
 using Synergy.WPF.Common.Controls;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
@@ -36,8 +39,12 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
 
                 if (res.StatusCode == Domain.Enums.StatusCode.Error)
                 {
-                    await NotifyingGrid.ShowNotificationAsync("MainGrid",
-                        "Error", "Specified name is already taken!",
+                    if (!ExceptionTranslator.Instance.TryGetValue(res.Error, out string message))
+                        message = res.Error?.Message ?? "Internal error.";
+
+					await NotifyingGrid.ShowNotificationAsync("MainGrid",
+						Application.Current.TryFindResource("Strings.Error") as string,
+                        message,
                         System.Windows.MessageBoxButton.OK);
 
                     return;

@@ -10,6 +10,8 @@
     <sys:String x:Key="Strings.Cancel">Cancel</sys:String>
     <sys:String x:Key="Strings.Save">Save</sys:String>
 
+    <sys:String x:Key="Strings.Error">Error</sys:String>
+
     <sys:String x:Key="Strings.Title">Title:</sys:String>
     <sys:String x:Key="Strings.Description">Description:</sys:String>
     <sys:String x:Key="Strings.Color">Color:</sys:String>

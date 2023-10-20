@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Synergy.StandardApps.EntityForms.Notes;
 using Synergy.StandardApps.Notes.Messages;
+using Synergy.StandardApps.Resources;
 using Synergy.StandardApps.Service.Calendar;
 using Synergy.StandardApps.Service.Notes;
 using Synergy.WPF.Common.Controls;
@@ -12,7 +13,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
@@ -62,8 +63,12 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
             var res = await _noteService.UpdateNote(ProtoNote, id);
             if (res.StatusCode == Domain.Enums.StatusCode.Error)
             {
-                await NotifyingGrid.ShowNotificationAsync("MainGrid",
-                    "Error", "Specified name is already taken!",
+				if (!ExceptionTranslator.Instance.TryGetValue(res.Error, out string message))
+					message = res.Error?.Message ?? "Internal error.";
+
+				await NotifyingGrid.ShowNotificationAsync("MainGrid",
+					Application.Current.TryFindResource("Strings.Error") as string,
+                    message,
                     System.Windows.MessageBoxButton.OK);
 
                 return;
@@ -81,8 +86,12 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
 
             if (res.StatusCode == Domain.Enums.StatusCode.Error)
             {
-                await NotifyingGrid.ShowNotificationAsync("MainGrid",
-                        "Error", "Specified name is already taken!",
+				if (!ExceptionTranslator.Instance.TryGetValue(res.Error, out string message))
+					message = res.Error?.Message ?? "Internal error.";
+
+				await NotifyingGrid.ShowNotificationAsync("MainGrid",
+						Application.Current.TryFindResource("Strings.Error") as string,
+                        message,
                         System.Windows.MessageBoxButton.OK);
 
                 return;

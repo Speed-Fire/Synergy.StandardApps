@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Synergy.StandardApps.Calendar.Messages;
+using Synergy.StandardApps.Resources;
 using Synergy.StandardApps.Service.Calendar;
 using Synergy.WPF.Common.Controls;
 using Synergy.WPF.Navigation.Services.Local;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Synergy.StandardApps.Calendar.ViewModels.CalendarEvent
@@ -33,16 +35,20 @@ namespace Synergy.StandardApps.Calendar.ViewModels.CalendarEvent
         {
             var res = await _calendarService.CreateEvent(Form);
 
-            if(res.StatusCode == Domain.Enums.StatusCode.Error)
-            {
-                await NotifyingGrid.ShowNotificationAsync("MainGrid",
-                        "Error", "Specified name is already taken!",
-                        System.Windows.MessageBoxButton.OK);
+			if (res.StatusCode == Domain.Enums.StatusCode.Error)
+			{
+				if (!ExceptionTranslator.Instance.TryGetValue(res.Error, out string message))
+					message = res.Error?.Message ?? "Internal error.";
 
-                return;
-            }
+				await NotifyingGrid.ShowNotificationAsync("MainGrid",
+					Application.Current.TryFindResource("Strings.Error") as string,
+					message,
+					System.Windows.MessageBoxButton.OK);
 
-            WeakReferenceMessenger.Default
+				return;
+			}
+
+			WeakReferenceMessenger.Default
                 .Send(new CalendarEventCreatedMessage(res.Data));
             WeakReferenceMessenger.Default
                 .Send(new CloseCalendarEventChangingMessage(null));
