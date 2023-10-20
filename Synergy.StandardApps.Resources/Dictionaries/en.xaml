@@ -47,7 +47,7 @@
     <sys:String x:Key="Strings.Never">Never</sys:String>
 
 
-    <!--<!--#region Exception -->
+    <!--#region Exception -->
 
     <sys:String x:Key="Exceptions.Common.InvalidForm">Invalid form.</sys:String>
     <sys:String x:Key="Exceptions.Common.InvalidId">Invalid Id.</sys:String>

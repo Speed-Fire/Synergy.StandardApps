@@ -47,7 +47,7 @@
     <sys:String x:Key="Strings.Never">Никогда</sys:String>
 
 
-    <!--<!--#region Exception -->
+    <!--#region Exception -->
 
     <sys:String x:Key="Exceptions.Common.InvalidForm">Форма заполнена неверно.</sys:String>
     <sys:String x:Key="Exceptions.Common.InvalidId">Неизвестный Id.</sys:String>
