@@ -1,4 +1,5 @@
 ﻿using Synergy.StandardApps.Domain.Enums;
+using Synergy.StandardApps.Misc.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,13 +28,11 @@ namespace Synergy.StandardApps.Misc
 
         public static void PlaySound(AlarmSound sound)
         {
-            //if (sound == AlarmSound.None)
-            //    return;
+            if (sound == AlarmSound.None)
+                return;
 
-            //var player = new MediaPlayer();
-            //player.Open(new Uri(GetPath(sound)));
-            //player.Play();
-            //player.Close();
+            var notifier = new SoundTestNotifier();
+            notifier.Notify(GetPath(sound));
         }
     }
 }
