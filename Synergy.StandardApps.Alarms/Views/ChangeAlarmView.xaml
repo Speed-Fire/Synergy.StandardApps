@@ -115,69 +115,106 @@
 
                 <TextBlock Text="{DynamicResource Strings.Repeat}"/>
 
-                <Grid DockPanel.Dock="Top"
-                      Margin="0 5 0 0">
+                <Border DockPanel.Dock="Top"
+                        Margin="0 5 0 0"
+                        BorderBrush="Red"
+                        Padding="2"
+                        CornerRadius="10"
+                        Validation.ValidationAdornerSiteFor="{Binding ElementName=DayMaskChecker}">
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
+                    <Border.Style>
+                        <Style TargetType="Border">
 
-                    <ToggleButton
-                            x:Name="MondayBtn"
-                            Grid.Column="0"
-                            Margin="0 0 5 0"
-                            IsChecked="{Binding Form.Monday}"
-                            Content="{DynamicResource Strings.Monday.Short}"/>
+                            <Setter Property="Validation.ErrorTemplate">
+                                <Setter.Value>
+                                    <ControlTemplate>
 
-                    <ToggleButton
-                            x:Name="TuesdayBtn"
-                            Grid.Column="1"
-                            Margin="5 0 5 0"
-                            IsChecked="{Binding Form.Tuesday}"
-                            Content="{DynamicResource Strings.Tuesday.Short}"/>
+                                        <Border BorderBrush="DarkRed" BorderThickness="2" CornerRadius="10">
+                                            <AdornedElementPlaceholder x:Name="errorControl"/>
+                                        </Border>
 
-                    <ToggleButton
-                            x:Name="WednesdayBtn"
-                            Grid.Column="2"
-                            Margin="5 0 5 0"
-                            IsChecked="{Binding Form.Wednesday}"
-                            Content="{DynamicResource Strings.Wednesday.Short}"/>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="Validation.HasError"
+                                                     Value="True">
+                                                <Setter Property="BorderThickness" Value="2"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
 
-                    <ToggleButton
-                            x:Name="ThursdayBtn"
-                            Grid.Column="3"
-                            Margin="5 0 5 0"
-                            IsChecked="{Binding Form.Thursday}"
-                            Content="{DynamicResource Strings.Thursday.Short}"/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Border.Style>
+                    
+                    <Grid>
 
-                    <ToggleButton
-                            x:Name="FridayBtn"
-                            Grid.Column="4"
-                            Margin="5 0 5 0"
-                            IsChecked="{Binding Form.Friday}"
-                            Content="{DynamicResource Strings.Friday.Short}"/>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
-                    <ToggleButton
-                            x:Name="SaturdayBtn"
-                            Grid.Column="5"
-                            Margin="5 0 5 0"
-                            IsChecked="{Binding Form.Saturday}"
-                            Content="{DynamicResource Strings.Saturday.Short}"/>
+                        <TextBlock x:Name="DayMaskChecker"
+                                   Text="{Binding Form.DayMask}"
+                                   Grid.Column="0"
+                                   Visibility="Collapsed"/>
 
-                    <ToggleButton
-                            x:Name="SundayBtn"
-                            Grid.Column="6"
-                            Margin="5 0 0 0"
-                            IsChecked="{Binding Form.Sunday}"
-                            Content="{DynamicResource Strings.Sunday.Short}"/>
-                </Grid>
+                        <ToggleButton
+                                x:Name="MondayBtn"
+                                Grid.Column="0"
+                                Margin="0 0 5 0"
+                                IsChecked="{Binding Form.Monday}"
+                                Content="{DynamicResource Strings.Monday.Short}"/>
 
+                        <ToggleButton
+                                x:Name="TuesdayBtn"
+                                Grid.Column="1"
+                                Margin="5 0 5 0"
+                                IsChecked="{Binding Form.Tuesday}"
+                                Content="{DynamicResource Strings.Tuesday.Short}"/>
+
+                        <ToggleButton
+                                x:Name="WednesdayBtn"
+                                Grid.Column="2"
+                                Margin="5 0 5 0"
+                                IsChecked="{Binding Form.Wednesday}"
+                                Content="{DynamicResource Strings.Wednesday.Short}"/>
+
+                        <ToggleButton
+                                x:Name="ThursdayBtn"
+                                Grid.Column="3"
+                                Margin="5 0 5 0"
+                                IsChecked="{Binding Form.Thursday}"
+                                Content="{DynamicResource Strings.Thursday.Short}"/>
+
+                        <ToggleButton
+                                x:Name="FridayBtn"
+                                Grid.Column="4"
+                                Margin="5 0 5 0"
+                                IsChecked="{Binding Form.Friday}"
+                                Content="{DynamicResource Strings.Friday.Short}"/>
+
+                        <ToggleButton
+                                x:Name="SaturdayBtn"
+                                Grid.Column="5"
+                                Margin="5 0 5 0"
+                                IsChecked="{Binding Form.Saturday}"
+                                Content="{DynamicResource Strings.Saturday.Short}"/>
+
+                        <ToggleButton
+                                x:Name="SundayBtn"
+                                Grid.Column="6"
+                                Margin="5 0 0 0"
+                                IsChecked="{Binding Form.Sunday}"
+                                Content="{DynamicResource Strings.Sunday.Short}"/>
+                    </Grid>
+
+                </Border>
+                
                 <controls:NormalButton
                             DockPanel.Dock="Top"
                             Margin="0 10 10 0"

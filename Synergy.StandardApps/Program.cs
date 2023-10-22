@@ -51,7 +51,7 @@ namespace Synergy.StandardApps
 		{
 			// App building
 			var builder = Host.CreateDefaultBuilder(args);
-
+			
 			builder.ConfigureServices(services =>
 			{
 				var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Synergy");

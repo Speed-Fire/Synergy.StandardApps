@@ -19,8 +19,6 @@ namespace Synergy.StandardApps.EntityForms.Alarm
         private AlarmSound sound;
         private bool isSoundEnabled;
 
-        //[Required]
-        //[MinLength(1)]
         [MaxLength(20)]
         public string Name
         {
@@ -158,7 +156,7 @@ namespace Synergy.StandardApps.EntityForms.Alarm
         {
             if (dayMask == 0)
             {
-                return new("Alarm must have at least one alarmed day!");
+				return new("Alarm must have at least one alarmed day!");
             }
 
             return ValidationResult.Success;
