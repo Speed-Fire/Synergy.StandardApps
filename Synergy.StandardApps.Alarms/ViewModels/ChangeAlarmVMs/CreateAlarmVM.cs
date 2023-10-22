@@ -43,9 +43,6 @@ namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
 
         private async Task CreateAlarm()
         {
-            if (Form.HasErrors)
-                return;
-
             var res = await _alarmService.CreateAlarm(Form);
 			if (res.StatusCode == Domain.Enums.StatusCode.Error)
 			{

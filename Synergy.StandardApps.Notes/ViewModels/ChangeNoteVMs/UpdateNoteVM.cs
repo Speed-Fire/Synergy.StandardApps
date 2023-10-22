@@ -57,9 +57,6 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
 
         private async Task UpdateNoteAsync()
         {
-            if (ProtoNote.HasErrors)
-                return;
-
             var res = await _noteService.UpdateNote(ProtoNote, id);
             if (res.StatusCode == Domain.Enums.StatusCode.Error)
             {
