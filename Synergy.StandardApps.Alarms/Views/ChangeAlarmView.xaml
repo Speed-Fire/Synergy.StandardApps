@@ -268,6 +268,15 @@
                     </ComboBox>
 
                 </GroupBox>
+
+                <controls:NormalButton DockPanel.Dock="Top"
+                                       HorizontalAlignment="Right"
+                                       VerticalAlignment="Top"
+                                       Margin="0 5 10 0"
+                                       Padding="3 5 3 5"
+                                       Style="{StaticResource NormalButtonStyle}"
+                                       Content="Play sound"
+                                       Command="{Binding PlayAlarmSoundCommand}"/>
             </DockPanel>
         </ScrollViewer>
 

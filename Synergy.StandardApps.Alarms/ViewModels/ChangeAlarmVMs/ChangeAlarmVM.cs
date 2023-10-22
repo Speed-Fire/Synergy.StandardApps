@@ -86,7 +86,7 @@ namespace Synergy.StandardApps.Alarms.ViewModels.ChangeAlarmVMs
             (playAlarmSoundCommand = new RelayCommand(() =>
             {
                 AlarmSoundPlayer.PlaySound(Form.Sound);
-            }));
+            }, () => { return Form.IsSoundEnabled; }));
 
         #endregion
 
