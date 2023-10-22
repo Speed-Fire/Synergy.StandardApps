@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Synergy.StandardApps.EntityForms.Alarm
 {
-    public class AlarmCreationForm : ObservableValidator
+    public class AlarmCreationForm : Common.ObservableValidator
     {
         private string name;
         private TimeOnly time;
@@ -19,27 +19,27 @@ namespace Synergy.StandardApps.EntityForms.Alarm
         private AlarmSound sound;
         private bool isSoundEnabled;
 
-        [Required]
-        [MinLength(1)]
+        //[Required]
+        //[MinLength(1)]
         [MaxLength(20)]
         public string Name
         {
             get => name;
-            set => SetProperty(ref name, value);
+            set => SetProperty(ref name, value, true);
         }
 
         [Required]
         public TimeOnly Time
         {
             get => time;
-            set => SetProperty(ref time, value);
+            set => SetProperty(ref time, value, true);
         }
 
         [CustomValidation(typeof(AlarmCreationForm), "ValidateDayMask")]
         public WeekDay DayMask
         {
             get => dayMask;
-            set => SetProperty(ref dayMask, value);
+            set => SetProperty(ref dayMask, value, true);
         }
 
         #region Days
@@ -116,14 +116,14 @@ namespace Synergy.StandardApps.EntityForms.Alarm
         public AlarmSound Sound
         {
             get => sound;
-            set => SetProperty(ref sound, value);
+            set => SetProperty(ref sound, value, true);
         }
 
         [Required]
         public bool IsSoundEnabled
         {
             get => isSoundEnabled;
-            set => SetProperty(ref isSoundEnabled, value);
+            set => SetProperty(ref isSoundEnabled, value, true);
         }
 
         public AlarmCreationForm()
@@ -149,12 +149,14 @@ namespace Synergy.StandardApps.EntityForms.Alarm
 
         public void SetDay(DayOfWeek day)
         {
-            AlarmHandler.SetDay(ref dayMask, day);
+            var mask = DayMask;
+            AlarmHandler.SetDay(ref mask, day);
+            DayMask = mask;
         }
 
         public static ValidationResult ValidateDayMask(WeekDay dayMask, ValidationContext context)
         {
-            if (dayMask.Equals(0))
+            if (dayMask == 0)
             {
                 return new("Alarm must have at least one alarmed day!");
             }

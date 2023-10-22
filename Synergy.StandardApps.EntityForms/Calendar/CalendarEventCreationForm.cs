@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace Synergy.StandardApps.EntityForms.Calendar
 {
-    public class CalendarEventCreationForm : ObservableValidator
+    public class CalendarEventCreationForm : Common.ObservableValidator
     {
         private string title;
         private string description;
@@ -21,27 +21,27 @@ namespace Synergy.StandardApps.EntityForms.Calendar
         public string Title
         {
             get => title;
-            set => SetProperty(ref title, value);
+            set => SetProperty(ref title, value, true);
         }
 
         public string Description
         {
             get => description;
-            set => SetProperty(ref description, value);
+            set => SetProperty(ref description, value, true);
         }
 
         [CustomValidation(typeof(CalendarEventCreationForm), "ValidateDayMonth")]
         public int Month
         {
             get => month;
-            set => SetProperty(ref month, value);
+            set => SetProperty(ref month, value, true);
         }
 
         [CustomValidation(typeof(CalendarEventCreationForm), "ValidateDayMonth")]
         public int Day
         {
             get => day;
-            set => SetProperty(ref day, value);
+            set => SetProperty(ref day, value, true);
         }
 
         public Color Color

@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Synergy.StandardApps.EntityForms.Notes
 {
-    public class NoteCreationForm : ObservableValidator
+    public class NoteCreationForm : Common.ObservableValidator
     {
         private string name;
-        private string description;
+        private string description = string.Empty;
 
         [Required]
         [MinLength(1)]
@@ -22,13 +22,16 @@ namespace Synergy.StandardApps.EntityForms.Notes
             set => SetProperty(ref name, value, true);
         }
 
-        [Required]
+        //[Required]
         [MaxLength(500)]
         public string Description
         {
             get => description;
             set => SetProperty(ref description, value, true);
         }
+
+
+        //public void Validate() => this.ValidateAllProperties();
 
         public static ValidationResult ValidateName(string name, ValidationContext context)
         {
