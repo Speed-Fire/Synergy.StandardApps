@@ -3,6 +3,7 @@ using Synergy.StandardApps.Background.Notifications;
 using Synergy.StandardApps.Background.Workers;
 using Synergy.StandardApps.Domain.Alarm;
 using Synergy.StandardApps.Domain.Calendar;
+using Synergy.StandardApps.Misc.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;

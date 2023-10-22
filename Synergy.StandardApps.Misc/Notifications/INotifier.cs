@@ -1,4 +1,4 @@
-﻿namespace Synergy.StandardApps.Background.Notifications
+﻿namespace Synergy.StandardApps.Misc.Notifications
 {
     public interface INotifier<T>
     {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Toolkit.Uwp.Notifications;
 using Synergy.StandardApps.Domain.Alarm;
 using Synergy.StandardApps.Misc;
+using Synergy.StandardApps.Misc.Notifications;
 using System;
 using System.IO;
 using System.Reflection;

@@ -7,6 +7,7 @@ using Synergy.StandardApps.Background.Messages.Calendar;
 using Synergy.StandardApps.Background.Notifications;
 using Synergy.StandardApps.DAL.Repositories;
 using Synergy.StandardApps.Domain.Calendar;
+using Synergy.StandardApps.Misc.Notifications;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;

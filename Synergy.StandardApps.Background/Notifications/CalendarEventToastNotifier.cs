@@ -1,5 +1,6 @@
 ﻿using Microsoft.Toolkit.Uwp.Notifications;
 using Synergy.StandardApps.Domain.Calendar;
+using Synergy.StandardApps.Misc.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
