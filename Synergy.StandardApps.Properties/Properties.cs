@@ -13,10 +13,10 @@ namespace Synergy.StandardApps.Settings
 {
     public static class Properties
     {
-        private static readonly string _path = Path.Combine
-            (Directory.GetCurrentDirectory(), _FILE_NAME);
+        private static readonly string _path = GetPropertiesDirectory(_FILE_NAME);
 
-        private static Dictionary<string, string> _properties = new();
+
+		private static Dictionary<string, string> _properties = new();
 
         #region Constants
 
@@ -48,7 +48,9 @@ namespace Synergy.StandardApps.Settings
             Load();
         }
 
-        private static void Load()
+		#region Serialization
+
+		private static void Load()
         {
             if(!File.Exists(_path))
             {
@@ -78,5 +80,26 @@ namespace Synergy.StandardApps.Settings
 
             Save();
         }
-    }
+
+		#endregion
+
+		#region Properties folder
+
+        public static string GetPropertiesDirectory()
+        {
+			var dir = Path
+                .Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Synergy");
+			dir = Path.Combine(dir, "StandardApps");
+			Directory.CreateDirectory(dir);
+
+            return dir;
+		}
+
+		public static string GetPropertiesDirectory(string file)
+        {
+            return Path.Combine(GetPropertiesDirectory(), file);
+        }
+
+		#endregion
+	}
 }
