@@ -42,7 +42,8 @@
     <sys:String x:Key="Strings.Alarm">Будильник</sys:String>
     <sys:String x:Key="Strings.Everyday">Каждый день</sys:String>
     <sys:String x:Key="Strings.Sound">Звук</sys:String>
-
+    <sys:String x:Key="Strings.PlaySound">Проиграть звук</sys:String>
+    
 
     <sys:String x:Key="Strings.30Days">30 дней</sys:String>
     <sys:String x:Key="Strings.60Days">60 дней</sys:String>

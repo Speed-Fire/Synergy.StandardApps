@@ -42,6 +42,7 @@
     <sys:String x:Key="Strings.Alarm">Alarm</sys:String>
     <sys:String x:Key="Strings.Everyday">Everyday</sys:String>
     <sys:String x:Key="Strings.Sound">Sound</sys:String>
+    <sys:String x:Key="Strings.PlaySound">Play sound</sys:String>
 
 
     <sys:String x:Key="Strings.30Days">30 days</sys:String>
