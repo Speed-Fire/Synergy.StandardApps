@@ -1,28 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Synergy.StandardApps.Alarms.Extensions;
 using Synergy.StandardApps.Background.Extensions;
-using Synergy.StandardApps.Calendar.Extensions;
 using Synergy.StandardApps.DAL.DbContexts;
-using Synergy.StandardApps.DAL.Extensions;
-using Synergy.StandardApps.EntityForms.Extensions;
 using Synergy.StandardApps.Extensions;
-using Synergy.StandardApps.Notes.Extensions;
 using Synergy.StandardApps.Service.Extensions;
+using Synergy.StandardApps.Settings;
 using Synergy.StandardApps.Utility.Misc;
-using Synergy.StandardApps.ViewModels;
-using Synergy.WPF.Common.Extensions;
-using Synergy.WPF.Navigation.Extensions;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Synergy.StandardApps
@@ -54,13 +41,9 @@ namespace Synergy.StandardApps
 			
 			builder.ConfigureServices(services =>
 			{
-				var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Synergy");
-				Directory.CreateDirectory(dir);
-				dir = Path.Combine(dir, "StandardApps");
-				Directory.CreateDirectory(dir);
-				dir = Path.Combine(dir, "standardapps.sqlite");
+				var path = Properties.GetPropertiesDirectory("standardapps.sqlite");
 
-				var connStr = $"Data Source={dir};";
+				var connStr = $"Data Source={path};";
 				services.AddDbContext<AppDbContext>(options =>
 				{
 					options.UseSqlite(connStr);
