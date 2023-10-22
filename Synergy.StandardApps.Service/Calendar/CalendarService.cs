@@ -32,7 +32,8 @@ namespace Synergy.StandardApps.Service.Calendar
         {
             try
             {
-                if (form.HasErrors)
+				form.Validate();
+				if (form.HasErrors)
 					throw new InvalidFormException();
 
 				var existing = await _calendarRepository
@@ -69,7 +70,8 @@ namespace Synergy.StandardApps.Service.Calendar
         {
             try
             {
-                if (form.HasErrors)
+				form.Validate();
+				if (form.HasErrors)
                     throw new InvalidFormException();
 
                 var ev = await _calendarRepository

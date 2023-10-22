@@ -32,6 +32,7 @@ namespace Synergy.StandardApps.Service.Alarm
         {
             try
             {
+                form.Validate();
                 if (form.HasErrors)
                     throw new InvalidFormException();
 
@@ -70,7 +71,8 @@ namespace Synergy.StandardApps.Service.Alarm
         {
             try
             {
-                if (form.HasErrors)
+				form.Validate();
+				if (form.HasErrors)
                     throw new InvalidFormException();
 
 				var alarm = await _alarmRepository

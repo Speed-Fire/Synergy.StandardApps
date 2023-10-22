@@ -28,7 +28,8 @@ namespace Synergy.StandardApps.Service.Notes
         {
             try
             {
-                if (form.HasErrors)
+                form.Validate();
+				if (form.HasErrors)
                     throw new InvalidFormException();
 
                 var note = await _noteRepository
@@ -59,7 +60,8 @@ namespace Synergy.StandardApps.Service.Notes
         {
             try
             {
-                if (form.HasErrors)
+				form.Validate();
+				if (form.HasErrors)
                     throw new InvalidFormException();
 
 				var note = await _noteRepository
