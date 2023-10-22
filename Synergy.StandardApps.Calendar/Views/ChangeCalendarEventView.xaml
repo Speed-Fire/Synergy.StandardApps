@@ -196,7 +196,8 @@
                                         Style="{x:Null}"
                                         FontSize="16"
                                         Text="{Binding Form.Title, Converter={StaticResource lssconv},
-                                                                   ConverterParameter={StaticResource MaxPreviewLength}}"/>
+                                                                   ConverterParameter={StaticResource MaxPreviewLength},
+                                                                   ValidatesOnNotifyDataErrors=False}"/>
 
                                 </Border>
 
