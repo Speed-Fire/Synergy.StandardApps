@@ -76,13 +76,6 @@ namespace Synergy.StandardApps.Service.Alarm
                     throw new InvalidFormException();
 
 				var alarm = await _alarmRepository
-					.GetAll()
-					.FirstOrDefaultAsync(a => a.Time == form.Time);
-
-				if (alarm is not null)
-					throw new AlarmTimeIsAlreadyTakenException();
-
-				alarm = await _alarmRepository
                     .GetAll()
                     .FirstOrDefaultAsync(a => a.Id == id)
                     ?? throw new InvalidIdException();
