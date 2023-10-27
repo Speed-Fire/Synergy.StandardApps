@@ -140,7 +140,7 @@
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto" MinWidth="800"/>
+                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
@@ -154,7 +154,7 @@
                             Opacity="0"/>
 
                     <!-- Alarms presenter -->
-                    <ListBox Grid.Column="1"
+                    <ListBox Grid.Column="1" HorizontalAlignment="Stretch"
                              SelectionMode="Single"
                              ItemContainerStyle="{StaticResource ListBoxItemStyle.Transparent}"
                              Style="{StaticResource ListBoxStyle.Transparent}"

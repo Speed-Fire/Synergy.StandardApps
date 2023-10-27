@@ -88,9 +88,9 @@
                 <Grid>
 
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.305*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="912"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.305*"/>
                     </Grid.ColumnDefinitions>
 
                     <Border x:Name="SurfaceBrd_Top"
