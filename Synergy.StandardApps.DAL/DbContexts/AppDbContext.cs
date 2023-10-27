@@ -26,10 +26,10 @@ namespace Synergy.StandardApps.DAL.DbContexts
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder
-                .Entity<AlarmRecord>()
-                .HasIndex(a => a.Time)
-                .IsUnique();
+            //modelBuilder
+            //    .Entity<AlarmRecord>()
+            //    .HasIndex(a => a.Time)
+            //    .IsUnique();
 
             modelBuilder
                 .Entity<Note>()
