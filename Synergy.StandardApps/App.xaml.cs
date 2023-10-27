@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Synergy.StandardApps.Misc;
 using Synergy.StandardApps.Resources;
 using Synergy.WPF.Common.Utility;
 using System;
@@ -17,13 +18,15 @@ namespace Synergy.StandardApps
     /// </summary>
     public partial class App : Application
     {
+        private readonly IEntrypointInfo _entrypointInfo;
         private readonly AppThemeController _themeController;
 
-        public App(AppThemeController themeController)
+        public App(IEntrypointInfo entrypointInfo, AppThemeController themeController)
         {
             InitializeComponent();
 
-            _themeController = themeController;
+			_entrypointInfo = entrypointInfo;
+			_themeController = themeController;
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -35,8 +38,13 @@ namespace Synergy.StandardApps
             _themeController.SetTheme("Dark");
 
             MainWindow = Program.AppHost.Services.GetRequiredService<MainWindow>();
-            MainWindow.Show();
-        }
+			MainWindow.Show();
+
+			if (_entrypointInfo.HasFlag("nogui"))
+			{
+				MainWindow.WindowState = WindowState.Minimized;
+			}
+		}
 
         [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private static void InitSettings()
