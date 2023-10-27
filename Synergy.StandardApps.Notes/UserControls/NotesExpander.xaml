@@ -162,7 +162,7 @@
                 Text="{Binding ElementName=expander, Path=Title}"/>
         </Expander.Header>
 
-        <Grid x:Name="Items"/>
+        <WrapPanel Orientation="Horizontal" x:Name="Items"/>
 
     </Expander>
     

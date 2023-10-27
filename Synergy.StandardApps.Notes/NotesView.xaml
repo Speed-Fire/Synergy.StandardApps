@@ -89,7 +89,7 @@
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto" MinWidth="900"/>
+                        <ColumnDefinition Width="912"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
@@ -103,7 +103,7 @@
                             Opacity="0"/>
 
 
-                    <ScrollViewer
+                    <ScrollViewer Padding="2 0 2 0"
                         Grid.Column="1"
                         Style="{StaticResource ScrollViewerStyle}">
 
@@ -112,20 +112,17 @@
                             <ucs:NotesExpander
                                 x:Name="TodayNotes"
                                 Title="{DynamicResource Strings.Today}"
-                                IsExpanded="True"
-                                RowLength="5"/>
+                                IsExpanded="True"/>
 
                             <ucs:NotesExpander
                                 x:Name="ThisMonthNotes"
                                 Title="{DynamicResource Strings.This_month}"
-                                IsExpanded="True"
-                                RowLength="5"/>
+                                IsExpanded="True"/>
 
                             <ucs:NotesExpander
                                 x:Name="EarlierNotes"
                                 Title="{DynamicResource Strings.Earlier}"
-                                IsExpanded="True"
-                                RowLength="5"/>
+                                IsExpanded="True"/>
 
                         </StackPanel>
                         

@@ -24,54 +24,6 @@ namespace Synergy.StandardApps.Notes.UserControls
     {
         #region Properties
 
-        #region RowLength
-
-        public static DependencyProperty RowLengthProperty=
-            DependencyProperty.Register("RowLength", typeof(int), typeof(NotesExpander), new PropertyMetadata(0, OnRowLengthChanged));
-
-        public int RowLength
-        {
-            get => (int)GetValue(RowLengthProperty);
-            set => SetValue(RowLengthProperty, value);
-        }
-
-        private static void OnRowLengthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var expander = (NotesExpander)d;
-            if (expander != null)
-                expander.OnRowLengthChanged((int)e.OldValue, (int)e.NewValue);
-        }
-
-        private void OnRowLengthChanged(int oldValue,  int newValue)
-        {
-            if (newValue < 0)
-                throw new ArgumentException("Length can't be less than zero!");
-
-            if(oldValue == newValue) return;
-
-            if(oldValue > newValue)
-            {
-                for(int i = 0; i < oldValue - newValue; i++)
-                {
-                    Items.ColumnDefinitions.RemoveAt(Items.ColumnDefinitions.Count - 1);
-                }
-            }
-            else
-            {
-                for (int i = 0; i < newValue - oldValue; i++)
-                {
-                    var column = new ColumnDefinition()
-                    {
-                        Width = new GridLength(1, GridUnitType.Star)
-                    };
-
-                    Items.ColumnDefinitions.Add(column);
-                }
-            }
-        }
-
-        #endregion
-
         #region Title
 
         public static DependencyProperty TitleProperty =
@@ -121,34 +73,7 @@ namespace Synergy.StandardApps.Notes.UserControls
 
             Items.Opacity = 0;
 
-            item.SetValue(Grid.RowProperty, 0);
-            item.SetValue(Grid.ColumnProperty, 0);
-
-            // fix old children
-            foreach(UIElement _item in Items.Children)
-            {
-                var r = (int)_item.GetValue(Grid.RowProperty);
-                var c = (int)_item.GetValue(Grid.ColumnProperty);
-
-                if(++c == RowLength)
-                {
-                    if (r + 1 == Items.RowDefinitions.Count)
-                        Items.RowDefinitions.Add(new() { Height = GridLength.Auto });
-
-                    c = 0;
-                    r++;
-                }
-
-                _item.SetValue(Grid.RowProperty, r);
-                _item.SetValue(Grid.ColumnProperty, c);
-            }
-
-            if(Items.RowDefinitions.Count == 0)
-            {
-                Items.RowDefinitions.Add(new() { Height = GridLength.Auto });
-            }
-
-            Items.Children.Add(item);
+            Items.Children.Insert(0, item);
 
             if(this.Visibility != Visibility.Visible)
             {
@@ -186,50 +111,7 @@ namespace Synergy.StandardApps.Notes.UserControls
         {
             Items.Opacity = 0;
 
-            var _r = (int)item.GetValue(Grid.RowProperty);
-            var _c = (int)item.GetValue(Grid.ColumnProperty);
-
             Items.Children.Remove(item);
-
-            // get items to fix
-            var itemsToFix = new List<UIElement>();
-            foreach (UIElement _item in Items.Children)
-            {
-                var r = (int)_item.GetValue(Grid.RowProperty);
-                var c = (int)_item.GetValue(Grid.ColumnProperty);
-
-                if (r > _r || (r == _r && c > _c))
-                {
-                    itemsToFix.Add(_item);
-                }
-            }
-
-            int maxRow = 0;
-            // fix items
-            foreach (var _item in itemsToFix)
-            {
-                var r = (int)_item.GetValue(Grid.RowProperty);
-                var c = (int)_item.GetValue(Grid.ColumnProperty);
-
-                if (--c == -1)
-                {
-                    c = RowLength - 1;
-                    r--;
-                }
-
-                _item.SetValue(Grid.RowProperty, r);
-                _item.SetValue(Grid.ColumnProperty, c);
-
-                if (r > maxRow)
-                    maxRow = r;
-            }
-
-            // remove empty rows
-            var countToRemove = Items.RowDefinitions.Count - (maxRow + 1);
-            for (int i = 0; i < countToRemove; i++)
-            {
-                Items.RowDefinitions.RemoveAt(Items.RowDefinitions.Count - 1);
-            }
 
             if (Items.Children.Count == 0)
             {
@@ -256,8 +138,6 @@ namespace Synergy.StandardApps.Notes.UserControls
         public void Clear()
         {
             Items.Children.Clear();
-            Items.RowDefinitions.Clear();
-            Items.RowDefinitions.Add(new() { Height = GridLength.Auto });
 
             this.Visibility = Visibility.Collapsed;
         }
