@@ -30,18 +30,39 @@ namespace Synergy.StandardApps
             this.WindowState = WindowState.Maximized;
         }
 
-        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+		#region DragMove
+
+		private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
                 if (this.WindowState == WindowState.Maximized)
                     this.WindowState = WindowState.Normal;
 
-                this.DragMove();
+                MoveBottomRightEdgeOfWindowToMousePosition();
+
+
+				this.DragMove();
             }
         }
 
-        private void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
+		private void MoveBottomRightEdgeOfWindowToMousePosition()
+		{
+			var transform = PresentationSource.FromVisual(this).CompositionTarget.TransformFromDevice;
+			var mouse = transform.Transform(GetMousePosition());
+			Left = mouse.X - ActualWidth / 2;
+			Top = mouse.Y;
+		}
+
+		public System.Windows.Point GetMousePosition()
+		{
+			System.Drawing.Point point = System.Windows.Forms.Control.MousePosition;
+			return new System.Windows.Point(point.X, point.Y);
+		}
+
+		#endregion
+
+		private void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
             this.Close();
         }
