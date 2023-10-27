@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Synergy.StandardApps.Background.Extensions;
 using Synergy.StandardApps.DAL.DbContexts;
 using Synergy.StandardApps.Extensions;
+using Synergy.StandardApps.Misc;
 using Synergy.StandardApps.Service.Extensions;
 using Synergy.StandardApps.Settings;
 using Synergy.StandardApps.Utility.Misc;
@@ -52,6 +53,9 @@ namespace Synergy.StandardApps
 				services
 					.RegisterStandardAppsServices()
 					.RegisterStandardAppsUI();
+
+				services
+					.AddSingleton<IEntrypointInfo, SystemEnvironmentEntrypointInfo>();
 
 			});
 
