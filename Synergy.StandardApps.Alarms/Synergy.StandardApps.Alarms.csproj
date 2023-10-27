@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Views\ChangeAlarmView.xaml~RF966ea88.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Synergy.WPF.Common\Synergy.WPF.Common\Synergy.WPF.Common.csproj" />
     <ProjectReference Include="..\..\Synergy.WPF.Navigation\Synergy.WPF.Navigation\Synergy.WPF.Navigation.csproj" />
     <ProjectReference Include="..\Synergy.StandardApps.EntityForms\Synergy.StandardApps.EntityForms.csproj" />

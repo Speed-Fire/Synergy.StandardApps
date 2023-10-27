@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:Synergy.StandardApps"
         xmlns:controls="clr-namespace:Synergy.WPF.Common.Controls;assembly=Synergy.WPF.Common"
         xmlns:tray="clr-namespace:Synergy.WPF.Common.Tray;assembly=Synergy.WPF.Common"
+        xmlns:decorators="clr-namespace:Synergy.WPF.Common.Decorators;assembly=Synergy.WPF.Common"
         
         xmlns:alarmVMs="clr-namespace:Synergy.StandardApps.Alarms.ViewModels;assembly=Synergy.StandardApps.Alarms"
         xmlns:alarmViews="clr-namespace:Synergy.StandardApps.Alarms;assembly=Synergy.StandardApps.Alarms"
@@ -27,7 +28,7 @@
         WindowStartupLocation="CenterScreen"
         
         Loaded="Window_Loaded"
-        
+        SnapsToDevicePixels="True"
         mc:Ignorable="d"
         WindowState="{Binding WindowState}"
         ShowInTaskbar="{Binding ShowInTaskbar}"
@@ -92,111 +93,112 @@
 
     </Window.Resources>
 
-    <controls:NotifyingGrid
-        NtfName="MainGrid"
-        Style="{StaticResource NotifyingGridStyle}">
-        <controls:NotifyingGrid.ColumnDefinitions>
-            <ColumnDefinition Width="40"/>
-            <ColumnDefinition Width="*"/>
-        </controls:NotifyingGrid.ColumnDefinitions>
+    <decorators:DpiDecorator>
+        <controls:NotifyingGrid
+            NtfName="MainGrid"
+            Style="{StaticResource NotifyingGridStyle}">
+            <controls:NotifyingGrid.ColumnDefinitions>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="*"/>
+            </controls:NotifyingGrid.ColumnDefinitions>
 
-        <controls:NotifyingGrid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </controls:NotifyingGrid.RowDefinitions>
+            <controls:NotifyingGrid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </controls:NotifyingGrid.RowDefinitions>
 
-        <tray:NotifyIconWrapper
-            Text="Standard apps"
-            NotifyRequest="{Binding NotifyRequest}">
-            <bh:Interaction.Triggers>
+            <tray:NotifyIconWrapper
+                Text="Standard apps"
+                NotifyRequest="{Binding NotifyRequest}">
+                <bh:Interaction.Triggers>
 
-                <bh:EventTrigger EventName="OpenSelected">
-                    <bh:InvokeCommandAction Command="{Binding NotifyIconOpenCommand}"/>
-                </bh:EventTrigger>
+                    <bh:EventTrigger EventName="OpenSelected">
+                        <bh:InvokeCommandAction Command="{Binding NotifyIconOpenCommand}"/>
+                    </bh:EventTrigger>
 
-                <bh:EventTrigger EventName="ExitSelected">
-                    <bh:InvokeCommandAction Command="{Binding NotifyIconExitCommand}"/>
-                </bh:EventTrigger>
+                    <bh:EventTrigger EventName="ExitSelected">
+                        <bh:InvokeCommandAction Command="{Binding NotifyIconExitCommand}"/>
+                    </bh:EventTrigger>
 
-            </bh:Interaction.Triggers>
-        </tray:NotifyIconWrapper>
+                </bh:Interaction.Triggers>
+            </tray:NotifyIconWrapper>
 
-        <Grid Grid.Column="1"
-              Background="{DynamicResource FrameBackground}">
+            <Grid Grid.Column="1"
+                  Background="{DynamicResource FrameBackground}">
 
-            <Border Margin="10 0 0 2"
-                CornerRadius="0 0 0 15"
-                Background="{DynamicResource ListView.Background}"
-                    MouseDown="Border_MouseDown">
+                <Border Margin="10 0 0 2"
+                    CornerRadius="0 0 0 15"
+                    Background="{DynamicResource ListView.Background}"
+                        MouseDown="Border_MouseDown">
 
-                <Grid>
+                    <Grid>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
-                    <!--
+                        <!--
                     
-                    <controls:NormalButton Command="{Binding Source={x:Static SystemCommands.MinimizeWindowCommand}}"
-                                           Style="{StaticResource ButtonStyle.Minimize}" Grid.Column="1"/>
+                        <controls:NormalButton Command="{Binding Source={x:Static SystemCommands.MinimizeWindowCommand}}"
+                                               Style="{StaticResource ButtonStyle.Minimize}" Grid.Column="1"/>
 
-                    -->
-                    
-                    <Grid Grid.Column="2">
-                        <controls:NormalButton x:Name="Restore" Command="{Binding Source={x:Static SystemCommands.RestoreWindowCommand}}"
-                                Style="{StaticResource ButtonStyle.Restore}"/>
-                        <controls:NormalButton x:Name="Maximize" Command="{Binding Source={x:Static SystemCommands.MaximizeWindowCommand}}"
-                                Style="{StaticResource ButtonStyle.Maximize}"/>
+                        -->
+
+                        <Grid Grid.Column="2">
+                            <controls:NormalButton x:Name="Restore" Command="{Binding Source={x:Static SystemCommands.RestoreWindowCommand}}"
+                                    Style="{StaticResource ButtonStyle.Restore}"/>
+                            <controls:NormalButton x:Name="Maximize" Command="{Binding Source={x:Static SystemCommands.MaximizeWindowCommand}}"
+                                    Style="{StaticResource ButtonStyle.Maximize}"/>
+                        </Grid>
+
+                        <controls:NormalButton
+                            Command="ApplicationCommands.Close"
+                            Style="{StaticResource ButtonStyle.Close}"
+                            Grid.Column="3"/>
+
                     </Grid>
 
-                    <controls:NormalButton
-                        Command="ApplicationCommands.Close"
-                        Style="{StaticResource ButtonStyle.Close}"
-                        Grid.Column="3"/>
+                </Border>
 
-                </Grid>
+            </Grid>
 
-            </Border>
-            
-        </Grid>
-    
-        <ContentControl
-            Grid.Column="1"
-            Grid.Row="1"
-            Content="{Binding Navigation.CurrentView}"/>
+            <ContentControl
+                Grid.Column="1"
+                Grid.Row="1"
+                Content="{Binding Navigation.CurrentView}"/>
 
-        <controls:Sidebar
-            x:Name="sidebar"
-            TitleIcon="{StaticResource SynergyIcon}"
-            Grid.Column="0"
-            Grid.RowSpan="2"
-            Style="{StaticResource Sidebar}">
+            <controls:Sidebar
+                x:Name="sidebar"
+                TitleIcon="{StaticResource SynergyIcon}"
+                Grid.Column="0"
+                Grid.RowSpan="2"
+                Style="{StaticResource Sidebar}">
 
-            <controls:NavItem
-                NavCommand="{Binding NavigateToNotesCommand}"
-                Style="{StaticResource ThemedNavItemStyle}"
-                Icon="{StaticResource ListIcon}"/>
+                <controls:NavItem
+                    NavCommand="{Binding NavigateToNotesCommand}"
+                    Style="{StaticResource ThemedNavItemStyle}"
+                    Icon="{StaticResource ListIcon}"/>
 
-            <controls:NavItem
-                NavCommand="{Binding NavigateToAlarmsCommand}"
-                Style="{StaticResource ThemedNavItemStyle}"
-                Icon="{StaticResource AlarmIcon}"/>
+                <controls:NavItem
+                    NavCommand="{Binding NavigateToAlarmsCommand}"
+                    Style="{StaticResource ThemedNavItemStyle}"
+                    Icon="{StaticResource AlarmIcon}"/>
 
-            <controls:NavItem
-                NavCommand="{Binding NavigateToCalendarCommand}"
-                Style="{StaticResource ThemedNavItemStyle}"
-                Icon="{StaticResource CalendarIcon}"/>
+                <controls:NavItem
+                    NavCommand="{Binding NavigateToCalendarCommand}"
+                    Style="{StaticResource ThemedNavItemStyle}"
+                    Icon="{StaticResource CalendarIcon}"/>
 
-            <controls:NavItem
-                NavCommand="{Binding NavigateToSettingsCommand}"
-                Style="{StaticResource ThemedNavItemStyle}"
-                Icon="{StaticResource SettingsIcon}"/>
+                <controls:NavItem
+                    NavCommand="{Binding NavigateToSettingsCommand}"
+                    Style="{StaticResource ThemedNavItemStyle}"
+                    Icon="{StaticResource SettingsIcon}"/>
 
-        </controls:Sidebar>
+            </controls:Sidebar>
 
-    </controls:NotifyingGrid>
-    
+        </controls:NotifyingGrid>
+    </decorators:DpiDecorator>
 </Window>

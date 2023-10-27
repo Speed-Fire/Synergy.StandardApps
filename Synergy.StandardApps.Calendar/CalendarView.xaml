@@ -110,7 +110,6 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="10"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
@@ -196,27 +195,36 @@
                         </ScrollViewer>
                     </Grid>
 
-                    <Border
-                        x:Name="FrameBrd"
-                        Panel.ZIndex="11"
-                        Grid.Column="3"
-                        Padding="5"
-                        CornerRadius="15 0 0 15"
-                        Background="{StaticResource Gray600Brush}"
-                        BorderThickness="2 2 0 2">
+                    <Grid Grid.ColumnSpan="3"
+                          Panel.ZIndex="11">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
-                        <Border.BorderBrush>
-                            <SolidColorBrush Color="{StaticResource Yellow100Accent}"/>
-                        </Border.BorderBrush>
+                        <Border
+                            x:Name="FrameBrd"
+                            Panel.ZIndex="11"
+                            Grid.Column="1"
+                            Padding="5"
+                            CornerRadius="15 0 0 15"
+                            Background="{StaticResource Gray600Brush}"
+                            BorderThickness="2 2 0 2">
 
-                        <ContentControl
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="{StaticResource Yellow100Accent}"/>
+                            </Border.BorderBrush>
+
+                            <ContentControl SnapsToDevicePixels="True"
                             Background="Transparent"
                             Content="{Binding LocalNavigationService.CurrentView}"/>
 
-                        <Border.RenderTransform>
-                            <TranslateTransform x:Name="TT"/>
-                        </Border.RenderTransform>
-                    </Border>
+                            <Border.RenderTransform>
+                                <TranslateTransform x:Name="TT"/>
+                            </Border.RenderTransform>
+                        </Border>
+
+                    </Grid>
                     
                 </Grid>
 

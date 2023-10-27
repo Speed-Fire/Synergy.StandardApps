@@ -1,4 +1,6 @@
 using System.Windows;
+using System.Windows.Media;
+
 
 [assembly: ThemeInfo(
     ResourceDictionaryLocation.None, //where theme specific resource dictionaries are located
