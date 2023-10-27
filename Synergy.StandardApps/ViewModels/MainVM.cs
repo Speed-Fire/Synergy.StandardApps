@@ -123,6 +123,7 @@ namespace Synergy.StandardApps.ViewModels
                     return;
 
                 e.Cancel = true;
+                WindowState = WindowState.Normal;
                 WindowState = WindowState.Minimized;
             }));
 
