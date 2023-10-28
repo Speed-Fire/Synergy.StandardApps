@@ -42,6 +42,7 @@ namespace Synergy.StandardApps
 
 			if (_entrypointInfo.HasFlag("nogui"))
 			{
+				MainWindow.WindowState = WindowState.Normal;
 				MainWindow.WindowState = WindowState.Minimized;
 			}
 		}
