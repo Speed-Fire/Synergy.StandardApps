@@ -18,14 +18,12 @@ namespace Synergy.StandardApps
     /// </summary>
     public partial class App : Application
     {
-        private readonly IEntrypointInfo _entrypointInfo;
         private readonly AppThemeController _themeController;
 
-        public App(IEntrypointInfo entrypointInfo, AppThemeController themeController)
+        public App(AppThemeController themeController)
         {
             InitializeComponent();
 
-			_entrypointInfo = entrypointInfo;
 			_themeController = themeController;
         }
 
@@ -39,12 +37,6 @@ namespace Synergy.StandardApps
 
             MainWindow = Program.AppHost.Services.GetRequiredService<MainWindow>();
 			MainWindow.Show();
-
-			if (_entrypointInfo.HasFlag("nogui"))
-			{
-				MainWindow.WindowState = WindowState.Normal;
-				MainWindow.WindowState = WindowState.Minimized;
-			}
 		}
 
         [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]

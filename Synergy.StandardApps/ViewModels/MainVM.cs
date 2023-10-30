@@ -5,6 +5,7 @@ using Synergy.StandardApps.Alarms;
 using Synergy.StandardApps.Alarms.ViewModels;
 using Synergy.StandardApps.Calendar;
 using Synergy.StandardApps.Calendar.ViewModels;
+using Synergy.StandardApps.Misc;
 using Synergy.StandardApps.Notes;
 using Synergy.StandardApps.Notes.ViewModels;
 using Synergy.StandardApps.Settings.ViewModels;
@@ -26,9 +27,12 @@ namespace Synergy.StandardApps.ViewModels
 {
     public class MainVM : ViewModel
     {
-        #region Properties
+		private readonly IEntrypointInfo _entrypointInfo;
+        private bool _isFirstStart = true;
 
-        private INavigationService _navigation;
+		#region Properties
+
+		private INavigationService _navigation;
         public INavigationService Navigation
         {
             get => _navigation;
@@ -63,9 +67,10 @@ namespace Synergy.StandardApps.ViewModels
 
         #endregion
 
-        public MainVM(INavigationService navigationService)
+        public MainVM(INavigationService navigationService, IEntrypointInfo entrypointInfo)
         {
             Navigation = navigationService;
+            _entrypointInfo = entrypointInfo;
         }
 
         #region Commands
@@ -76,7 +81,16 @@ namespace Synergy.StandardApps.ViewModels
         public ICommand ViewLoadedCommand => viewLoadedCommand ??
             (viewLoadedCommand = new(() =>
             {
-                //NavigateToNotesCommand.Execute(null);
+                if (_isFirstStart)
+                {
+                    _isFirstStart = false;
+
+					if (_entrypointInfo.HasFlag("nogui"))
+					{
+						WindowState = WindowState.Normal;
+						WindowState = WindowState.Minimized;
+					}
+				}
             }));
 
         #endregion
