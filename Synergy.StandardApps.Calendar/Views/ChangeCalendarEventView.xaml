@@ -129,6 +129,8 @@
                       Margin="0 0 0 10"
             Style="{StaticResource ScrollViewerStyle}">
             <DockPanel>
+                <Grid x:Name="WidthGrid" DockPanel.Dock="Top" HorizontalAlignment="Stretch"/>
+                
                 <Border DockPanel.Dock="Top"
                         CornerRadius="15"
                         Margin="0 20 0 20"
@@ -227,6 +229,7 @@
 
                 <controls:AdvancedTextBox
                     DockPanel.Dock="Top"
+                    Width="{Binding ElementName=WidthGrid, Path=ActualWidth}"
                     Style="{StaticResource AdvancedTextBoxStyle}"
                     Placeholder="{DynamicResource Strings.Calendar.Placeholder.Title}"
                     Text="{Binding Form.Title, UpdateSourceTrigger=PropertyChanged}"/>
@@ -236,8 +239,10 @@
                 <TextBlock
                     Text="{DynamicResource Strings.Description}"/>
 
-                <controls:AdvancedTextBox x:Name="DescriptionBox"
+                <controls:AdvancedTextBox 
+                    x:Name="DescriptionBox"
                     DockPanel.Dock="Top"
+                    Width="{Binding ElementName=WidthGrid, Path=ActualWidth}"                   
                     Style="{StaticResource AdvancedTextBoxStyle}"
                     TextWrapping="Wrap"
                     Placeholder="{DynamicResource Strings.Calendar.Placeholder.Description}"

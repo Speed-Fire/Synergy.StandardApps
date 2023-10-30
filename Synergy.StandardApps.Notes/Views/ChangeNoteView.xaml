@@ -45,14 +45,17 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ScrollViewer
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled"
             Style="{StaticResource ScrollViewerStyle}">
             <DockPanel>
+
+                <Grid x:Name="WidthGrid" DockPanel.Dock="Top" HorizontalAlignment="Stretch"/>
 
                 <TextBlock Text="{DynamicResource Strings.Title}"/>
 
                 <controls:AdvancedTextBox
                     DockPanel.Dock="Top"
+                    Width="{Binding ElementName=WidthGrid, Path=ActualWidth}"
                     Style="{StaticResource AdvancedTextBoxStyle}"
                     Placeholder="{DynamicResource Strings.Notes.Placeholder.Title}"
                     Text="{Binding ProtoNote.Name, UpdateSourceTrigger=PropertyChanged}"/>
@@ -63,6 +66,7 @@
 
                 <controls:AdvancedTextBox
                     DockPanel.Dock="Top"
+                    Width="{Binding ElementName=WidthGrid, Path=ActualWidth}"
                     Style="{StaticResource AdvancedTextBoxStyle}"
                     Placeholder="{DynamicResource Strings.Notes.Placeholder.Description}"
                     TextWrapping="Wrap"

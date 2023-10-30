@@ -79,7 +79,8 @@
                 Margin="0 0 0 10"
                 Style="{StaticResource ScrollViewerStyle}">
             <DockPanel>
-
+                <Grid x:Name="WidthGrid" DockPanel.Dock="Top" HorizontalAlignment="Stretch"/>
+                
                 <TextBlock
                     DockPanel.Dock="Top"
                         Style="{StaticResource TextBlockStyle}"
@@ -106,9 +107,9 @@
 
                 <controls:AdvancedTextBox
                     DockPanel.Dock="Top"
+                    Width="{Binding ElementName=WidthGrid, Path=ActualWidth}"
                     Style="{StaticResource AdvancedTextBoxStyle}"
                     Placeholder="{DynamicResource Strings.Alarm.Placeholder.Title}"
-                    TextWrapping="Wrap"
                     Text="{Binding Form.Name}"/>
 
                 <Separator/>
