@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using Synergy.StandardApps.Calendar.Messages;
 using Synergy.StandardApps.EntityForms.Calendar;
 using Synergy.StandardApps.Service.Calendar;
 using Synergy.WPF.Navigation.Services.Local;
@@ -98,11 +100,19 @@ namespace Synergy.StandardApps.Calendar.ViewModels.CalendarEvent
                 Form.Color = color;
             }));
 
-        #endregion
+        private RelayCommand? cancel;
+        public ICommand Cancel => cancel ??
+            (cancel = new(() =>
+            {
+                WeakReferenceMessenger.Default
+                    .Send(new CloseCalendarEventChangingMessage(null));
+            }));
 
-        #region Methods
+		#endregion
 
-        private void SetMonth(int val)
+		#region Methods
+
+		private void SetMonth(int val)
         {
             var dt = new DateTime(DateTime.Now.Year, val, 1);
             Month = dt.ToString("MMMM");
