@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
 {
@@ -36,11 +37,19 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
             set => SetProperty(ref _description, value);
         }
 
+        private Color _color = Colors.Yellow;
+        public Color Color
+        {
+            get => _color;
+            set=>SetProperty(ref _color, value);
+        }
+
         public NoteVM(NoteForm form)
         {
             _id = form.Id;
             Title = form.Name;
             Description = form.Description;
+            Color = form.GetColor();
         }
 
         #region Messages
@@ -54,6 +63,7 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
 
             Title = message.Value.Name;
             Description = message.Value.Description;
+            Color = message.Value.GetColor();
 
             UpdateEnd?.Invoke();
         }

@@ -2,6 +2,7 @@
 using Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,4 +72,39 @@ namespace Synergy.StandardApps.Notes.UserControls
 
         #endregion
     }
+
+	public class Color2GradConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			if(value is not Color clr1) throw new InvalidCastException(nameof(value));
+
+            Color clr2, clr3;
+
+            if((clr1.R == 255) && (clr1.G == 255) && (clr1.B == 0))
+            {
+                clr2 = Colors.Gold;
+                clr3 = Colors.DarkGoldenrod;
+            }
+            else
+            {
+				clr2 = Color.FromRgb((byte)(clr1.R * 0.84), (byte)(clr1.G * 0.84), (byte)(clr1.B * 0.84));
+				clr3 = Color.FromRgb((byte)(clr1.R * 0.52), (byte)(clr1.G * 0.52), (byte)(clr1.B * 0.52));
+			}
+
+			var col = new GradientStopCollection
+			{
+				new GradientStop(clr1, 0),
+                new GradientStop(clr2, 0.5),
+                new GradientStop(clr3, 1)
+            };
+
+            return new LinearGradientBrush(col, new Point(0, 0), new Point(1, 1));
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

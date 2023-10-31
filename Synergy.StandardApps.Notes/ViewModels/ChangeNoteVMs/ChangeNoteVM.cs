@@ -11,7 +11,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
 {
@@ -56,5 +58,12 @@ namespace Synergy.StandardApps.Notes.ViewModels.ChangeNoteVMs
             {
                 IsActive = false;
             }));
-    }
+
+		private RelayCommand<Color>? setColor;
+		public ICommand SetColor => setColor ??
+			(setColor = new RelayCommand<Color>(color =>
+			{
+				ProtoNote.Color = color;
+			}));
+	}
 }

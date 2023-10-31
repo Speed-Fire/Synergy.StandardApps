@@ -7,10 +7,82 @@
       xmlns:controls="clr-namespace:Synergy.WPF.Common.Controls;assembly=Synergy.WPF.Common"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:convs="clr-namespace:Synergy.WPF.Common.Converters;assembly=Synergy.WPF.Common"
+             
+      Loaded="UserControl_Loaded"
+             
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
+        <Style TargetType="RadioButton">
+
+            <Setter Property="MinHeight" Value="20"/>
+            <Setter Property="MinWidth" Value="20"/>
+            <Setter Property="Margin" Value="15 0 15 0"/>
+            <Setter Property="GroupName" Value="ColorGroup"/>
+            <Setter Property="Command" Value="{Binding SetColor}"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="RadioButton">
+
+                        <Border x:Name="Brd"
+                                Background="{TemplateBinding Background}"
+                                VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
+
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsChecked"
+                                     Value="True">
+
+                                <Setter TargetName="Brd"
+                                        Property="BorderBrush"
+                                        Value="LightBlue"/>
+
+                                <Setter TargetName="Brd"
+                                        Property="BorderThickness"
+                                        Value="2"/>
+
+                            </Trigger>
+
+                            <Trigger Property="IsChecked"
+                                     Value="False">
+
+                                <Setter TargetName="Brd"
+                                        Property="BorderBrush"
+                                        Value="Black"/>
+
+                                <Setter TargetName="Brd"
+                                        Property="BorderThickness"
+                                        Value="1.5"/>
+
+                            </Trigger>
+
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Brd"
+                                        Property="BorderBrush"
+                                        Value="Snow"/>
+
+                                <Setter TargetName="Brd"
+                                        Property="BorderThickness"
+                                        Value="2"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
         <convs:Bool2VisibilityConverter x:Key="b2vconv"/>
 
         <Style TargetType="Separator">
@@ -72,6 +144,61 @@
                     TextWrapping="Wrap"
                     MinLines="10"
                     Text="{Binding ProtoNote.Description, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <Separator/>
+
+                <TextBlock
+                    Text="{DynamicResource Strings.Color}"/>
+
+                <Grid DockPanel.Dock="Top" VerticalAlignment="Top">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <RadioButton x:Name="ColorBtn0"
+                                 Grid.Column="1"
+                                 Background="Yellow"
+                                 CommandParameter="{x:Static Colors.Yellow}"/>
+
+                    <RadioButton x:Name="ColorBtn1"
+                                 Grid.Column="2"
+                                 Background="Red"
+                                 CommandParameter="{x:Static Colors.Red}"/>
+
+                    <RadioButton x:Name="ColorBtn2"
+                                 Grid.Column="3"
+                                 Background="OliveDrab"
+                                 CommandParameter="{x:Static Colors.OliveDrab}"/>
+
+                    <RadioButton x:Name="ColorBtn3"
+                                 Grid.Column="4"
+                                 Background="CornflowerBlue"
+                                 CommandParameter="{x:Static Colors.CornflowerBlue}"/>
+
+                    <RadioButton x:Name="ColorBtn4"
+                                 Grid.Column="5"
+                                 Background="YellowGreen"
+                                 CommandParameter="{x:Static Colors.YellowGreen}"/>
+
+                    <RadioButton x:Name="ColorBtn5"
+                                 Grid.Column="6"
+                                 Background="BlueViolet"
+                                 CommandParameter="{x:Static Colors.BlueViolet}"/>
+
+                    <RadioButton x:Name="ColorBtn6"
+                                 Grid.Column="7"
+                                 Background="HotPink"
+                                 CommandParameter="{x:Static Colors.HotPink}"/>
+                </Grid>
 
             </DockPanel>
         </ScrollViewer>

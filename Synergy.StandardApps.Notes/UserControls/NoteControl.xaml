@@ -7,6 +7,7 @@
              xmlns:local="clr-namespace:Synergy.StandardApps.Notes"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:convs="clr-namespace:Synergy.WPF.Common.Converters;assembly=Synergy.WPF.Common"
+             xmlns:ucs="clr-namespace:Synergy.StandardApps.Notes.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="250"
              RenderTransformOrigin="0.5,0.5"
@@ -14,7 +15,9 @@
              Unloaded="UserControl_Unloaded">
 
     <UserControl.Resources>
-        
+
+        <ucs:Color2GradConverter x:Key="c2gconv"/>
+
         <LinearGradientBrush x:Key="NoteBrush"
                              StartPoint="0,0"
                              EndPoint="1,1">
@@ -72,7 +75,7 @@
         <Style x:Key="NoteBorderStyle"
                TargetType="Border">
             <Setter Property="Background"
-                    Value="{StaticResource NoteBrush}"/>
+                    Value="{Binding Color, Converter={StaticResource c2gconv}}"/>
             <Setter Property="CornerRadius"
                     Value="10"/>
             <Setter Property="Padding"

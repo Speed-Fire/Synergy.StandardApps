@@ -42,7 +42,8 @@ namespace Synergy.StandardApps.Service.Notes
                 note = new Note()
                 {
                     Name = form.Name,
-                    Description = form.Description
+                    Description = form.Description,
+                    Color = form.ColorNum
                 };
 
                 await _noteRepository
@@ -71,6 +72,7 @@ namespace Synergy.StandardApps.Service.Notes
 
 				note.Name = form.Name;
                 note.Description = form.Description;
+                note.Color = form.ColorNum;
 
                 note = await _noteRepository
                     .Update(note);

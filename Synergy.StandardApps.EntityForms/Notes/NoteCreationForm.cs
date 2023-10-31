@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace Synergy.StandardApps.EntityForms.Notes
 {
@@ -12,6 +13,7 @@ namespace Synergy.StandardApps.EntityForms.Notes
     {
         private string name;
         private string description = string.Empty;
+        private int color;
 
         [Required]
         [MinLength(1)]
@@ -30,10 +32,33 @@ namespace Synergy.StandardApps.EntityForms.Notes
             set => SetProperty(ref description, value, true);
         }
 
+		public Color Color
+		{
+			get
+			{
+				var r = (byte)(color & 255);
+				var g = (byte)((color & (255 << 8)) >> 8);
+				var b = (byte)((color & (255 << 16)) >> 16);
 
-        //public void Validate() => this.ValidateAllProperties();
+				return Color.FromRgb(r, g, b);
+			}
 
-        public static ValidationResult ValidateName(string name, ValidationContext context)
+			set
+			{
+				var r = value.R;
+				var g = value.G;
+				var b = value.B;
+
+				var clr = r | (g << 8) | (b << 16);
+				SetProperty(ref color, clr);
+			}
+		}
+
+		public int ColorNum => color;
+
+		//public void Validate() => this.ValidateAllProperties();
+
+		public static ValidationResult ValidateName(string name, ValidationContext context)
         {
             if(string.IsNullOrWhiteSpace(name))
             {
