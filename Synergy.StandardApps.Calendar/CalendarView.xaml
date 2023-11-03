@@ -115,7 +115,7 @@
 
                     <Border x:Name="SurfaceBrd_Top"
                             Panel.ZIndex="10"
-                            Grid.ColumnSpan="4"
+                            Grid.ColumnSpan="3"
                             CornerRadius="15"
                             Margin="-3"
                             Background="{StaticResource Gray950Brush}"
@@ -196,7 +196,7 @@
                     </Grid>
 
                     <Grid Grid.ColumnSpan="3"
-                          Panel.ZIndex="11">
+                          Panel.ZIndex="1500">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
@@ -204,9 +204,10 @@
 
                         <Border
                             x:Name="FrameBrd"
-                            Panel.ZIndex="11"
+                            Panel.ZIndex="1500"
                             Grid.Column="1"
                             Padding="5"
+                            MinWidth="379"
                             CornerRadius="15 0 0 15"
                             Background="{StaticResource Gray600Brush}"
                             BorderThickness="2 2 0 2">

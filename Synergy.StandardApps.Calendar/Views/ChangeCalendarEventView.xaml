@@ -245,6 +245,7 @@
                     Width="{Binding ElementName=WidthGrid, Path=ActualWidth}"                   
                     Style="{StaticResource AdvancedTextBoxStyle}"
                     TextWrapping="Wrap"
+                    AcceptsReturn="True"
                     Placeholder="{DynamicResource Strings.Calendar.Placeholder.Description}"
                     MinLines="5"
                     Text="{Binding Form.Description}"/>

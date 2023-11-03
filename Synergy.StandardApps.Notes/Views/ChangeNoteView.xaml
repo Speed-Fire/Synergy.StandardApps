@@ -142,6 +142,7 @@
                     Style="{StaticResource AdvancedTextBoxStyle}"
                     Placeholder="{DynamicResource Strings.Notes.Placeholder.Description}"
                     TextWrapping="Wrap"
+                    AcceptsReturn="True"
                     MinLines="10"
                     Text="{Binding ProtoNote.Description, UpdateSourceTrigger=PropertyChanged}"/>
 
