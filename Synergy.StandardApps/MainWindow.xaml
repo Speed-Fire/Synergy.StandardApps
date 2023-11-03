@@ -129,7 +129,9 @@
                 <Border Margin="10 0 0 2"
                     CornerRadius="0 0 0 15"
                     Background="{DynamicResource ListView.Background}"
-                        MouseDown="Border_MouseDown">
+                        MouseDown="Border_MouseDown"
+                        MouseUp="Border_MouseUp"
+                        MouseMove="Border_MouseMove">
 
                     <Grid>
 

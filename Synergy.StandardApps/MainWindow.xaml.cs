@@ -30,21 +30,37 @@ namespace Synergy.StandardApps
             this.WindowState = WindowState.Maximized;
         }
 
-		#region DragMove
+        #region DragMove
+
+        private volatile int _dragState = 0;
 
 		private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            if (e.ChangedButton == MouseButton.Left && _dragState == 0)
             {
-                if (this.WindowState == WindowState.Maximized)
-                    this.WindowState = WindowState.Normal;
-
-                MoveBottomRightEdgeOfWindowToMousePosition();
-
-
-				this.DragMove();
-            }
+				_dragState = 1;
+			}
         }
+
+		private void Border_MouseMove(object sender, MouseEventArgs e)
+		{
+            if (_dragState != 1) return;
+
+            _dragState = 2;
+
+			if (this.WindowState == WindowState.Maximized)
+				this.WindowState = WindowState.Normal;
+
+			MoveBottomRightEdgeOfWindowToMousePosition();
+
+
+			this.DragMove();
+		}
+
+		private void Border_MouseUp(object sender, MouseButtonEventArgs e)
+		{
+            _dragState = 0;
+		}
 
 		private void MoveBottomRightEdgeOfWindowToMousePosition()
 		{
@@ -81,5 +97,5 @@ namespace Synergy.StandardApps
         {
             //this.WindowState = WindowState.Minimized;
         }
-    }
+	}
 }
